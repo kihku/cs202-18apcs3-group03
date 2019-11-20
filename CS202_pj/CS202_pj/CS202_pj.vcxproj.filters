@@ -15,36 +15,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\cgame.cpp">
+    <ClCompile Include="cpeople.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\cpeople.cpp">
+    <ClCompile Include="cpeople.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\enemy.cpp">
+    <ClCompile Include="cpeople.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\extra.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\Source.cpp">
+    <ClCompile Include="source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\cgame.h">
+    <ClInclude Include="cpeople.cpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\Library.h">
+    <ClInclude Include="cgame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\cpeople.h">
+    <ClInclude Include="Library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\enemy.h">
+    <ClInclude Include="extra.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\extra.h">
+    <ClInclude Include="enemy.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpeople.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

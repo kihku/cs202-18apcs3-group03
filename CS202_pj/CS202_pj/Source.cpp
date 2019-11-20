@@ -2,6 +2,7 @@
 //start x,y CDINAUSOR is (4,3)
 int main()
 {
+	CGAME game;
 	/*CDINAUSOR str;
 	CDINAUSOR str2,str3,str4;
 	for (int i = 5; i < 100; ++i)

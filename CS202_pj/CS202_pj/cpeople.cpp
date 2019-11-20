@@ -1,9 +1,12 @@
-#include"cpeople.h"
+#include"Library.h"
 CPEOPLE::CPEOPLE()
 {
 	mState = 1;
 	mX = screenSize_H / 2;
 	mY = screenSize_V;
+	//print People
+	gotoxy(mX, mY);
+	cout << char(219);
 }
 void CPEOPLE::Up(int n)
 {

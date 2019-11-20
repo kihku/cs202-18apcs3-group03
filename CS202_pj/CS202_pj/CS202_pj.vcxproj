@@ -123,18 +123,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\cgame.cpp" />
-    <ClCompile Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\cpeople.cpp" />
-    <ClCompile Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\enemy.cpp" />
-    <ClCompile Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\extra.cpp" />
-    <ClCompile Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\Source.cpp" />
+    <ClCompile Include="cgame.cpp" />
+    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="extra.cpp" />
+    <ClCompile Include="cpeople.cpp" />
+    <ClCompile Include="source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\cgame.h" />
-    <ClInclude Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\cpeople.h" />
-    <ClInclude Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\enemy.h" />
-    <ClInclude Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\extra.h" />
-    <ClInclude Include="..\..\..\..\Crossy Road\Crossy-Road\CrossyRoad\Crossy Road\Crossy Road\Library.h" />
+    <ClInclude Include="cgame.h" />
+    <ClInclude Include="enemy.h" />
+    <ClInclude Include="cpeople.h" />
+    <ClInclude Include="extra.h" />
+    <ClInclude Include="Library.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

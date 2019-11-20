@@ -6,5 +6,5 @@
 #include"enemy.h"
 #include"extra.h"
 #include"cgame.h"
-const int screenSize_V = 70;
-const int screenSize_H = 200;
+const int screenSize_V = 30;
+const int screenSize_H = 100;
