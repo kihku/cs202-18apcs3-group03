@@ -20,3 +20,57 @@ void CGAME::updatePosPeople(char keyPressed)
 		cn.Down(step_vertical);
 	}
 }
+CGAME::CGAME()
+{
+	
+}
+void CGAME::drawGame()
+{
+
+}
+CGAME::~CGAME()
+{
+
+}
+CPEOPLE CGAME::getPeople()
+{
+	CPEOPLE peo;
+	return peo;
+}
+CVEHICLE* CGAME::getVehicle()
+{
+	CVEHICLE* car = new CCAR;
+	return car;
+}
+CANIMAL* CGAME::getAnimal()
+{
+	CANIMAL* anim = new CBIRD;
+	return anim;
+}
+void CGAME::resetGame()
+{
+
+}
+//void exitGame(HANDLE); 
+void CGAME::startGame()
+{
+
+}
+void CGAME::loadGame(istream)
+{
+
+}
+void CGAME::saveGame(istream)
+{
+
+}
+//void pauseGame(HANDLE);
+//void resumeGame(HANDLE); 
+void CGAME::updatePosVehicle()
+{
+
+}
+void CGAME::updatePosAnimal()
+{
+
+}

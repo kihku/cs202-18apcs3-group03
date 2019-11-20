@@ -27,11 +27,17 @@
     <ClCompile Include="source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cgame.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extra.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cpeople.cpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="cgame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
