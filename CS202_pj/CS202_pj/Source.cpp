@@ -3,6 +3,7 @@
 int main()
 {
 	CGAME game;
+	char keyPressed;
 	/*CDINAUSOR str;
 	CDINAUSOR str2,str3,str4;
 	for (int i = 5; i < 100; ++i)
@@ -12,6 +13,13 @@ int main()
 		str2.Move(i + 15, 5);
 		str3.Move(i + 40, 5);
 	}*/
+	while (1)
+	{
+		keyPressed = _getch();
+		if (keyPressed == 0)
+			keyPressed = _getch();
+		game.updatePosPeople(keyPressed);
+	}
 	CCAR car;
 	CTRUCK truck;
 	for (int i = 5; i < 100; ++i)

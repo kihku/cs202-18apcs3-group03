@@ -3,19 +3,19 @@ void CGAME::updatePosPeople(char keyPressed)
 {
 	const int step_horizontal = 2;
 	const int step_vertical = 1;
-	if (keyPressed == 'D')
+	if (keyPressed == 'd')
 	{
 		cn.Right(step_horizontal);
 	}
-	else if (keyPressed == 'A')
+	else if (keyPressed == 'a')
 	{
 		cn.Left(step_horizontal);
 	}
-	else if (keyPressed == 'W')
+	else if (keyPressed == 'w')
 	{
 		cn.Up(step_vertical);
 	}
-	else if (keyPressed == 'S')
+	else if (keyPressed == 's')
 	{
 		cn.Down(step_vertical);
 	}

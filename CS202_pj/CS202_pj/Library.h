@@ -2,6 +2,7 @@
 #include<iostream>
 #include<Windows.h>
 #include<windows.h>
+#include<conio.h>
 #include"cpeople.h"
 #include"enemy.h"
 #include"extra.h"
