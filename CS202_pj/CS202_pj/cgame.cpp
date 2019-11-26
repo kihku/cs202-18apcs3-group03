@@ -51,7 +51,12 @@ void CGAME::resetGame()
 {
 
 }
-//void exitGame(HANDLE); 
+void CGAME::exitGame(HANDLE t)
+{
+	//IS_RUNNING = false;
+	system("cls");
+	//t->join();
+}
 void CGAME::startGame()
 {
 
@@ -64,8 +69,14 @@ void CGAME::saveGame(istream)
 {
 
 }
-//void pauseGame(HANDLE);
-//void resumeGame(HANDLE); 
+void CGAME::pauseGame(thread &t)
+{
+	SuspendThread(&t);
+}
+void CGAME::resumeGame(HANDLE t)
+{
+	ResumeThread(t);
+}
 void CGAME::updatePosVehicle()
 {
 
