@@ -74,3 +74,14 @@ void CGAME::updatePosAnimal()
 {
 
 }
+void CGAME::controlPeople()
+{
+	char keyPressed;
+	while (1)
+	{
+		keyPressed = _getch();
+		if (keyPressed == 0)
+			keyPressed = _getch();
+		updatePosPeople(keyPressed);
+	}
+}

@@ -2,6 +2,7 @@
 #include<iostream>
 #include<Windows.h>
 #include<windows.h>
+#include <thread> 
 #include<conio.h>
 #include"cpeople.h"
 #include"enemy.h"
