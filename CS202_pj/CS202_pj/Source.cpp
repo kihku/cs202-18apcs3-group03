@@ -2,6 +2,7 @@
 //start x,y CDINAUSOR is (4,3)
 int main()
 {
+	ShowConsoleCursor(false);
 	CGAME game;
 	char keyPressed;
 	/*CDINAUSOR str;
