@@ -13,18 +13,30 @@ void tructMove()
 }
 int main()
 {
-	char control;
 	ShowConsoleCursor(false);
+	char keyPressed;
+	bool pause_game = false;
 	CGAME game;
-	//thread th1(&CGAME::controlPeople, game);
 	thread th1(tructMove);
+	HANDLE th1_handle= th1.native_handle();
+	SuspendThread(&th1);
 	while (1)
 	{
-		control = _getch();
-		if (control == 0)
-			control = _getch();
-		if (control == 27)
-			game.pauseGame(th1);
+		keyPressed = _getch();
+		if (keyPressed == 0)
+			keyPressed = _getch();
+		if (keyPressed == 13&&pause_game==false)
+		{
+			game.pauseGame(th1_handle);
+			pause_game = true;
+		}
+		else if (keyPressed == 13&&pause_game==true)
+		{
+			game.resumeGame(th1_handle);
+			pause_game = false;
+		}
+		if (pause_game == false)
+			game.updatePosPeople(keyPressed);
 	}
 	if (th1.joinable())
 		th1.join();
