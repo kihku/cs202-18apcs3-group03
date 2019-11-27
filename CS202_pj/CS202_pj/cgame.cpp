@@ -27,6 +27,8 @@ CGAME::CGAME()
 void CGAME::drawGame()
 {
 	const int delta = 3;
+	const int scoreBoard_H = 25;
+	const int scoreBoard_V = 5;
 	for (int i= 4; i < screenSize_H; ++i)
 	{
 		gotoxy(i, 1);
@@ -55,6 +57,35 @@ void CGAME::drawGame()
 	}
 	gotoxy(3, 1);
 	cout << char(218);
+	//SCORE BOARD
+	gotoxy(screenSize_H + 4, 7);
+	cout << char(218);
+	for (int i = screenSize_H+5; i < screenSize_H+5 + scoreBoard_H; ++i)
+	{
+		gotoxy(i, 7);
+		cout << char(196);
+	}
+	gotoxy(screenSize_H + 5 + scoreBoard_H, 7);
+	cout << char(191);
+	for (int i = 8; i < scoreBoard_V+15; ++i)
+	{
+		gotoxy(scoreBoard_H + screenSize_H + 5, i);
+		cout << char(179);
+	}
+	for (int i = 8; i < scoreBoard_V + 15; ++i)
+	{
+		gotoxy(screenSize_H  + 4, i);
+		cout << char(179);
+	}
+	gotoxy(screenSize_H + 4, scoreBoard_V + 15);
+	cout << char(192);
+	for (int i = screenSize_H + 5; i < screenSize_H + 5 + scoreBoard_H; ++i)
+	{
+		gotoxy(i, scoreBoard_V + 15);
+		cout << char(196);
+	}
+	gotoxy(screenSize_H + 5 + scoreBoard_H, scoreBoard_V + 15);
+	cout << char(217);
 }
 CGAME::~CGAME()
 {
