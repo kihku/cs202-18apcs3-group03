@@ -26,7 +26,35 @@ CGAME::CGAME()
 }
 void CGAME::drawGame()
 {
-
+	const int delta = 3;
+	for (int i= 4; i < screenSize_H; ++i)
+	{
+		gotoxy(i, 1);
+		cout << char(196);
+	}
+	gotoxy(screenSize_H, 1);
+	cout << char(191);
+	for (int i = 2; i < screenSize_V+delta; ++i)
+	{
+		gotoxy(screenSize_H, i);
+		cout << char(179);
+	}
+	gotoxy(screenSize_H, screenSize_V + delta);
+	cout << char(217);
+	for (int i = 4; i < screenSize_H; ++i)
+	{
+		gotoxy(i, screenSize_V + delta);
+		cout << char(196);
+	}
+	gotoxy(3, screenSize_V + delta);
+	cout << char(192);
+	for (int i = 2; i < screenSize_V + delta; ++i)
+	{
+		gotoxy(3, i);
+		cout << char(179);
+	}
+	gotoxy(3, 1);
+	cout << char(218);
 }
 CGAME::~CGAME()
 {

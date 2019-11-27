@@ -17,20 +17,20 @@ int main()
 	char keyPressed;
 	bool pause_game = false;
 	CGAME game;
+	game.drawGame();
 	thread th1(tructMove);
 	HANDLE th1_handle= th1.native_handle();
-	SuspendThread(&th1);
 	while (1)
 	{
 		keyPressed = _getch();
 		if (keyPressed == 0)
 			keyPressed = _getch();
-		if (keyPressed == 13&&pause_game==false)
+		if (keyPressed == 13 && pause_game == false)
 		{
 			game.pauseGame(th1_handle);
 			pause_game = true;
 		}
-		else if (keyPressed == 13&&pause_game==true)
+		else if (keyPressed == 13 && pause_game == true)
 		{
 			game.resumeGame(th1_handle);
 			pause_game = false;

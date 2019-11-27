@@ -8,7 +8,7 @@
 #include"enemy.h"
 #include"extra.h"
 #include"cgame.h"
-const int screenSize_V = 25;
-const int screenSize_H = 100;
+const int screenSize_V = 24;
+const int screenSize_H = 85;
 #define ESC 27;
 #define ENTER 13;
