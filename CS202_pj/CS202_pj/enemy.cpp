@@ -1,4 +1,6 @@
 #include"Library.h"
+int CTRAFFIC::numTraffic = 0;
+int CCAR::numCar = 0;
 void CDINAUSOR::Move(int x, int y)
 {
 	const int height = 3;
@@ -34,27 +36,80 @@ void CDINAUSOR::Move(int x, int y)
 		cout << "  ";
 	}
 }
-void CCAR::Move(int x, int y)
+
+void CCAR::Move(int spd)
 {
-	//    _____
-	//   /    |_\_
-	// |__O___O___|
-	gotoxy(x, y);
-	cout << "    _____";
-	gotoxy(x, y + 1);
-	cout << "   /    |_\_";
-	gotoxy(x, y + 2);
-	cout << " |__O___O___|";
+
+	//drawVeh({ y,x });
+	int l = 5, r = 100;
+	dir = !dir;
+	if (dir) {
+		for (int i = 0; i < 10000; ++i)
+		{
+			//di lo khung thi di lai
+			if (r < pos.x) {
+				gotoxy(pos.x , pos.y);
+				cout << "         ";
+				gotoxy(pos.x , pos.y + 1);
+				cout << "         ";
+				gotoxy(pos.x , pos.y + 2);
+				cout << "         ";
+				pos.x = 0, pos.y = 5, drawVeh({ pos.x,pos.y });
+			}
+			else {
+				++pos.x, drawVeh({ pos.x,pos.y });
+				gotoxy(pos.x - 1, pos.y);
+				cout << " ";
+				gotoxy(pos.x - 1, pos.y + 1);
+				cout << " ";
+				gotoxy(pos.x - 1, pos.y + 2);
+				cout << " ";
+				Sleep(spd);
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < 10000; ++i)
+		{
+			//di lo khung thi di lai
+			if (pos.x < l) {
+				gotoxy(pos.x, pos.y);
+				cout << "         ";
+				gotoxy(pos.x , pos.y + 1);
+				cout << "         ";
+				gotoxy(pos.x  , pos.y + 2);
+				cout << "         ";
+				pos.x = 85, pos.y = 5, drawVeh({ pos.x,pos.y });
+			}
+			else {
+				gotoxy(pos.x + 7, pos.y);
+				cout << " ";
+				gotoxy(pos.x+7, pos.y + 1);
+				cout << " ";
+				gotoxy(pos.x +7, pos.y + 2);
+				cout << " ";
+				--pos.x, drawVeh({ pos.x,pos.y });
+				
+				Sleep(spd);
+			}
+		}
+	}
+
+}
+void CCAR::pause()
+{
+	drawVeh(pos);
 }
 void CTRUCK::Move(int x, int y)
 {
-	//  _________
-	// |///////|_\_
-	// |_/O____O\__|
-	gotoxy(x, y);
-	cout << "  ________";
-	gotoxy(x, y + 1);
-	cout << " |//////|_\\_";
-	gotoxy(x, y + 2);
-	cout << " |_/O____O\__|";
+	//for (int i = 5; i < 100; ++i)
+	//{
+	//	truck.Move(i, 10);
+	//	Sleep(200);
+	//}
+}
+
+void CTRUCK::pause()
+{
+	drawVeh(pos);
 }

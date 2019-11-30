@@ -37,8 +37,8 @@ void CPEOPLE::Down(int n)
 void CPEOPLE::Left(int n)
 {
 	mX -= n;
-	if (mX < 5)
-		mX = 5;
+	if (mX < 0)
+		mX = 0;
 	gotoxy(mX, mY);
 	cout << char(219) << char(219) << char(219) << "  ";
 	gotoxy(mX, mY + 1);

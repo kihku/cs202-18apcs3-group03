@@ -1,7 +1,6 @@
 #include"Library.h"
 //start x,y CDINAUSOR is (4,3)
-
-//for testing purpose
+/*//for testing purpose
 void tructMove()
 {
 	CTRUCK truck;
@@ -10,10 +9,10 @@ void tructMove()
 		truck.Move(i, 10);
 		Sleep(200);
 	}
-}
+}*/
 int main()
 {
-	ShowConsoleCursor(false);
+	/*ShowConsoleCursor(false);
 	char keyPressed;
 	bool pause_game = false;
 	CGAME game;
@@ -39,6 +38,9 @@ int main()
 			game.updatePosPeople(keyPressed);
 	}
 	if (th1.joinable())
-		th1.join();
+		th1.join();*/
+	VEHLANE l(1);
+	l.updatePosVehicle();
+	
 	return 0;
 }
