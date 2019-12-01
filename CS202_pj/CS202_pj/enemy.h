@@ -65,7 +65,7 @@ private:
 		'|','_','_','O','_','_','O','_','|' };
 public:
 	CCAR(Point p, bool d) :CVEHICLE(p) {
-		dir - d;
+		dir = d;
 	}
 	void Move();
 	void pause();
@@ -74,7 +74,7 @@ public:
 		//   _____     3-9
 		//  /| x |\ 
 		// |_O___O_|
-		
+		// 123456789
 		gotoxy(pos.x - bk, pos.y - 1);
 		cout << "  _____  ";
 		gotoxy(pos.x - bk, pos.y);
@@ -99,15 +99,16 @@ class CTRUCK : public CVEHICLE {
 	const int bk = 6;
 public:
 	CTRUCK(Point p, bool d) :CVEHICLE(p) {
-		dir - d;
+		dir = d;
 	}void Move();
 	void drawVeh() {
 		//  _________   3-13
 		// |///////|_\_ 
 		// |_/O____O\__|
 		//    _________   
-		//  _/_|///////| 
+		//  _/_|/x/////| 
 		// |__/O____O\_|
+		// 1234567890123
 		if (dir) {
 			gotoxy(pos.x-bk, pos.y-1);
 			cout << " _________   ";
@@ -171,7 +172,7 @@ public:
 		for (int i = numCarLVL[level - 1]; i < MAXCAR; ++i)
 			v[i] = NULL;
 		for (int i = MAXCAR; i < MAXCAR+numTruckLVL[level-1]; ++i)
-			v[i] = new CTRUCK(pTruck, 1), v[i]->drawVeh(), pTruck.x += 17;
+			v[i] = new CTRUCK(pTruck, 0), v[i]->drawVeh(), pTruck.x += 17;
 		for (int i = numTruckLVL[level-1]; i < MAXTRUCK; ++i)
 			v[i] = NULL;
 	}
