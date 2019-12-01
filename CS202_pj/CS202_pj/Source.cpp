@@ -42,7 +42,7 @@ int main()
 	}
 	if (th1.joinable())
 		th1.join();*/
-	VEHLANE l(1);
+	VEHLANE l(5);
 	l.updatePosVehicle();
 	
 	return 0;

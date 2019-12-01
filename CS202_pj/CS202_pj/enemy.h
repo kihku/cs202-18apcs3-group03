@@ -155,14 +155,14 @@ public:
 		level = l;								//tu 1->5
 		int distLane = 3, minDistCar = 6;		//distance btw 2 lane, min distance btw 2 car
 		//khoi tao den giao thong
-		Point pT1 = { 85 + 2,2 + 2 + 2 }, pT2 = { 85 + 2,2+2+3+2 }, pC = { 4+4,2 + 2+1 };
+		Point pT1 = { 85 + 2,6}, pT2 = { 85 + 2,10 }, pC = { 4+4,2 + 2+1 };
 		t = new CTRAFFIC[2]{ pT1,pT2 };				//default 2 lan xe -> 2 den gthong
 		//khoi tao xe hoi
 		//int a = 0, b = 1;
 		//srand(time(NULL));
 		//int rPos = rand() % (b - a + 1) + a;	//tu a den b
 		for (int i = 0; i < numCarLVL[level - 1]; ++i)
-			pC.x += 15 * i, v[i] = new CCAR(pC, 1), v[i]->drawVeh();
+			v[i] = new CCAR(pC, 1), v[i]->drawVeh(),pC.x += 15;
 		for (int i = numCarLVL[level - 1]; i < MAXCAR; ++i)
 			v[i] = NULL;
 	}
