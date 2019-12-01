@@ -59,7 +59,7 @@ private:
 	bool dir;			//0: left, 1: right
 	//int spd;
 	static int numCar;	//max=5
-
+	const int bk = 4;
 	const char shape[3][9] = { ' ',' ','_','_','_','_',' ',' ',' ',
 		' ','/','|',' ',' ','|','\\','_',' ',
 		'|','_','_','O','_','_','O','_','|' };
@@ -74,7 +74,7 @@ public:
 		//   _____     3-9
 		//  /| x |\ 
 		// |_O___O_|
-		int bk = 4;
+		
 		gotoxy(pos.x - bk, pos.y - 1);
 		cout << "  _____  ";
 		gotoxy(pos.x - bk, pos.y);
@@ -96,8 +96,11 @@ public:
 };
 class CTRUCK : public CVEHICLE {
 	bool dir;
+	const int bk = 6;
 public:
-	void Move(int, int);
+	CTRUCK(Point p, bool d) :CVEHICLE(p) {
+		dir - d;
+	}void Move();
 	void drawVeh() {
 		//  _________   3-13
 		// |///////|_\_ 
@@ -106,19 +109,19 @@ public:
 		//  _/_|///////| 
 		// |__/O____O\_|
 		if (dir) {
-			gotoxy(pos.x, pos.y);
+			gotoxy(pos.x-bk, pos.y-1);
 			cout << " _________   ";
-			gotoxy(pos.x, pos.y + 1);
+			gotoxy(pos.x-bk, pos.y );
 			cout << "|///////|_\\_ ";
-			gotoxy(pos.x, pos.y + 2);
+			gotoxy(pos.x-bk, pos.y +1);
 			cout << "|_/O____O\\__|";
 		}
 		else {
-			gotoxy(pos.x, pos.y);
+			gotoxy(pos.x-bk, pos.y-1);
 			cout << "   _________ ";
-			gotoxy(pos.x, pos.y + 1);
+			gotoxy(pos.x-bk, pos.y);
 			cout << " _/_|///////|";
-			gotoxy(pos.x, pos.y + 2);
+			gotoxy(pos.x-bk, pos.y + 1);
 			cout << "|__/O____O\\_|";
 		}
 
@@ -149,13 +152,15 @@ class VEHLANE {
 	int level;			//1-5
 
 	const int numCarLVL[5] = { 2,3,4,4,5 };
+	const int numTruckLVL[5] = { 2,2,3,4,4 };
+
 	const int speed[5] = { 150,100,100,50,30 };
 public:
 	VEHLANE(int l) {
 		level = l;								//tu 1->5
 		int distLane = 3, minDistCar = 6;		//distance btw 2 lane, min distance btw 2 car
 		//khoi tao den giao thong
-		Point pT1 = { 85 + 2,6}, pT2 = { 85 + 2,10 }, pC = { 4+4,2 + 2+1 };
+		Point pT1 = { 85 + 2,6 }, pT2 = { 85 + 2,10 }, pC = { 4 + 4,2 + 2 + 1 }, pTruck = {4+6,10};
 		t = new CTRAFFIC[2]{ pT1,pT2 };				//default 2 lan xe -> 2 den gthong
 		//khoi tao xe hoi
 		//int a = 0, b = 1;
@@ -165,6 +170,10 @@ public:
 			v[i] = new CCAR(pC, 1), v[i]->drawVeh(),pC.x += 15;
 		for (int i = numCarLVL[level - 1]; i < MAXCAR; ++i)
 			v[i] = NULL;
+		for (int i = MAXCAR; i < MAXCAR+numTruckLVL[level-1]; ++i)
+			v[i] = new CTRUCK(pTruck, 1), v[i]->drawVeh(), pTruck.x += 17;
+		for (int i = numTruckLVL[level-1]; i < MAXTRUCK; ++i)
+			v[i] = NULL;
 	}
 	void updatePosVehicle()
 	{
@@ -172,6 +181,9 @@ public:
 		{
 			for (int i = 0; i < numCarLVL[level - 1]; ++i)
 				v[i]->Move();
+			for (int i = MAXCAR; i < MAXCAR + numTruckLVL[level - 1]; ++i)
+				v[i]->Move();
+
 			Sleep(speed[level - 1]);
 			t[0].toggle();
 		}

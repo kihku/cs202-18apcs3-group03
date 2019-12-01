@@ -40,7 +40,7 @@ void CDINAUSOR::Move(int x, int y)
 
 void CCAR::Move()
 {
-	int l = 4, r = 85, bk=4;
+	int l = 4, r = 85;
 	if (dir) {
 		//di lo khung thi di lai
 		if (r <= pos.x+bk+1) {
@@ -88,13 +88,51 @@ void CCAR::pause()
 {
 	drawVeh();
 }
-void CTRUCK::Move(int x, int y)
+void CTRUCK::Move()
 {
-	//for (int i = 5; i < 100; ++i)
-	//{
-	//	truck.Move(i, 10);
-	//	Sleep(200);
-	//}
+	int l = 4, r = 85;
+	if (dir) {
+		//di lo khung thi di lai
+		if (r <= pos.x + bk + 1) {
+			gotoxy(pos.x - bk, pos.y - 1);
+			cout << "             ";
+			gotoxy(pos.x - bk, pos.y);
+			cout << "             ";
+			gotoxy(pos.x - bk, pos.y + 1);
+			cout << "             ";
+			pos.x = l + bk, drawVeh();
+		}
+		else {
+			gotoxy(pos.x - bk, pos.y - 1);
+			cout << " ";
+			gotoxy(pos.x - bk, pos.y);
+			cout << " ";
+			gotoxy(pos.x - bk, pos.y + 1);
+			cout << " ";
+			++pos.x, drawVeh();
+		}
+	}
+	else {
+		//di lo khung thi di lai
+		if (pos.x - bk - 1 <= l) {
+			gotoxy(pos.x - bk, pos.y - 1);
+			cout << "             ";
+			gotoxy(pos.x - bk, pos.y);
+			cout << "             ";
+			gotoxy(pos.x - bk, pos.y + 1);
+			cout << "             ";
+			pos.x = r - bk, drawVeh();
+		}
+		else {
+			gotoxy(pos.x + bk, pos.y - 1);
+			cout << " ";
+			gotoxy(pos.x + bk, pos.y);
+			cout << " ";
+			gotoxy(pos.x + bk, pos.y + 1);
+			cout << " ";
+			--pos.x, drawVeh();
+		}
+	}
 }
 
 void CTRUCK::pause()
