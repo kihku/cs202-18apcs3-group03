@@ -1,4 +1,3 @@
-#pragma once
 #include"Library.h"
 int CTRAFFIC::numTraffic = 0;
 int CCAR::numCar = 0;
@@ -6,17 +5,17 @@ void CDINAUSOR::Move(int x, int y)
 {
 	const int height = 3;
 	const int width = 4;
-	for (int i = y; i < y + height; ++i)
+	for (int i = y; i < y+height; ++i)
 	{
-		for (int j = x; j < x + width; ++j)
+		for (int j = x; j < x+width; ++j)
 		{
-			if (i == y && j == x + 3 || i == y && j == x + 2)
+			if (i == y && j == x+3||i==y&&j==x+2)
 			{
 				continue;
 			}
 			gotoxy(j, i);
 			cout << char(219);
-			if (i == y + height - 1 && j == x + width - 1)
+			if (i==y+height-1 &&j == x + width - 1)
 			{
 				for (int k = 0; k < width / 4; ++k) //lam tron len xuong?
 				{
@@ -25,62 +24,67 @@ void CDINAUSOR::Move(int x, int y)
 				}
 			}
 		}
-		x -= 2;
+		x-=2;
 	}
-	for (int j = x - width; j < x; ++j)
+	for (int j = x-width; j < x; ++j)
 	{
 		gotoxy(j, y);
 		cout << "      ";
-		gotoxy(j, y + 1);
+		gotoxy(j , y + 1);
 		cout << "    ";
 		gotoxy(j, y + 2);
 		cout << "  ";
 	}
 }
 
-void CCAR::Move()
+void CCAR::Move(int spd)
 {
-	int l = 4, r = 85, bk=4;
+
+	//drawVeh({ y,x });
+	int l = 5, r = 100;
 	if (dir) {
 		//di lo khung thi di lai
-		if (r <= pos.x+bk+1) {
-			gotoxy(pos.x - bk, pos.y - 1);
+		if (r < pos.x) {
+			gotoxy(pos.x-4, pos.y-1);
 			cout << "         ";
-			gotoxy(pos.x - bk, pos.y);
+			gotoxy(pos.x-4, pos.y );
 			cout << "         ";
-			gotoxy(pos.x - bk, pos.y + 1);
+			gotoxy(pos.x-4, pos.y + 1);
 			cout << "         ";
-			pos.x = l+bk, drawVeh();
+			pos.x = 0, pos.y = 5, drawVeh();
 		}
 		else {
-			gotoxy(pos.x - bk, pos.y - 1);
-			cout << " ";
-			gotoxy(pos.x - bk, pos.y);
-			cout << " ";
-			gotoxy(pos.x - bk, pos.y + 1);
-			cout << " ";
 			++pos.x, drawVeh();
+			gotoxy(pos.x - 5, pos.y-1);
+			cout << " ";
+			gotoxy(pos.x - 5, pos.y);
+			cout << " ";
+			gotoxy(pos.x - 5, pos.y + 1);
+			cout << " ";
+			//Sleep(spd);
 		}
 	}
 	else {
 		//di lo khung thi di lai
-		if (pos.x-bk-1 <= l) {
-			gotoxy(pos.x-bk, pos.y - 1);
+		if (pos.x < l) {
+			gotoxy(pos.x, pos.y-1);
 			cout << "         ";
-			gotoxy(pos.x-bk, pos.y);
+			gotoxy(pos.x, pos.y );
 			cout << "         ";
-			gotoxy(pos.x-bk, pos.y + 1);
+			gotoxy(pos.x, pos.y + 1);
 			cout << "         ";
-			pos.x = r-bk, drawVeh();
+			pos.x = 85, pos.y = 5, drawVeh();
 		}
 		else {
-			gotoxy(pos.x + bk, pos.y - 1);
+			gotoxy(pos.x + 4, pos.y-1);
 			cout << " ";
-			gotoxy(pos.x + bk, pos.y);
+			gotoxy(pos.x + 4, pos.y);
 			cout << " ";
-			gotoxy(pos.x + bk, pos.y + 1);
+			gotoxy(pos.x + 4, pos.y + 1);
 			cout << " ";
 			--pos.x, drawVeh();
+
+			Sleep(spd);
 		}
 	}
 }

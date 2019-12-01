@@ -1,4 +1,3 @@
-#pragma once
 #include"Library.h"
 void CGAME::updatePosPeople(char keyPressed)
 {
@@ -23,7 +22,7 @@ void CGAME::updatePosPeople(char keyPressed)
 }
 CGAME::CGAME()
 {
-
+	
 }
 CGAME::~CGAME()
 {

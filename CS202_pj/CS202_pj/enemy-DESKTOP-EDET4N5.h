@@ -11,7 +11,7 @@ class CTRAFFIC {
 	static int numTraffic;
 	Point pos;
 public:
-	CTRAFFIC(Point p) { ++numTraffic; greenLight = true; pos = p; gotoxy(pos.x, pos.y);  drawTrafficLight(); }
+	CTRAFFIC(Point p) { ++numTraffic; greenLight = true; pos = p;gotoxy(pos.x, pos.y);  drawTrafficLight(); }
 	CTRAFFIC(const CTRAFFIC& src) {
 		++numTraffic; greenLight = src.greenLight; pos = src.pos;
 		gotoxy(pos.x, pos.y); drawTrafficLight();
@@ -19,23 +19,17 @@ public:
 	void drawTrafficLight() { (greenLight) ? cout << char(220) : cout << char(223); }
 	void green() {
 		greenLight = true;
-		gotoxy(pos.x, pos.y), drawTrafficLight();
+		gotoxy(pos.x, pos.y); drawTrafficLight();
 	}
-	void red() {
-		int a = 0, b = 400;
+	void isRed() {
+		int a = 0, b = 300;
 		srand(time(NULL));
-		int rRedTime = rand() % (b - a + 1) + a;	//tu a den b
+		int rRed = rand() % (b - a + 1) + a;	//tu a den b
 
-		greenLight = false; gotoxy(pos.x, pos.y), drawTrafficLight();
-		Sleep(500);
-		green();
+		greenLight = false; gotoxy(pos.x, pos.y); drawTrafficLight();
+		Sleep(rRed);
 	}
-	void toggle() {
-		srand(time(NULL));
-		greenLight = (rand() % 100) < 75;
-		if (!greenLight)red();
-	}
-
+	
 	~CTRAFFIC() { --numTraffic; }
 
 	bool isGreen() { return greenLight; }
@@ -46,43 +40,42 @@ private:
 
 protected:
 	Point pos;
-	void setPos(Point p) { pos = p; };
+	void setPos(Point p) { pos=p; };
 public:
 	CVEHICLE(Point p) { pos = p; }
-	virtual void Move() = 0;
+	virtual void Move(int) = 0;
 	virtual void drawVeh() = 0;
-	virtual void pause() = 0;
+	virtual void pause()=0;
 };
 
 class CCAR : public CVEHICLE {
 private:
 	bool dir;			//0: left, 1: right
-	//int spd;
+	int spd;
 	static int numCar;	//max=5
 
 	const char shape[3][9] = { ' ',' ','_','_','_','_',' ',' ',' ',
 		' ','/','|',' ',' ','|','\\','_',' ',
 		'|','_','_','O','_','_','O','_','|' };
 public:
-	CCAR(Point p, bool d) :CVEHICLE(p) {
-		dir - d;
+	CCAR(Point p, bool d, int s) :CVEHICLE(p) {
+		dir - d, spd = s;
 	}
-	void Move();
+	void Move(int spd);
 	void pause();
 
-	void drawVeh() {
-		//   _____     3-9
-		//  /| x |\ 
-		// |_O___O_|
-		int bk = 4;
-		gotoxy(pos.x - bk, pos.y - 1);
+	void drawVeh(){
+	//   _____     3-9
+	//  /| x |\ 
+	// |_O___O_|
+		gotoxy(pos.x-4, pos.y-1);
 		cout << "  _____  ";
-		gotoxy(pos.x - bk, pos.y);
+		gotoxy(pos.x-4, pos.y );
 		cout << " /|   |\\ ";
-		gotoxy(pos.x - bk, pos.y + 1);
+		gotoxy(pos.x-4, pos.y +1);
 		cout << "|_O___O_|";
 		//setPos(pos);
-
+		
 		/*int left=5, right = 100;
 			for (int r = 0; r < 3; ++r)
 				for (int c = 0; c < 9; ++c) {
@@ -94,17 +87,17 @@ public:
 				}*/
 	}
 };
-class CTRUCK : public CVEHICLE {
+class CTRUCK: public CVEHICLE {
 	bool dir;
 public:
 	void Move(int, int);
 	void drawVeh() {
-		//  _________   3-13
-		// |///////|_\_ 
-		// |_/O____O\__|
-		//    _________   
-		//  _/_|///////| 
-		// |__/O____O\_|
+	//  _________   3-13
+	// |///////|_\_ 
+	// |_/O____O\__|
+	//    _________   
+	//  _/_|///////| 
+	// |__/O____O\_|
 		if (dir) {
 			gotoxy(pos.x, pos.y);
 			cout << " _________   ";
@@ -126,6 +119,18 @@ public:
 	void pause();
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
 //----------------CANIMAL-----------------
 class CANIMAL {
 	int mX, mY;
@@ -155,31 +160,30 @@ public:
 		level = l;								//tu 1->5
 		int distLane = 3, minDistCar = 6;		//distance btw 2 lane, min distance btw 2 car
 		//khoi tao den giao thong
-		Point pT1 = { 85 + 2,2 + 2 + 2 }, pT2 = { 85 + 2,2+2+3+2 }, pC = { 4+4,2 + 2+1 };
+		Point pT1 = { 85 + 2,2 + 3 + 2 }, pT2 = { 85 + 2,2 + 3 + 3 + 2 + 2 }, pC = {4,2+3};
 		t = new CTRAFFIC[2]{ pT1,pT2 };				//default 2 lan xe -> 2 den gthong
-		//khoi tao xe hoi
-		//int a = 0, b = 1;
-		//srand(time(NULL));
-		//int rPos = rand() % (b - a + 1) + a;	//tu a den b
+		//khoi tao xe hoi, 
+		int a = 0, b = 1;
+		srand(time(NULL));
+		int rPos = rand() % (b - a + 1) + a;	//tu a den b
 		for (int i = 0; i < numCarLVL[level - 1]; ++i)
-			pC.x += 15 * i, v[i] = new CCAR(pC, 1), v[i]->drawVeh();
+			pC.x+=12*i, v[i] = new CCAR(pC, rPos,speed[level-1] ),v[i]->drawVeh();
 		for (int i = numCarLVL[level - 1]; i < MAXCAR; ++i)
 			v[i] = NULL;
-	}
+}
 	void updatePosVehicle()
 	{
 		while (t[0].isGreen())
 		{
 			for (int i = 0; i < numCarLVL[level - 1]; ++i)
-				v[i]->Move();
+				v[i]->Move(speed[level]);
 			Sleep(speed[level - 1]);
-			t[0].toggle();
 		}
+		for (int i = numCarLVL[level - 1]; i < MAXCAR; ++i)
+			v[i]->pause();
 	}
 
-		~VEHLANE() { for (int i = 0; i < 9; ++i) delete v[i], v[i] = NULL; delete[] t; t = NULL; }
-};
-//	//VEHLANE() {
+	//	//VEHLANE() {
 	//
 	//		/*int c1pos = 5; Point veh1 = { c1pos,c1pos };
 	//		c = new CCAR[numVeh];
@@ -226,4 +230,7 @@ public:
 		//CVEHICLE* getVehicle() { return c; }//Lấy danh sách các xe
 
 		//Thực hiện cho CTRUCK & CCAR di chuyển
+
+	~VEHLANE() { for (int i = 0; i < 8;++i) delete v[i], v[i]=NULL; delete[] t; t = NULL; }
+};
 

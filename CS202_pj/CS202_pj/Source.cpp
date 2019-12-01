@@ -12,6 +12,9 @@ void tructMove()
 }*/
 int main()
 {
+	CGAME game;
+	game.drawGame();
+
 	/*ShowConsoleCursor(false);
 	char keyPressed;
 	bool pause_game = false;
