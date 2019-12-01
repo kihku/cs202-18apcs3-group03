@@ -10,6 +10,7 @@ class CTRAFFIC {
 	bool greenLight;
 	static int numTraffic;
 	Point pos;
+	const int prob[2] = {75,75};
 public:
 	CTRAFFIC(Point p) { ++numTraffic; greenLight = true; pos = p; gotoxy(pos.x, pos.y);  drawTrafficLight(); }
 	CTRAFFIC(const CTRAFFIC& src) {
@@ -27,13 +28,12 @@ public:
 		int rRedTime = rand() % (b - a + 1) + a;	//tu a den b
 
 		greenLight = false; gotoxy(pos.x, pos.y), drawTrafficLight();
-		Sleep(500);
-		green();
+		//Sleep(500);
 	}
-	void toggle() {
+	void toggle(int i) {
 		srand(time(NULL));
-		greenLight = (rand() % 100) < 75;
-		if (!greenLight)red();
+		greenLight = (rand() % 100) < prob[i];
+		if (!greenLight)red(); else green();
 	}
 
 	~CTRAFFIC() { --numTraffic; }
@@ -178,15 +178,16 @@ public:
 	}
 	void updatePosVehicle()
 	{
-		while (t[0].isGreen())
+		while (1)
 		{
-			for (int i = 0; i < numCarLVL[level - 1]; ++i)
-				v[i]->Move();
-			for (int i = MAXCAR; i < MAXCAR + numTruckLVL[level - 1]; ++i)
-				v[i]->Move();
-
+			if (t[0].isGreen())
+				for (int i = 0; i < numCarLVL[level - 1]; ++i)
+					v[i]->Move();
+			if (t[1].isGreen())
+				for (int i = MAXCAR; i < MAXCAR + numTruckLVL[level - 1]; ++i)
+					v[i]->Move();
 			Sleep(speed[level - 1]);
-			t[0].toggle();
+			t[0].toggle(1); t[1].toggle(0);
 		}
 	}
 

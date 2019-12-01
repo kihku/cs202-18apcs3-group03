@@ -14,8 +14,8 @@ int main()
 {
 	CGAME game;
 	game.drawGame();
-
-	/*ShowConsoleCursor(false);
+ShowConsoleCursor(false);
+	/*
 	char keyPressed;
 	bool pause_game = false;
 	CGAME game;
