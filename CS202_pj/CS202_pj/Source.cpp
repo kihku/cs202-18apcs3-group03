@@ -1,26 +1,19 @@
 #include"Library.h"
 //start x,y CDINAUSOR is (4,3)
-/*//for testing purpose
-void tructMove()
+//for testing purpose
+void vehicleMove()
 {
-	CTRUCK truck;
-	for (int i = 5; i < 100; ++i)
-	{
-		truck.Move(i, 10);
-		Sleep(200);
-	}
-}*/
+	VEHLANE l(5);
+	l.updatePosVehicle();
+}
 int main()
 {
-	CGAME game;
-	game.drawGame();
-ShowConsoleCursor(false);
-	/*
+	ShowConsoleCursor(false);
 	char keyPressed;
 	bool pause_game = false;
 	CGAME game;
 	game.drawGame();
-	thread th1(tructMove);
+	thread th1(vehicleMove);
 	HANDLE th1_handle= th1.native_handle();
 	while (1)
 	{
@@ -41,10 +34,6 @@ ShowConsoleCursor(false);
 			game.updatePosPeople(keyPressed);
 	}
 	if (th1.joinable())
-		th1.join();*/
-
-	VEHLANE l(5);
-	l.updatePosVehicle();
-	
+		th1.join();
 	return 0;
 }
