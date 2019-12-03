@@ -62,3 +62,10 @@ bool CPEOPLE::isDead()
 	else
 		return 0;
 }
+Point CPEOPLE::currentPos()
+{
+	Point peoPos;
+	peoPos.x = mX;
+	peoPos.y = mY;
+	return peoPos;
+}

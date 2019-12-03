@@ -6,6 +6,7 @@ class CGAME {
 	CDINAUSOR* akl;
 	CBIRD* ac;
 	CPEOPLE cn;
+	int map[85][24];
 public:
 	CGAME(); //Chuẩn bị dữ liệu cho tất cả các đối tượng
 	void drawGame(); //Thực hiện vẽ trò chơi ra màn hình sau khi có dữ liệu
@@ -23,5 +24,7 @@ public:
 	void updatePosPeople(char); //Thực hiện điều khiển di chuyển của CPEOPLE
 	void updatePosVehicle(); //Thực hiện cho CTRUCK & CCAR di chuyển
 	void updatePosAnimal();//Thực hiện cho CDINAUSOR & CBIRD di chuyển
-
+	//For arrayTesting
+	bool exportMap(const char* a);
+	Point peoplePos();
 };

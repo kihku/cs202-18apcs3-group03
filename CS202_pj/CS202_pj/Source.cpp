@@ -13,9 +13,12 @@ int main()
 	bool pause_game = false;
 	CGAME game;
 	game.drawGame();
-	thread th1(vehicleMove);
-	HANDLE th1_handle= th1.native_handle();
-	while (1)
+	/*thread th1(vehicleMove);
+	HANDLE th1_handle= th1.native_handle();*/
+	game.exportMap("map.txt");
+	Point peopos = game.peoplePos();
+	peopos.display();
+	/*while (1)
 	{
 		keyPressed = _getch();
 		if (keyPressed == 0)
@@ -34,6 +37,6 @@ int main()
 			game.updatePosPeople(keyPressed);
 	}
 	if (th1.joinable())
-		th1.join();
+		th1.join();*/
 	return 0;
 }

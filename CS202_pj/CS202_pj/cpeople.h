@@ -16,4 +16,6 @@ public:
 	//bool isImpact(const CANIMAL*&);
 	//bool isFinish();
 	bool isDead();
+	//For arrayTesting
+	Point currentPos();
 };

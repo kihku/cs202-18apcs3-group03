@@ -23,7 +23,21 @@ void CGAME::updatePosPeople(char keyPressed)
 }
 CGAME::CGAME()
 {
-
+	for (int i = 0; i < 24; ++i)
+	{
+		for (int j = 0; j < 85; ++j)
+		{
+			map[j][i] = 0;
+		}
+	}
+	//init people pos 
+	//people Pos: 42 24
+	map[42][22] = 1;
+	map[43][22] = 1;
+	map[44][22] = 1;
+	map[43][23] = 1;
+	//mX = screenSize_H / 2;
+	//mY = screenSize_V;
 }
 CGAME::~CGAME()
 {
@@ -148,4 +162,25 @@ void CGAME::drawGame()
 	}
 	gotoxy(screenSize_H + 5 + scoreBoard_H, scoreBoard_V + 15);
 	cout << char(217);
+}
+bool CGAME::exportMap(const char* path)
+{
+	ofstream file;
+	file.open(path);
+	if (!file.is_open())
+	{
+		return false;
+	}
+	for (int i = 0; i < 24; ++i)
+	{
+		for (int j = 0; j < 85; ++j)
+		{
+			file << map[j][i]<<" ";
+		}
+		file << "\n";
+	}
+}
+Point CGAME::peoplePos()
+{
+	return cn.currentPos();
 }
