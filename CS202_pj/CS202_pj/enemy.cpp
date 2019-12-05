@@ -41,6 +41,7 @@ void CDINAUSOR::Move(int x, int y)
 void CCAR::Move()
 {
 	int l = 3, r = 84;
+	unique_lock<mutex> lk(CGAME::mtx);
 	if (dir) {
 		//di lo khung thi di lai
 		if (r <= pos.x+bk) {
@@ -91,6 +92,7 @@ void CCAR::pause()
 void CTRUCK::Move()
 {
 	int l = 4, r = 85;
+	unique_lock<mutex> lk(CGAME::mtx);
 	if (dir) {
 		//di lo khung thi di lai
 		if (r <= pos.x + bk ) {

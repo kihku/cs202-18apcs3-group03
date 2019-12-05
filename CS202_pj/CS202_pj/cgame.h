@@ -27,4 +27,5 @@ public:
 	//For arrayTesting
 	bool exportMap(const char* a);
 	Point peoplePos();
+	static mutex mtx;
 };

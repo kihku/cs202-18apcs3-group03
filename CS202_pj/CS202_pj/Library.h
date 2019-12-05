@@ -7,6 +7,7 @@
 #include<vector>
 #include <cstdlib>	//rand
 #include <ctime>
+#include<mutex>
 #include<fstream>
 using namespace std;
 struct Point { 
@@ -16,6 +17,8 @@ struct Point {
 		cout << x << " " << y;
 	}
 };
+
+
 #include"extra.h"
 #include"cpeople.h"
 #include"enemy.h"

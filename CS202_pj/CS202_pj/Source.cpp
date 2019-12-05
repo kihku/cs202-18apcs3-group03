@@ -1,6 +1,10 @@
 #include"Library.h"
 //start x,y CDINAUSOR is (4,3)
 //for testing purpose
+
+
+mutex CGAME::mtx;
+
 void vehicleMove()
 {
 	VEHLANE l(5);
@@ -13,16 +17,21 @@ int main()
 	bool pause_game = false;
 	CGAME game;
 	game.drawGame();
-	/*thread th1(vehicleMove);
-	HANDLE th1_handle= th1.native_handle();*/
+	thread th1(vehicleMove);
+	HANDLE th1_handle= th1.native_handle();
 	game.exportMap("map.txt");
 	Point peopos = game.peoplePos();
 	peopos.display();
-	/*while (1)
+	while (1)
 	{
+		
 		keyPressed = _getch();
 		if (keyPressed == 0)
 			keyPressed = _getch();
+		if (pause_game == false)
+		{
+			game.updatePosPeople(keyPressed);
+		}
 		if (keyPressed == 13 && pause_game == false)
 		{
 			game.pauseGame(th1_handle);
@@ -33,10 +42,9 @@ int main()
 			game.resumeGame(th1_handle);
 			pause_game = false;
 		}
-		if (pause_game == false)
-			game.updatePosPeople(keyPressed);
+		
 	}
 	if (th1.joinable())
-		th1.join();*/
+		th1.join();
 	return 0;
 }

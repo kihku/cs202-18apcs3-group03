@@ -2,6 +2,7 @@
 #include"Library.h"
 void CGAME::updatePosPeople(char keyPressed)
 {
+	unique_lock<mutex> lk(CGAME::mtx);
 	const int step_horizontal = 2;
 	const int step_vertical = 1;
 	if (keyPressed == 'd')
