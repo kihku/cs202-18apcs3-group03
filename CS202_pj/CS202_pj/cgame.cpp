@@ -1,8 +1,7 @@
-#pragma once
-#include"Library.h"
-void CGAME::updatePosPeople(char keyPressed)
+#include"cgame.h"
+void CGame::updatePosPeople(char keyPressed)
 {
-	unique_lock<mutex> lk(CGAME::mtx);
+	unique_lock<mutex> lk(CGame::mtx);
 	const int step_horizontal = 2;
 	const int step_vertical = 1;
 	if (keyPressed == 'd')
@@ -22,7 +21,7 @@ void CGAME::updatePosPeople(char keyPressed)
 		cn.Down(step_vertical);
 	}
 }
-CGAME::CGAME()
+CGame::CGame()
 {
 	for (int i = 0; i < 24; ++i)
 	{
@@ -40,68 +39,64 @@ CGAME::CGAME()
 	//mX = screenSize_H / 2;
 	//mY = screenSize_V;
 }
-CGAME::~CGAME()
+CGame::~CGame()
 {
 
 }
-CPEOPLE CGAME::getPeople()
+CPEOPLE CGame::getPeople()
 {
 	CPEOPLE peo;
 	return peo;
 }
-/*CVEHICLE* CGAME::getVehicle()
+/*Enemy* CGame::getVehicle()
 {
 
-	//CVEHICLE* car = new CCAR;
+	//Enemy* car = new Car;
 //	return car;
 }*/
-CANIMAL* CGAME::getAnimal()
-{
-	CANIMAL* anim = new CBIRD;
-	return anim;
-}
-void CGAME::resetGame()
+
+void CGame::resetGame()
 {
 
 }
-void CGAME::exitGame(HANDLE)
+void CGame::exitGame(HANDLE)
 {
 	//IS_RUNNING = false;
 	system("cls");
 	//t->join();
 }
 //void exitGame(HANDLE); 
-void CGAME::startGame()
+void CGame::startGame()
 {
 
 }
-void CGAME::loadGame(istream)
+void CGame::loadGame(istream)
 {
 
 }
-void CGAME::saveGame(istream)
+void CGame::saveGame(istream)
 {
 
 }
-void CGAME::pauseGame(HANDLE t)
+void CGame::pauseGame(HANDLE t)
 {
 	SuspendThread(t);
 }
-void CGAME::resumeGame(HANDLE t)
+void CGame::resumeGame(HANDLE t)
 {
 	ResumeThread(t);
 }
 //void pauseGame(HANDLE);
 //void resumeGame(HANDLE); 
-void CGAME::updatePosVehicle()
+void CGame::updatePosVehicle()
 {
 
 }
-void CGAME::updatePosAnimal()
+void CGame::updatePosAnimal()
 {
 
 }
-void CGAME::drawGame()
+void CGame::drawGame()
 {
 	const int delta = 3;
 	const int scoreBoard_H = 25;
@@ -164,7 +159,7 @@ void CGAME::drawGame()
 	gotoxy(screenSize_H + 5 + scoreBoard_H, scoreBoard_V + 15);
 	cout << char(217);
 }
-bool CGAME::exportMap(const char* path)
+bool CGame::exportMap(const char* path)
 {
 	ofstream file;
 	file.open(path);
@@ -181,7 +176,7 @@ bool CGAME::exportMap(const char* path)
 		file << "\n";
 	}
 }
-Point CGAME::peoplePos()
+Point CGame::peoplePos()
 {
 	return cn.currentPos();
 }

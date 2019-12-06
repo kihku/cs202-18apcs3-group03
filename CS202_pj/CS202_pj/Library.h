@@ -17,15 +17,23 @@ struct Point {
 		cout << x << " " << y;
 	}
 };
-
+struct ShapeSize {
+	int w, h;
+};
 
 #include"extra.h"
 #include"cpeople.h"
 #include"enemy.h"
-#include"cgame.h"
+#include"clane.h"
+#include"CGame.h"
 
 const int screenSize_V = 24;
 const int screenSize_H = 84;
+
+const int MAXLEVEL = 5;
+const int MAXCAR = 5;
+const int MAXTRUCK = 4;
+const int MAXSPEED = 100;		//1s
 #define ESC 27;
 #define ENTER 13;
 

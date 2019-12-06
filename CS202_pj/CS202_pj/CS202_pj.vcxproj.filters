@@ -36,6 +36,9 @@
     <ClCompile Include="extra.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="clane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cgame.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
