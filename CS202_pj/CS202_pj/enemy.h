@@ -60,7 +60,9 @@ private:
 	//int spd;
 	static int numCar;	//max=5
 	const int bk = 4;
-	const char shape[3][9] = { ' ',' ','_','_','_','_',' ',' ',' ',
+	const char shape[3][9] =
+	
+	{ ' ',' ','_','_','_','_',' ',' ',' ',
 		' ','/','|',' ',' ','|','\\','_',' ',
 		'|','_','_','O','_','_','O','_','|' };
 public:
