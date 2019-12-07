@@ -3,8 +3,8 @@
 class CGame {
 	Truck* axt;
 	Car* axh;
-	CDINAUSOR* akl;
-	CBird* ac;
+	Dinosaur* akl;
+	Bird* ac;
 	CPEOPLE cn;
 	int map[85][24];
 public:

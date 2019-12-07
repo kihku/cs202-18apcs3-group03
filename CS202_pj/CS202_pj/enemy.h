@@ -3,11 +3,16 @@
 
 class Enemy {
 	Point pos;
+	bool dir;
+protected:
+	const int l = 4, r = 84 ;
 public:
 
-	Enemy(Point p) { pos = p; }
+	Enemy(Point p, bool d) { pos = p, dir = d; }
 
 	Point getPos() { return pos; }
+
+	bool getDir() { return dir; }
 	
 	virtual ShapeSize getShapeSize()=0;	//return w,h of shape
 
@@ -54,30 +59,25 @@ public:
 		// 123456789
 class Car : public Enemy {
 private:
-	//bool dir;			//0: left, 1: right
-	////int spd;
-	//static int numCar;	//max=5
-	//const int bk = 4;
-	const char shape[3][9] = { {' ',' ','_','_','_','_',' ',' ',' '},
-	{' ','/','|',' ',' ','|','\\','_',' ' },
-	{'|','_','_','O','_','_','O','_','|' } };
+	const char shape[3][9] = { {' ',' ','_','_','_','_','_',' ',' '},
+	{' ','/','|',' ',' ',' ','|','\\',' ' },
+	{'|','_','O','_','_','_','O','_','|' } };
 const ShapeSize ss = {9,3};
 public:
-	Car(Point p);
-	
-	~Car();
+	Car(Point p,bool d);
 
 	virtual ShapeSize getShapeSize();	//return w,h of shape
-
-	//virtual char** getShape();		//return array of shape
-
+	
 	virtual int getType();
 
 	virtual void moveEne();
+
 	virtual void drawEne();
 	//void drawVeh() {
 	//void Move();
 	//void pause();
+	//virtual char** getShape();		//return array of shape
+
 };	
 
 		//  _________   3-13
@@ -89,28 +89,80 @@ public:
 		// 1234567890123
 
 class Truck : public Enemy {
-	char** shape;
-	/*bool dir;
-	const int bk = 6;*/
-public:
-	Truck(Point p);
+	char shape1[3][13] = { {' ','_','_','_','_','_','_','_','_','_',' ',' ',' '},
+	{ '|','/','/','/','/','/','/','/','|','_','\\','_',' ' },
+	{ '|','_','/','O','_','_','_','_','O','\\','_','_','|' } };
+	char shape0[3][13] = { {' ',' ',' ','_','_','_','_','_','_','_','_','_',' '},
+	{' ','_','/','_','|','/','/','/','/','/','/','/','|'},
+	{'|','_','_','/','O','_','_','_','_','O','\\','_','|'} };
 
-	~Truck();
+	const ShapeSize ss = { 13,3 };
+public:
+	Truck(Point p, bool d);
 
 	virtual ShapeSize getShapeSize();	//return w,h of shape
 
-	virtual char** getShape() ;		//return array of shape
-
 	virtual int getType() ;
+
+	virtual void moveEne();
+
+	virtual void drawEne();
+	//virtual char** getShape() ;		//return array of shape
 };
 
-class CDINAUSOR : public Enemy {
+	//   ▄▄▄▄▄▄	   		     ▄▄▄▄▄▄      
+	//  ▀▀▄████►   		    ◄████▄▀▀    
+	//	▀▀█████►   		    ◄█████▀▀
+	//	 ▀█████► █►		 ◄█ ◄█████▀
+	//	 ▄██████▀▀        ▀▀▀█████▄ 
+	//  12345678901
+class Dinosaur : public Enemy {
 private:
+	const char shape1[5][11] = { {' ',' ',' ',' ','▄','▄','▄','▄','▄','▄',' '},
+		{' ',' ',' ','◄','█','█','█','█','▄','▀','▀'},
+	{' ',' ',' ','◄','█','█','█','█','█','▀','▀'},
+	{'◄','█',' ','◄','█','█','█','█','█','▀',' '},
+	{' ','▀','▀','▀','█','█','█','█','█','▄',' '} };
+	const char shape0[5][11] = { {' ','▄','▄','▄','▄','▄','▄',' ',' ',' ',' '},
+		{'▀','▀','▄','█','█','█','█','►',' ',' ',' '},
+	{'▀','▀','█','█','█','█','█','►',' ',' ',' '} ,
+	{' ','▀','█','█','█','█','█','►',' ','█','►'},
+	{' ','▄','█','█','█','█','█','█','▀','▀',' '}};
+	const ShapeSize ss = { 11,5 };
 public:
-	void Move(int, int);
+	Dinosaur(Point p, bool d) :Enemy(p, d) {};
+
+	  virtual ShapeSize getShapeSize();	//return w,h of shape
+
+	  virtual int getType();
+
+	  virtual void moveEne();
+
+	  virtual void drawEne();
 };
 
-class CBird : public Enemy {
+	//    ,,,       ,,,             
+	//  (   .)>   <(.   )                
+	//  /_<),)     (,(>_\                                  
+	//  1234567
+class Bird : public Enemy {
+	const char shape1[3][7] = { {' ',' ',',',',',',',' ',' '},
+	{'(',' ',' ',' ','.',')','>' },
+	{ '/','_','<',')',',',')',' '} };
+	const char shape0[3][7] = { {' ',' ',',',',',',',' ',' '},
+	{ '<','(','.',' ',' ',' ',')' },
+	{ ' ','(',',','(','>','_','\\'} };
+	const ShapeSize ss = { 7,3 };
+public:
+	Bird(Point p, bool d) :Enemy(p, d) {};
+
+	virtual ShapeSize getShapeSize();	//return w,h of shape
+
+	virtual int getType();
+
+	virtual void moveEne();
+
+	virtual void drawEne();
 };
 
 /////////////////////////////////////LANE//////////////////////////
