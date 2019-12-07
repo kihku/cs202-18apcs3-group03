@@ -5,17 +5,18 @@ class Level
 private:
 	int level;
 
-	const int ezSpeed[5] = {3000000,2000000,2000000,1000000,800000};
+	const int ezSpeed[5] = {200,200,100,100,20};
 	
-	const int harSpeed[5] = { 1000000,800000,800000,500000,300000 };
+	const int harSpeed[5] = { 50,50,40,30,20 };
 	
 	const int numCar[5] = { 2,3,4,4,4 };
 	const int numTruck[5] = { 2,2,3,4,4 };
 	const int maxEne[4] = {6,5,5,5};
-	//int maxEne, numEne;
+	
 	const int maxLevel = 5;
 	const int diff = 50;
 	int minSpd, maxSpd;
+	//int maxEne, numEne;
 	//int nRow;
 	//  int nColumn;
 public:
@@ -56,7 +57,7 @@ public:
 	Lane();
 	~Lane();
 	Lane(bool d, bool g, int s, int c);
-	void updateTraffic(int t);
+	void updateTraffic();
 	
 	void updateLane();
 	

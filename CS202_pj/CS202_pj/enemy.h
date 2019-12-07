@@ -16,41 +16,30 @@ public:
 	
 	virtual ShapeSize getShapeSize()=0;	//return w,h of shape
 
-	//virtual char** getShape() = 0;
-
 	virtual int getType() = 0;
 
 	void setPos(Point p) { pos = p; }
 
 	virtual void moveEne() = 0;
 	virtual void drawEne() = 0;
+	//virtual char** getShape() = 0;
 };
 
 class Traffic {
 	Point pos;
 	bool greenLight;
 	static int numTraffic;
-	
-	const int prob[2] = {75,75};
 public:
-	Traffic(Point p) { ++numTraffic; greenLight = true; pos = p; gotoxy(pos.x, pos.y);  drawTrafficLight(); }
-	Traffic(const Traffic& src) {
-		++numTraffic; greenLight = src.greenLight; pos = src.pos;
-	}
-	void drawTrafficLight() { gotoxy(pos.x, pos.y);(greenLight) ? cout << char(220) : cout << char(223); }
-	void green() {
-		greenLight = true;
-	}
-	void red() {
-		greenLight = false;
-	}
-	void toggle(int i) {
-		greenLight = !greenLight;
-	}
+	Traffic(Point p);
+	Traffic(const Traffic& src);
+	void drawTrafficLight();
+	void green();
+	void red();
+	void toggle(int i);
 
-	~Traffic() { --numTraffic; }
+	~Traffic();
 
-	bool isGreen() { return greenLight; }
+	bool isGreen();
 };
 
 		//   _____     3-9
@@ -131,33 +120,7 @@ private:
 	{' ',char(220),char(219),char(219),char(219),char(219),char(219),char(219),char(223),char(223),' '}};
 	const ShapeSize ss = { 11,5 };
 public:
-	Dinosaur(Point p, bool d) :Enemy(p, d) {
-		for (int i = 0; i < 4;++i) shape1[0][i] = ' ';
-		for (int i = 4; i < 10; ++i) shape1[0][i] = char(220);
-		shape1[0][10] = ' ';
-		for (int i = 0; i < 3; ++i) shape1[1][i] = shape1[2][i] =  ' ';
-		for (int i = 4; i < 9; ++i) shape1[1][i] = shape1[2][i]=shape1[3][i] = shape1[4][i]=char(219); 
-		shape1[1][8] = char(220);
-		for (int i = 9; i < 11; ++i) shape1[1][i]=shape1[2][i] = char(223);
-		shape1[3][1]=shape1[4][3] = char(219);
-		shape1[3][9] = char(223), shape1[4][9]=char(220);
-		for (int i = 1; i < 3; ++i) shape1[4][i] =char(223);
-		shape1[3][2] = shape1[3][10] = shape1[4][10] = shape1[4][0] = ' ';
-		shape1[1][3] = shape1[2][3] = shape1[3][0] = shape1[3][3] = char(174);
-
-		for (int i = 7; i < 11; ++i) shape0[0][i] = ' ';
-		for (int i = 1; i < 7; ++i) shape0[0][i] = char(220);
-		shape0[0][0] = ' ';
-		for (int i = 8; i < 11; ++i) shape0[1][i] = shape0[2][i] = ' ';
-		for (int i = 2; i < 7; ++i) shape0[1][i] = shape0[2][i] = shape0[3][i] = shape0[4][i] = char(219);
-		shape0[1][2] = char(220);
-		for (int i = 0; i < 2; ++i) shape0[1][i] = shape0[2][i] = char(223);
-		shape0[3][9] = shape0[4][7]=char(219);
-		shape0[3][1] = char(223), shape0[4][1] = char(220);
-		for (int i = 8; i < 10; ++i) shape0[4][i] = char(223);
-		shape0[3][0] = shape0[3][8] = shape0[4][10] = shape0[4][0] = ' ';
-		shape0[1][7] = shape0[2][7] = shape0[3][7] = shape0[3][10] = char(175);
-	};
+	Dinosaur(Point p, bool d);
 
 	  virtual ShapeSize getShapeSize();	//return w,h of shape
 
