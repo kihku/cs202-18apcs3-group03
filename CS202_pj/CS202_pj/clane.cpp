@@ -73,6 +73,7 @@ void Lane::updateTraffic()
 }
 
 void Lane::updateLane() {
+	unique_lock<mutex> lk(CGame::mtx);
 	count++;
 	if (count %lev.getEzSpeed() == 0)
 		if (stopCar != 0)
