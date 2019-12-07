@@ -10,7 +10,6 @@ Lane::Lane()
 	count = 0;
 	stopCount = 0, stopCar = -1;
 	
-	
 	traf=vector<Traffic*>(4, NULL);
 	for (int i = 0; i < 4; ++i)
 		traf[i]=new Traffic(pTra),pTra.y+=4;
@@ -34,8 +33,6 @@ Lane::Lane()
 	dino = vector<Dinosaur*>(6, NULL);
 	for (int i = 0; i < lev.getNumTruck(); ++i)
 		dino[i] = new Dinosaur(pT, dir), pT.x += 20;
-
-	
 }
 
 Lane::~Lane()
@@ -96,11 +93,12 @@ void Lane::updateLane() {
 		if (stopCar != 3)
 			for (int i = 0; i < lev.getNumTruck(); i++)
 				dino[i]->moveEne(), dino[i]->drawEne();
+
 	//	Tam dung xe 
 	if (count == 2000000000)count = 0;
 	stopCount++;
-	if (stopCount == 500) stopCar = rand() % 3;
-	if (stopCount == 3000) {
+	if (stopCount == 100) stopCar = rand() % 4;
+	if (stopCount == 500) {
 		stopCount = 0;
 		stopCar = -1;
 	}

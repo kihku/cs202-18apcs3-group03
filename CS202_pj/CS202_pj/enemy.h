@@ -107,17 +107,8 @@ public:
  	//  12345678901
 class Dinosaur : public Enemy {
 private:
-	char shape1[5][11] = { {' ',' ',' ',' ',char(220),char(220),char(220),char(220),char(220),char(220),' '},
-		{' ',' ',' ',char(174),char(219),char(219),char(219),char(219),char(220),char(223),char(223)},
-	{' ',' ',' ',char(174),char(219),char(219),char(219),char(219),char(219),char(223),char(223)},
-	{char(174),char(219),' ',char(174),char(219),char(219),char(219),char(219),char(219),char(223),' '},
-	{' ',char(223),char(223),char(219),char(219),char(219),char(219),char(219),char(219),char(220),' '} };
-
-	char shape0[5][11] = { {' ',char(220),char(220),char(220),char(220),char(220),char(220),' ',' ',' ',' '},
-		{char(223),char(223),char(220),char(219),char(219),char(219),char(219),char(175),' ',' ',' '},
-	{char(223),char(223),char(219),char(219),char(219),char(219),char(219),char(175),' ',' ',' '} ,
-	{' ',char(223),char(219),char(219),char(219),char(219),char(219),char(175),' ',char(219),char(175)},
-	{' ',char(220),char(219),char(219),char(219),char(219),char(219),char(219),char(223),char(223),' '}};
+	char shape1[5][11];
+	char shape0[5][11];
 	const ShapeSize ss = { 11,5 };
 public:
 	Dinosaur(Point p, bool d);

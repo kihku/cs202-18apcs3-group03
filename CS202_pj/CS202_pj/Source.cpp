@@ -2,7 +2,6 @@
 //start x,y CDINAUSOR is (4,3)
 //for testing purpose
 
-
 mutex CGame::mtx;
 
 void vehicleMove()
@@ -12,7 +11,7 @@ void vehicleMove()
 }
 int main()
 {
-	//ShowConsoleCursor(false);
+	ShowConsoleCursor(false);
 	
 	//char keyPressed;
 	//bool pause_game = false;
