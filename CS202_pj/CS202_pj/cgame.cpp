@@ -1,5 +1,6 @@
 #pragma once
 #include"Library.h"
+using namespace std;
 void CGAME::updatePosPeople(char keyPressed)
 {
 	unique_lock<mutex> lk(CGAME::mtx);
@@ -79,8 +80,13 @@ void CGAME::loadGame(istream)
 {
 
 }
-void CGAME::saveGame(istream)
+void CGAME::saveGame(ofstream& fout )
 {
+	int a, b;
+	a = cn.currentPos().x;
+	b = cn.currentPos().y;
+	fout << a << endl;
+	fout << b << endl;
 
 }
 void CGAME::pauseGame(HANDLE t)
@@ -93,6 +99,7 @@ void CGAME::resumeGame(HANDLE t)
 }
 //void pauseGame(HANDLE);
 //void resumeGame(HANDLE); 
+
 void CGAME::updatePosVehicle()
 {
 
