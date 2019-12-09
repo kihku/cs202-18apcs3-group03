@@ -23,7 +23,7 @@ int main()
 	HANDLE th1_handle= th1.native_handle();
 	game.exportMap("map.txt");
 	Point peopos = game.peoplePos();
-	peopos.display();
+	//peopos.display();
 	while (1)
 	{
 		

@@ -107,9 +107,9 @@ public:
  	//  12345678901
 class Dinosaur : public Enemy {
 private:
-	char shape1[5][11];
-	char shape0[5][11];
-	const ShapeSize ss = { 11,5 };
+	char shape1[3][11];
+	char shape0[3][11];
+	const ShapeSize ss = { 11,3 };
 public:
 	Dinosaur(Point p, bool d);
 

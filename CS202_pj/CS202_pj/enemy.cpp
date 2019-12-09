@@ -20,6 +20,7 @@ int Car::getType()
 
 void Car::moveEne()
 {
+	unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 	for (int i = 0; i < ss.h; ++i)
 		for (int j = 0; j < ss.w; ++j)
@@ -41,6 +42,7 @@ void Car::moveEne()
 
 void Car::drawEne()
 {
+	unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 	
 		for (int i = 0; i < ss.h; ++i)
@@ -66,6 +68,7 @@ int Truck::getType()
 
 void Truck::moveEne()
 {
+	unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 	for (int i = 0; i < ss.h; ++i)
 		for (int j = 0; j < ss.w; ++j)
@@ -87,6 +90,7 @@ void Truck::moveEne()
 
 void Truck::drawEne()
 {
+	unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 
 	for (int i = 0; i < ss.h; ++i)
@@ -214,6 +218,7 @@ int Bird::getType()
 
 void Bird::moveEne()
 {
+	unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 	for (int i = 0; i < ss.h; ++i)
 		for (int j = 0; j < ss.w; ++j)
@@ -235,6 +240,7 @@ void Bird::moveEne()
 
 void Bird::drawEne()
 {
+	unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 
 	for (int i = 0; i < ss.h; ++i)
@@ -247,7 +253,7 @@ void Bird::drawEne()
 }
 
 Dinosaur::Dinosaur(Point p, bool d):Enemy(p, d) {
-	for (int i = 0; i < 4; ++i) shape1[0][i] = ' ';
+	/*for (int i = 0; i < 4; ++i) shape1[0][i] = ' ';
 	for (int i = 4; i < 10; ++i) shape1[0][i] = char(220);
 	shape1[0][10] = ' ';
 	for (int i = 0; i < 3; ++i) shape1[1][i] = shape1[2][i] = ' ';
@@ -271,7 +277,7 @@ Dinosaur::Dinosaur(Point p, bool d):Enemy(p, d) {
 	shape0[3][1] = char(223), shape0[4][1] = char(220);
 	for (int i = 8; i < 10; ++i) shape0[4][i] = char(223);
 	shape0[3][0] = shape0[3][8] = shape0[4][10] = shape0[4][0] = ' ';
-	shape0[1][7] = shape0[2][7] = shape0[3][7] = shape0[3][10] = char(175);
+	shape0[1][7] = shape0[2][7] = shape0[3][7] = shape0[3][10] = char(175);*/
 };
 
 ShapeSize Dinosaur::getShapeSize()
@@ -286,6 +292,7 @@ int Dinosaur::getType()
 
 void Dinosaur::moveEne()
 {
+	unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 	for (int i = 0; i < ss.h; ++i)
 		for (int j = 0; j < ss.w; ++j)
@@ -307,14 +314,17 @@ void Dinosaur::moveEne()
 
 void Dinosaur::drawEne()
 {
+	unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
-
+	lk.unlock();
 	for (int i = 0; i < ss.h; ++i)
 		for (int j = 0; j < ss.w; ++j)
 		{
+			lk.lock();
 			gotoxy(pos.x + j, pos.y + i);
 			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
 				getDir() ? cout << shape1[i][j] : cout << shape0[i][j];
+			lk.unlock();
 		}
 }
 
@@ -332,6 +342,7 @@ Traffic::Traffic(const Traffic& src)
 
 void Traffic::drawTrafficLight()
 {
+	unique_lock<mutex> lk(CGame::mtx);
 	gotoxy(pos.x, pos.y); (greenLight) ? cout << char(220) : cout << char(223);
 }
 
