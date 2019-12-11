@@ -4,28 +4,26 @@ Lane::Lane()
 {
 	srand(time(NULL));
 	int topLeft = 2;
-	Point pTra = {screenSize_H+2,topLeft+4}
-	, pC = { 5, topLeft + 3 }, pT = { 5,pC.y + 4 };
+	Point pT = {screenSize_H+2,topLeft+4}
+	, pC = {5, topLeft+3};
 	
 	count = 0;
 	stopCount = 0, stopCar = -1;
 	
 	traf=vector<Traffic*>(4, NULL);
 	for (int i = 0; i < 4; ++i)
+<<<<<<< HEAD
 		traf[i]=new Traffic(pTra),pTra.y+=4;
+=======
+		traf[i]=new Traffic(pT),pT.y+=3;
+>>>>>>> parent of 5536fa9... Update all obstacle {direction, random, level}, fix barrier, dinosaur will be redrawed shiet
 	
-	dir = rand() % 2;
 	car = vector<Car*>(6, NULL);
 	for (int i = 0; i < lev.getNumCar(); ++i)
-		car[i]=new Car(pC,dir), pC.x += 15;
-	truck = vector<Truck*>(6, NULL);
-	dir = rand() % 2;
+		car[i]=new Car(pC), pC.x += 15;
 
-	for (int i = 0; i < lev.getNumTruck(); ++i)
-		truck[i] = new Truck(pT, dir), pT.x += 20;
-
-	pC = { 5, pT.y + 4 }, pT = { 5, pC.y + 4 };
 	dir = rand() % 2;
+<<<<<<< HEAD
 	bird = vector<Bird*>(6, NULL);
 	for (int i = 0; i < lev.getNumCar(); ++i)
 		bird[i] = new Bird(pC, dir), pC.x += 15;
@@ -43,6 +41,8 @@ Lane::~Lane()
 		delete truck[i], dino[i], truck[i] = NULL, dino[i] = NULL;
 	for (int i = 0; i < traf.size(); ++i)
 		delete traf[i], traf[i] = NULL;
+=======
+>>>>>>> parent of 5536fa9... Update all obstacle {direction, random, level}, fix barrier, dinosaur will be redrawed shiet
 }
 
 Lane::Lane(bool d, bool g, int s, int row)
@@ -70,11 +70,17 @@ void Lane::updateTraffic()
 	//	|| (greenLight && (rand() % 15 == 0)) || (t == 0)) {
 	//	toggleLight();
 	//}
+	////Draw traffic light
+	////(greenLight)?	TextColor(10); : TextColor(12);
+	//gotoxy(screenSize_H + 2, curLane);
+	//cout << char(220);	//or 223 den do
+	////TextColor(7);
 }
 
 void Lane::updateLane() {
 	unique_lock<mutex> lk(CGame::mtx);
 	count++;
+<<<<<<< HEAD
 	if (count %lev.getEzSpeed() == 0)
 		if (stopCar != 0)
 			for (int i = 0; i < lev.getNumCar(); i++)
@@ -105,6 +111,38 @@ void Lane::updateLane() {
 	}
 	updateTraffic();
 }
+=======
+	if (count % 300000 == 0) {
+		if (stopCar != 0)
+			for (int i = 0; i < lev.getNumCar(); i++)
+				car[i]->moveEne(), car[i]->drawEne();
+	}
+		/*if (count % (40 - speed) == 0) {
+			if (stopCar != 1)
+				for (int i = 3; i < 6; i++)
+					moveCar(cars[i], 0);
+			else
+				for (int i = 3; i < 6; i++)
+					drawReverseCar(cars[i], 252);
+		}
+		if (count % (37 - speed) == 0) {
+			if (stopCar != 2)
+				for (int i = 6; i < 9; i++)
+					moveCar(cars[i], 1);
+			else
+				for (int i = 6; i < 9; i++)
+					drawCar(cars[i], 252);
+		}*/
+		//Tam dung xe 
+	if (count == 2000000000)count = 0;
+		stopCount++;
+		if (stopCount == 500) stopCar = rand() % 3;
+		if (stopCount == 3000) {
+			stopCount = 0;
+			stopCar = -1;
+		}
+	}
+>>>>>>> parent of 5536fa9... Update all obstacle {direction, random, level}, fix barrier, dinosaur will be redrawed shiet
 
 
 Level::Level()
@@ -136,11 +174,6 @@ int Level::getEzSpeed()
 int Level::getNumCar()
 {
 	return numCar[level-1];
-}
-
-int Level::getNumTruck()
-{
-	return numTruck[level-1];
 }
 
 int Level::getMaxSpeed()

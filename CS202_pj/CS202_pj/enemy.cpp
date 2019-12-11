@@ -2,9 +2,50 @@
 #include"Library.h"
 int Traffic::numTraffic = 0;
 //int Car::numCar = 0;
-Car::Car(Point p, bool d) :Enemy(p,d)
+void CDINAUSOR::Move(int x, int y)
+{
+	const int height = 3;
+	const int width = 4;
+	for (int i = y; i < y + height; ++i)
+	{
+		for (int j = x; j < x + width; ++j)
+		{
+			if (i == y && j == x + 3 || i == y && j == x + 2)
+			{
+				continue;
+			}
+			gotoxy(j, i);
+			cout << char(219);
+			if (i == y + height - 1 && j == x + width - 1)
+			{
+				for (int k = 0; k < width / 4; ++k) //lam tron len xuong?
+				{
+					gotoxy(j + 1, i);
+					cout << char(219);
+				}
+			}
+		}
+		x -= 2;
+	}
+	for (int j = x - width; j < x; ++j)
+	{
+		gotoxy(j, y);
+		cout << "      ";
+		gotoxy(j, y + 1);
+		cout << "    ";
+		gotoxy(j, y + 2);
+		cout << "  ";
+	}
+}
+
+
+Car::Car(Point p) :Enemy(p)
 {
 	
+}
+
+Car::~Car()
+{
 }
 
 ShapeSize Car::getShapeSize()
@@ -20,43 +61,75 @@ int Car::getType()
 
 void Car::moveEne()
 {
+	int width = 144;
+	int t = width * 3 / 4 - 1 - 12;
 	Point pos = getPos();
+	int l = 3, r = screenSize_H-1;
+	if (pos.x > r)setPos({ l, pos.y });
 	for (int i = 0; i < ss.h; ++i)
-		for (int j = 0; j < ss.w; ++j)
-		{
-			gotoxy(pos.x + j, pos.y + i);
-			if (l + 1 <= pos.x + j && pos.x + j <= r-1)
-				cout << ' ';
+		for (int j = pos.x; j <= min(r,pos.x + ss.w - 1); ++j) {
+			gotoxy(pos.x + j-pos.x, pos.y + i);
+			cout << ' ';
 		}
-	if (getDir()) {
-			setPos({ pos.x + 1, pos.y });
-		if (getPos().x >= r) setPos({ l - ss.w, pos.y });	//l-1?
-	}
-	else {
-		setPos({ pos.x - 1, pos.y });
-		if (getPos().x + ss.w - 1 <= l) setPos({ r , pos.y });
-	}
+	setPos({ getPos().x+1, getPos().y});
 }
-
 
 void Car::drawEne()
 {
 	Point pos = getPos();
+	int l = 3, r = screenSize_H-1;
 	
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0;j<ss.w;++j)
-			{
-				gotoxy(pos.x+j, pos.y + i);
-				if(l+1<=pos.x+j&&pos.x+j<=r-1)
-					cout << shape[i][j];
-			}
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = pos.x; j <= min(r, pos.x + ss.w - 1); ++j)
+		{
+			gotoxy(getPos().x + j -pos.x, getPos().y + i);
+			cout << shape[i][j-pos.x];
+		}
+	/*Point pos = getPos();
+	if (pos.x == 4) return;
+	if (pos.x > r) return;
+	for (int i = 0; i < ss.h; ++i) 
+		for (int j = max(1, pos.x); j <= min(r, pos.x + ss.w - 1); ++j) {
+			gotoxy(pos.x + j, pos.y + i);
+			cout << ' ';
+		}
+	if (getPos().x + ss.w <= l | getPos().x > r)return;
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = max(l + 1, getPos().x); j <= min(r, getPos().x + ss.w - 1); ++j)
+		{
+			gotoxy(getPos().x +j, getPos().y+i );
+			cout << shape[i][j - max(1, getPos().x)];
+		}
+	return;*/
 }
 
-Truck::Truck(Point p, bool d):Enemy(p,d) {}
+Truck::Truck(Point p):Enemy(p) {
+	char t[3][13] = { {' ','_','_','_','_','_','_','_','_','_',' ',' ',' '},
+	{ '|','/','/','/','/','/','/','/','|','_','\\','_',' ' },
+	{ '|','_','/','O','_','_','_','_','O','\\','_','_','|' } };
+	shape = new char* [3];
+	for (int i = 0; i < 3; ++i)
+		shape[i] = new char[13];
+
+	for (int i = 0; i < 3; ++i)
+		shape[i] = t[i];
+}
+
+Truck::~Truck()
+{
+	for (int i = 0; i < 3; ++i)
+		delete[] shape[i];
+	delete[] shape, shape = NULL;
+}
 
 ShapeSize Truck::getShapeSize()
 {
-	return ss;
+	return { 13,3 };
+}
+
+char** Truck::getShape()
+{
+	return shape;
 }
 
 int Truck::getType()
@@ -64,39 +137,6 @@ int Truck::getType()
 	return 3;
 }
 
-void Truck::moveEne()
-{
-	Point pos = getPos();
-	for (int i = 0; i < ss.h; ++i)
-		for (int j = 0; j < ss.w; ++j)
-		{
-			gotoxy(pos.x + j, pos.y + i);
-			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
-				cout << ' ';
-		}
-	if (getDir()) {
-		setPos({ pos.x + 1, pos.y });
-		if (getPos().x >= r) setPos({ l - ss.w, pos.y });
-	}
-	else {
-		setPos({ pos.x - 1, pos.y });
-		if (getPos().x + ss.w - 1 <= l) setPos({ r , pos.y });
-	}
-}
-
-
-void Truck::drawEne()
-{
-	Point pos = getPos();
-
-	for (int i = 0; i < ss.h; ++i)
-		for (int j = 0; j < ss.w; ++j)
-		{
-			gotoxy(pos.x + j, pos.y + i);
-			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
-				getDir() ? cout << shape1[i][j] : cout << shape0[i][j];
-		}
-}
 //
 //void Car::Move()
 //{
@@ -201,6 +241,7 @@ void Truck::drawEne()
 //{
 //	drawVeh();
 //}
+<<<<<<< HEAD
 
 ShapeSize Bird::getShapeSize()
 {
@@ -359,3 +400,5 @@ bool Traffic::isGreen()
 {
 	return greenLight;
 }
+=======
+>>>>>>> parent of 5536fa9... Update all obstacle {direction, random, level}, fix barrier, dinosaur will be redrawed shiet

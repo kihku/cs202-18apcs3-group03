@@ -1,10 +1,18 @@
 ﻿#pragma once
 #include"Library.h"
+<<<<<<< HEAD
 class CGAME {
 	CTRUCK* axt;
 	CCAR* axh;
 	CDINAUSOR* akl;
 	CBIRD* ac;
+=======
+class CGame {
+	Truck* axt;
+	Car* axh;
+	CDINAUSOR* akl;
+	CBird* ac;
+>>>>>>> parent of 5536fa9... Update all obstacle {direction, random, level}, fix barrier, dinosaur will be redrawed shiet
 	CPEOPLE cn;
 	int map[85][24];
 public:
