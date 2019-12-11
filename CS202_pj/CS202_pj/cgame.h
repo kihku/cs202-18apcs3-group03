@@ -30,6 +30,8 @@ public:
 	void updatePosPeople(char); //Thực hiện điều khiển di chuyển của CPEOPLE
 	void updatePosVehicle(); //Thực hiện cho Truck & Car di chuyển
 	void updatePosAnimal();//Thực hiện cho CDINAUSOR & CBird di chuyển
+	void menu();
+	void setting();
 	//For arrayTesting
 	bool exportMap(const char* a);
 	Point peoplePos();

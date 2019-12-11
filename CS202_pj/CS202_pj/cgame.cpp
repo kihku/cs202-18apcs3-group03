@@ -68,7 +68,7 @@ void CGame::exitGame(HANDLE)
 //void exitGame(HANDLE); 
 void CGame::startGame()
 {
-
+	drawGame();
 }
 void CGame::loadGame(istream)
 {
@@ -115,7 +115,8 @@ void CGame::updatePosAnimal()
 }
 void CGame::drawGame()
 {
-	system("Color B0");
+	system("cls");
+	SCREEN_COLOR;
 	const int delta = 3;
 	const int scoreBoard_H = 25;
 	const int scoreBoard_V = 5;
@@ -211,4 +212,105 @@ bool CGame::exportMap(const char* path)
 Point CGame::peoplePos()
 {
 	return cn.currentPos();
+}
+void CGame::menu()
+{
+
+	//MAIN MENU
+	SCREEN_COLOR;
+	int ki;
+	const int SL = 4;
+	system("cls");
+	const char* tenmuc[] = { "N E W  G A M E","L O A D  G A M E","S E T T I N G S","M Y P R O F I L E" };
+	for (ki = 1; ki < SL; ki++)
+	{
+		gotoxy(52, ki + 1 + 10);
+		SCREEN_COLOR;
+		_cprintf(tenmuc[ki]);
+	}
+	gotoxy(52, 1 + 10);
+	SCREEN_COLOR;
+	BUTTON_COLOR;
+	_cprintf(tenmuc[0]);
+	char ch;
+	int stt = 0;
+	while (1)
+	{
+		ch = _getch();
+		if (ch == 0)
+			ch = _getch();
+		if (ch == KEY_UP)
+		{
+			stt--;
+			if (stt < 0)
+			{
+				stt = SL - 1;
+				gotoxy(52, 1 + 10);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[0]);
+				gotoxy(52, SL + 10);
+				BUTTON_COLOR;
+				_cprintf(tenmuc[stt]);
+			}
+			else
+			{
+
+				gotoxy(52, stt + 2 + 10);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[stt + 1]);
+				gotoxy(52, stt + 1 + 10);
+				BUTTON_COLOR;
+				_cprintf(tenmuc[stt]);
+			}
+		}
+		else if (ch == KEY_DOWN)
+		{
+			stt++;
+			if (stt > SL - 1)
+			{
+				gotoxy(52, SL + 10);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[SL - 1]);
+				stt = 0;
+				gotoxy(52, 1 + 10);
+				BUTTON_COLOR;
+				_cprintf(tenmuc[stt]);
+			}
+			else
+			{
+				gotoxy(52, stt + 10);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[stt - 1]);
+				gotoxy(52, stt + 1 + 10);
+				BUTTON_COLOR;
+				_cprintf(tenmuc[stt]);
+			}
+		}
+		else if ((ch == ENTER) && (stt == 0))
+		{
+			startGame();
+			break; //START GAME
+		}
+		else if ((ch == ENTER) && (stt == 1))
+		{
+			
+			break; //LOAD GAME
+		}
+		else if ((ch == ENTER) && (stt == 2))
+		{
+			
+			break;//SETTINGS
+		}
+		else if ((ch == ENTER) && (stt == 3))
+		{
+			
+			
+			break;//MY PROFILE
+		}
+
+	}
+}
+void CGame::setting()
+{
+
 }
