@@ -73,6 +73,7 @@ void Lane::updateTraffic()
 }
 
 void Lane::updateLane() {
+	unique_lock<mutex> lk(CGame::mtx);
 	count++;
 	if (count %lev.getEzSpeed() == 0)
 		if (stopCar != 0)
@@ -108,7 +109,7 @@ void Lane::updateLane() {
 
 Level::Level()
 {
-	level = 1;
+	level = 5;
 
 	//maxSpd = diff - level*2, minSpd=diff-level;
 }
