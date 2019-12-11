@@ -14,11 +14,12 @@ void vehicleMove()
 int main()
 {
 	ShowConsoleCursor(false);
-	
+	//SetColor(14);
 	char keyPressed;
 	bool pause_game = false;
 	CGame game;
-	game.drawGame();
+	game.menu();
+	//game.drawGame();
 	thread th1(vehicleMove);
 	HANDLE th1_handle= th1.native_handle();
 	game.exportMap("map.txt");
