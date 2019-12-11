@@ -42,7 +42,7 @@ public:
 };
 //-------------------------------------------------------
 class Lane {
-	vector<>
+	
 	vector<Car*> car;
 	vector<Truck*> truck;
 	vector<Bird*> bird;
