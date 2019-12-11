@@ -74,8 +74,25 @@ void CGame::loadGame(istream)
 {
 
 }
-void CGame::saveGame(istream)
+void CGame::saveGame(ofstream &fout)
 {
+	//SAVE PEOPLE
+	fout << cn.currentPos().x << endl;
+	fout << cn.currentPos().y << endl;
+	//SAVE ENEMY
+		//save truck 
+	fout << axt->getPos().x << endl;
+	fout << axt->getPos().y << endl;
+		//save car
+	fout << axh->getPos().x << endl;
+	fout << axh->getPos().y << endl;
+		//save dinosaur
+	fout << axh->getPos().x << endl;
+	fout << axh->getPos().y << endl;
+		//save bird
+	fout << ac->getPos().x << endl;
+	fout << ac->getPos().y << endl;
+
 
 }
 void CGame::pauseGame(HANDLE t)

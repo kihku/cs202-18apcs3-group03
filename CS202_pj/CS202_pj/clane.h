@@ -42,6 +42,7 @@ public:
 };
 //-------------------------------------------------------
 class Lane {
+	vector<>
 	vector<Car*> car;
 	vector<Truck*> truck;
 	vector<Bird*> bird;
@@ -61,6 +62,7 @@ public:
 	
 	void updateLane();
 	
+	Point  getVehiclePoint();
 	void updatePosEnemy(int t);
 	
 	bool drawEne();

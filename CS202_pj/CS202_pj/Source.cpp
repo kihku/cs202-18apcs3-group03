@@ -44,6 +44,19 @@ int main()
 			game.resumeGame(th1_handle);
 			pause_game = false;
 		}
+		if (keyPressed == 'c' || keyPressed == 'C')
+		{
+			string save;
+			game.pauseGame(th1_handle);
+
+			cout << "Enter filename: ";
+			cin >> save;
+			
+			ofstream fout;
+			fout.open(save + ".txt");
+			game.saveGame(fout);
+			pause_game = true;
+		}
 		
 	}
 	if (th1.joinable())
