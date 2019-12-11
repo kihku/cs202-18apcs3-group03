@@ -2,26 +2,28 @@
 //start x,y CDINAUSOR is (4,3)
 //for testing purpose
 
-
-mutex CGAME::mtx;
+mutex CGame::mtx;
 
 void vehicleMove()
 {
-	VEHLANE l(5);
-	l.updatePosVehicle();
+	Lane l;
+	while (true) {
+		l.updateLane();
+	}
 }
 int main()
 {
 	ShowConsoleCursor(false);
+	
 	char keyPressed;
 	bool pause_game = false;
-	CGAME game;
+	CGame game;
 	game.drawGame();
 	thread th1(vehicleMove);
 	HANDLE th1_handle= th1.native_handle();
 	game.exportMap("map.txt");
 	Point peopos = game.peoplePos();
-	peopos.display();
+	//peopos.display();
 	while (1)
 	{
 		
@@ -42,9 +44,23 @@ int main()
 			game.resumeGame(th1_handle);
 			pause_game = false;
 		}
+		if (keyPressed == 'c' || keyPressed == 'C')
+		{
+			string save;
+			game.pauseGame(th1_handle);
+
+			cout << "Enter filename: ";
+			cin >> save;
+			
+			ofstream fout;
+			fout.open(save + ".txt");
+			game.saveGame(fout);
+			pause_game = true;
+		}
 		
 	}
 	if (th1.joinable())
 		th1.join();
+	
 	return 0;
 }

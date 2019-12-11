@@ -5,16 +5,18 @@ class Level
 private:
 	int level;
 
-	const int ezSpeed[5] = {3000000,2500000,2000000,1500000,1000000};
+	const int ezSpeed[5] = {200,200,100,100,20};
 	
-	const int numCar[5] = { 2,3,4,4,5 };
-
-	const int numTruckLVL[5] = { 2,2,3,4,4 };
+	const int harSpeed[5] = { 50,50,40,30,20 };
+	
+	const int numCar[5] = { 2,3,4,4,4 };
+	const int numTruck[5] = { 2,2,3,4,4 };
 	const int maxEne[4] = {6,5,5,5};
-	//int maxEne, numEne;
+	
 	const int maxLevel = 5;
 	const int diff = 50;
 	int minSpd, maxSpd;
+	//int maxEne, numEne;
 	//int nRow;
 	//  int nColumn;
 public:
@@ -27,6 +29,7 @@ public:
 	int getEzSpeed();
 
 	int getNumCar();
+	int getNumTruck();
 
 	int getMaxSpeed();
 	int getMinSpeed();
@@ -37,8 +40,13 @@ public:
 	//void decnumEne(int d);
 	//Enemy* randNewEnemy(cPosition pos);
 };
+//-------------------------------------------------------
 class Lane {
+	vector<>
 	vector<Car*> car;
+	vector<Truck*> truck;
+	vector<Bird*> bird;
+	vector<Dinosaur*> dino;
 	vector<Traffic*>traf;
 	bool dir;		//0: left, 1: right
 	Level lev;
@@ -48,13 +56,13 @@ class Lane {
 	//int curLaneRow;
 public:
 	Lane();
-	~Lane() { for (int i = 0; i < car.size(); ++i) { delete car[i], car[i] = NULL; }for (int i = 0; i < traf.size(); ++i) { delete traf[i], traf[i] = NULL; }
-	}
+	~Lane();
 	Lane(bool d, bool g, int s, int c);
-	void updateTraffic(int t);
+	void updateTraffic();
 	
 	void updateLane();
 	
+	Point  getVehiclePoint();
 	void updatePosEnemy(int t);
 	
 	bool drawEne();
