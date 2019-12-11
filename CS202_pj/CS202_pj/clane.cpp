@@ -4,7 +4,7 @@ Lane::Lane()
 {
 	srand(time(NULL));
 	int topLeft = 2;
-	Point pTra = {screenSize_H+2,topLeft+4}
+	Point pTra = {screenSize_H_right+2,topLeft+4}
 	, pC = { 5, topLeft + 3 }, pT = { 5,pC.y + 4 };
 	
 	count = 0;

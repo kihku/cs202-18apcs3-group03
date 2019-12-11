@@ -27,8 +27,15 @@ struct ShapeSize {
 #include"clane.h"
 #include"CGame.h"
 
-const int screenSize_V = 24;
-const int screenSize_H = 84;
+//const int screenSize_V = 24;
+//const int screenSize_H = 84;
+const int screenSize_H_left = 3;
+const int screenSize_H_right = 84;
+const int screenSize_V_top = 3;
+const int screenSize_V_bot = 24;
+const int delta_screenSize_H = screenSize_H_right - screenSize_H_left;
+const int delta_screenSize_V = screenSize_V_bot - screenSize_V_top;
+
 
 const int MAXLEVEL = 5;
 const int MAXCAR = 5;
