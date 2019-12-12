@@ -14,6 +14,8 @@ void vehicleMove()
 int main()
 {
 	ShowConsoleCursor(false);
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
 	//SetColor(14);
 	char keyPressed;
 	bool pause_game = false;
@@ -25,6 +27,7 @@ int main()
 	game.exportMap("map.txt");
 	Point peopos = game.peoplePos();
 	//peopos.display();
+	
 	while (1)
 	{
 		

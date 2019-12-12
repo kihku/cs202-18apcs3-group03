@@ -299,7 +299,7 @@ void Dinosaur::moveEne()
 		{
 			gotoxy(pos.x + j, pos.y + i);
 			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
-				cout << ' ';
+				printf(" ");
 		}
 	//if (!getDir()) {
 		setPos({ pos.x + 1, pos.y });
@@ -323,7 +323,7 @@ void Dinosaur::drawEne()
 			lk.lock();
 			gotoxy(pos.x + j, pos.y + i);
 			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
-				getDir() ? cout << shape1[i][j] : cout << shape0[i][j];
+				getDir() ? printf("%c" ,shape1[i][j]) : printf("%c", shape0[i][j]);
 			lk.unlock();
 		}
 }

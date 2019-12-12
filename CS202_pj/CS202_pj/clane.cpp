@@ -118,7 +118,7 @@ void Lane::updateLane() {
 Level::Level()
 {
 	mode = 0;
-	level = 3;
+	level = 1;
 
 	//maxSpd = diff - level*2, minSpd=diff-level;
 }
