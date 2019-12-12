@@ -54,8 +54,8 @@ vector<Enemy*> CGame::getVehicle()
 	vector<Enemy*> ene(2 * lane.getCar().size() + 2 * lane.getTruck().size(), NULL);
 	ene.insert(ene.end(), lane.getCar().begin(), lane.getCar().end());
 	ene.insert(ene.end(), lane.getTruck().begin(), lane.getTruck().end());
-	copy(ene.end(), lane.getBird().begin(), lane.getBird().end());
-	copy(ene.end(), lane.getDino().begin(), lane.getDino().end());
+	ene.insert(ene.end(), lane.getBird().begin(), lane.getBird().end());
+	ene.insert(ene.end(), lane.getDino().begin(), lane.getDino().end());
 	return ene;
 }
 /*Enemy* CGame::getVehicle()
