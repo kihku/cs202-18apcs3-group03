@@ -81,17 +81,17 @@ void CGame::saveGame(ofstream &fout)
 	fout << cn.currentPos().y << endl;
 	//SAVE ENEMY
 		//save truck 
-	fout << axt->getPos().x << endl;
-	fout << axt->getPos().y << endl;
-		//save car
-	fout << axh->getPos().x << endl;
-	fout << axh->getPos().y << endl;
-		//save dinosaur
-	fout << axh->getPos().x << endl;
-	fout << axh->getPos().y << endl;
-		//save bird
-	fout << ac->getPos().x << endl;
-	fout << ac->getPos().y << endl;
+	/*fout << lane. << endl;*/
+	//fout << axt->getPos().y << endl;
+	//	//save car
+	//fout << axh->getPos().x << endl;
+	//fout << axh->getPos().y << endl;
+	//	//save dinosaur
+	//fout << axh->getPos().x << endl;
+	//fout << axh->getPos().y << endl;
+	//	//save bird
+	//fout << ac->getPos().x << endl;
+	//fout << ac->getPos().y << endl;
 
 
 }
@@ -107,7 +107,7 @@ void CGame::resumeGame(HANDLE t)
 //void resumeGame(HANDLE); 
 void CGame::updatePosVehicle()
 {
-
+	
 }
 void CGame::updatePosAnimal()
 {

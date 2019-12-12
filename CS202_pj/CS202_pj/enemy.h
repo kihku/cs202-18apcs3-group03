@@ -2,6 +2,7 @@
 #include"Library.h"
 
 class Enemy {
+
 	Point pos;
 	bool dir;
 protected:
@@ -37,6 +38,8 @@ public:
 	void red();
 	void toggle(int i);
 
+	Point getPos();
+
 	~Traffic();
 
 	bool isGreen();
@@ -54,6 +57,7 @@ private:
 const ShapeSize ss = {9,3};
 public:
 	Car(Point p,bool d);
+	
 
 	virtual ShapeSize getShapeSize();	//return w,h of shape
 	
@@ -98,8 +102,9 @@ public:
 	virtual void drawEne();
 	//virtual char** getShape() ;		//return array of shape
 };
-
-	//   ▄▄▄▄▄▄	   		     ▄▄▄▄▄▄      
+//       	
+//		  
+	//   ▄███▄▄	   		     ▄▄▄▄▄▄      
 	//  ▀▀▄████►   		    ◄████▄▀▀     
 	//	▀▀█████►   		    ◄█████▀▀   
 	//	 ▀█████► █►		 ◄█ ◄█████▀     

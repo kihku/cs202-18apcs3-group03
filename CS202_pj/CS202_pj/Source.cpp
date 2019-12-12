@@ -1,14 +1,12 @@
 #include"Library.h"
 //start x,y CDINAUSOR is (4,3)
 //for testing purpose
-
 mutex CGame::mtx;
-
 void vehicleMove()
 {
-	Lane l;
+	Lane lane;
 	while (true) {
-		l.updateLane();
+		lane.updateLane();
 	}
 }
 int main()

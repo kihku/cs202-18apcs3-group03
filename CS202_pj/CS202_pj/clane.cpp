@@ -104,6 +104,12 @@ void Lane::updateLane() {
 	}
 	updateTraffic();
 }
+//
+//Point Lane::getVehiclePoint()
+//{
+//
+//	return nullptr;
+//}
 
 
 Level::Level()

@@ -1,19 +1,19 @@
 ﻿#pragma once
 #include"Library.h"
+
 class CGame {
-	Truck* axt;
-	Car* axh;
-	Dinosaur* akl;
-	Bird* ac;
+	
 	CPEOPLE cn;
+	/*Lane lane;*/
 	int map[85][24];
+	
 public:
 	CGame(); //Chuẩn bị dữ liệu cho tất cả các đối tượng
 	void drawGame(); //Thực hiện vẽ trò chơi ra màn hình sau khi có dữ liệu
 	~CGame(); // Hủy tài nguyên đã cấp phát
 	CPEOPLE getPeople();//Lấy thông tin người
-	Enemy* getVehicle();//Lấy danh sách các xe
-	//CANIMAL* getAnimal(); //Lấy danh sách các thú
+	Enemy*  getVehicle();//Lấy danh sách các xe
+	/*CANIMAL* getAnimal(); *///Lấy danh sách các thú
 	void resetGame(); // Thực hiện thiết lập lại toàn bộ dữ liệu như lúc đầu
 	void exitGame(HANDLE); // Thực hiện thoát Thread
 	void startGame(); // Thực hiện bắt đầu vào trò chơi
@@ -28,4 +28,5 @@ public:
 	bool exportMap(const char* a);
 	Point peoplePos();
 	static mutex mtx;
+
 };

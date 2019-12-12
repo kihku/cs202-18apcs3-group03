@@ -361,6 +361,11 @@ void Traffic::toggle(int i)
 	greenLight = !greenLight;
 }
 
+Point Traffic::getPos()
+{
+	return pos;
+}
+
 Traffic::~Traffic()
 {
 	--numTraffic;

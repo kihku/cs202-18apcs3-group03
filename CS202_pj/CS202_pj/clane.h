@@ -1,5 +1,6 @@
 #pragma once
 #include"Library.h"
+using namespace std;
 class Level
 {
 private:
@@ -42,7 +43,7 @@ public:
 };
 //-------------------------------------------------------
 class Lane {
-	vector<>
+
 	vector<Car*> car;
 	vector<Truck*> truck;
 	vector<Bird*> bird;
@@ -52,7 +53,6 @@ class Lane {
 	Level lev;
 	int count, stopCount;
 	int stopCar;
-
 	//int curLaneRow;
 public:
 	Lane();
