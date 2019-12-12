@@ -52,6 +52,9 @@ const int MAXSPEED = 100;		//1s
 #define ESC 27
 #define BUTTON_COLOR SetColor(14);
 #define SCREEN_COLOR system("Color B0");
+#define RED_LIGHT SetColor(10);
+#define GREEN_LIGHT SetColor(8);
+
 
 
 

@@ -4,16 +4,21 @@ class Level
 {
 private:
 	int level;
+	int mode;
 
-	const int ezSpeed[5] = {200,200,100,100,20};
+	const int ezSpeed[3] = {200,200,100};
 	
-	const int harSpeed[5] = { 50,50,40,30,20 };
+	const int harSpeed[3] = { 50,40,30 };
 	
-	const int numCar[5] = { 2,3,4,4,4 };
-	const int numTruck[5] = { 2,2,3,4,4 };
-	const int maxEne[4] = {6,5,5,5};
+	const int numCar[3] = { 2,3,3 };
+	const int numTruck[3] = { 2,2,3 };
+
+	const int distCar[3] = {50,30,20};
+	const int distTruck[3] = {40,30,30};
+
+	const int maxEne[4] = {6,5,5};
 	
-	const int maxLevel = 5;
+	const int maxLevel = 3;
 	const int diff = 50;
 	int minSpd, maxSpd;
 	//int maxEne, numEne;
@@ -27,9 +32,12 @@ public:
 	int getLevel();
 
 	int getEzSpeed();
-
+	int getHarSpeed();
 	int getNumCar();
 	int getNumTruck();
+
+	int getDistCar();
+	int getDistTruck();
 
 	int getMaxSpeed();
 	int getMinSpeed();

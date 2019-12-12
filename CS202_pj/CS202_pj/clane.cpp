@@ -2,6 +2,20 @@
 
 Lane::Lane()
 {
+	/*int mode = 1;
+	int numCar, numTruck, distCar, distTruck;
+	if (!mode) {
+		numCar = lev.getNumCar();
+		numTruck = lev.getNumCar();
+		distCar = lev.getDistCar();
+		distTruck = lev.getDistTruck();
+	}
+	else {
+		numCar = lev.getNumCar();
+		numTruck = lev.getNumCar();
+		distCar = lev.getDistCar();
+		distTruck = lev.getDistTruck();
+	}*/
 	srand(time(NULL));
 	int topLeft = 2;
 	Point pTra = {screenSize_H_right+2,topLeft+4}
@@ -14,25 +28,25 @@ Lane::Lane()
 	for (int i = 0; i < 4; ++i)
 		traf[i]=new Traffic(pTra),pTra.y+=4;
 	
-	dir = rand() % 2;
+	//dir = rand() % 2;
 	car = vector<Car*>(6, NULL);
 	for (int i = 0; i < lev.getNumCar(); ++i)
-		car[i]=new Car(pC,dir), pC.x += 15;
+		car[i]=new Car(pC,0),car[i]->drawEne(), pC.x += lev.getDistCar();
 	truck = vector<Truck*>(6, NULL);
-	dir = rand() % 2;
+	//dir = rand() % 2;
 
 	for (int i = 0; i < lev.getNumTruck(); ++i)
-		truck[i] = new Truck(pT, dir), pT.x += 20;
+		truck[i] = new Truck(pT, 1), truck[i]->drawEne(), pT.x += lev.getDistTruck();
 
 	pC = { 5, pT.y + 4 }, pT = { 5, pC.y + 4 };
-	dir = rand() % 2;
+	//dir = rand() % 2;
 	bird = vector<Bird*>(6, NULL);
 	for (int i = 0; i < lev.getNumCar(); ++i)
-		bird[i] = new Bird(pC, dir), pC.x += 15;
-	dir = rand() % 2;
+		bird[i] = new Bird(pC, 0), bird[i]->drawEne(), pC.x += lev.getDistCar();
+	//dir = rand() % 2;
 	dino = vector<Dinosaur*>(6, NULL);
 	for (int i = 0; i < lev.getNumTruck(); ++i)
-		dino[i] = new Dinosaur(pT, dir), pT.x += 20;
+		dino[i] = new Dinosaur(pT, 1), dino[i]->drawEne(), pT.x += lev.getDistTruck();
 }
 
 Lane::~Lane()
@@ -74,31 +88,26 @@ void Lane::updateTraffic()
 
 void Lane::updateLane() {
 	count++;
-	if (count %lev.getEzSpeed() == 0)
+	if (count % lev.getHarSpeed() == 0)
+	{
 		if (stopCar != 0)
 			for (int i = 0; i < lev.getNumCar(); i++)
 				car[i]->moveEne(), car[i]->drawEne();
-
-	if (count % lev.getEzSpeed() == 0)
 		if (stopCar != 1)
 			for (int i = 0; i < lev.getNumTruck(); i++)
 				truck[i]->moveEne(), truck[i]->drawEne();
-
-	if (count % lev.getEzSpeed() == 0)
 		if (stopCar != 2)
 			for (int i = 0; i < lev.getNumCar(); i++)
 				bird[i]->moveEne(), bird[i]->drawEne();
-
-	if (count % lev.getEzSpeed() == 0)
 		if (stopCar != 3)
 			for (int i = 0; i < lev.getNumTruck(); i++)
 				dino[i]->moveEne(), dino[i]->drawEne();
-
+	}
 	//	Tam dung xe 
 	if (count == 2000000000)count = 0;
 	stopCount++;
 	if (stopCount == 100) stopCar = rand() % 4;
-	if (stopCount == 500) {
+	if (stopCount == 2000) {
 		stopCount = 0;
 		stopCar = -1;
 	}
@@ -108,7 +117,8 @@ void Lane::updateLane() {
 
 Level::Level()
 {
-	level = 1;
+	mode = 0;
+	level = 3;
 
 	//maxSpd = diff - level*2, minSpd=diff-level;
 }
@@ -132,6 +142,11 @@ int Level::getEzSpeed()
 	return ezSpeed[level-1];
 }
 
+int Level::getHarSpeed()
+{
+	return harSpeed[level-1];
+}
+
 int Level::getNumCar()
 {
 	return numCar[level-1];
@@ -142,6 +157,14 @@ int Level::getNumTruck()
 	return numTruck[level-1];
 }
 
+int Level::getDistCar()
+{
+	return distCar[level-1];
+}
+int Level::getDistTruck()
+{
+	return distTruck[level - 1];
+}
 int Level::getMaxSpeed()
 {
 	return maxSpd;

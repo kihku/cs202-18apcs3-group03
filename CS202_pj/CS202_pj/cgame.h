@@ -7,12 +7,8 @@ class CGame {
 	Bird* ac;
 	CPEOPLE cn;
 	int map[85][24];
+	bool mode;	//0: easy, 1: hard
 	//Level clevel;
-	//     .^^^.
-	//    /     \__
-	//   /__>__>__'\ 
- 	//   12345678901
-	//
 public:
 	CGame(); //Chuẩn bị dữ liệu cho tất cả các đối tượng
 	void drawGame(); //Thực hiện vẽ trò chơi ra màn hình sau khi có dữ liệu

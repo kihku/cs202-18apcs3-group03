@@ -29,14 +29,14 @@ void Car::moveEne()
 			if (l + 1 <= pos.x + j && pos.x + j <= r-1)
 				cout << ' ';
 		}
-	if (getDir()) {
-			setPos({ pos.x + 1, pos.y });
-		if (getPos().x >= r) setPos({ l - ss.w, pos.y });	//l-1?
-	}
-	else {
+	//if (getDir()) {
+	//		setPos({ pos.x + 1, pos.y });
+	//	if (getPos().x >= r) setPos({ l - ss.w, pos.y });	//l-1?
+	//}
+	//else {
 		setPos({ pos.x - 1, pos.y });
 		if (getPos().x + ss.w - 1 <= l) setPos({ r , pos.y });
-	}
+	//}
 }
 
 
@@ -77,14 +77,14 @@ void Truck::moveEne()
 			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
 				cout << ' ';
 		}
-	if (getDir()) {
+	//if (getDir()) {
 		setPos({ pos.x + 1, pos.y });
 		if (getPos().x >= r) setPos({ l - ss.w, pos.y });
-	}
-	else {
-		setPos({ pos.x - 1, pos.y });
-		if (getPos().x + ss.w - 1 <= l) setPos({ r , pos.y });
-	}
+	//}
+	//else {
+	//	setPos({ pos.x - 1, pos.y });
+	//	if (getPos().x + ss.w - 1 <= l) setPos({ r , pos.y });
+	//}
 }
 
 
@@ -227,14 +227,14 @@ void Bird::moveEne()
 			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
 				cout << ' ';
 		}
-	if (getDir()) {
+	/*if (getDir()) {
 		setPos({ pos.x + 1, pos.y });
 		if (getPos().x >= r) setPos({ l - ss.w, pos.y });
-	}
-	else {
+	}*/
+	//else {
 		setPos({ pos.x - 1, pos.y });
 		if (getPos().x + ss.w - 1 <= l) setPos({ r , pos.y });
-	}
+	//}
 }
 
 
@@ -301,14 +301,14 @@ void Dinosaur::moveEne()
 			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
 				cout << ' ';
 		}
-	if (getDir()) {
+	//if (!getDir()) {
 		setPos({ pos.x + 1, pos.y });
 		if (getPos().x >= r) setPos({ l - ss.w, pos.y });
-	}
-	else {
-		setPos({ pos.x - 1, pos.y });
-		if (getPos().x + ss.w - 1 <= l) setPos({ r , pos.y });
-	}
+//	}
+	////else {
+	//	setPos({ pos.x - 1, pos.y });
+	//	if (getPos().x + ss.w - 1 <= l) setPos({ r , pos.y });
+	////}
 }
 
 
@@ -343,7 +343,13 @@ Traffic::Traffic(const Traffic& src)
 void Traffic::drawTrafficLight()
 {
 	unique_lock<mutex> lk(CGame::mtx);
-	gotoxy(pos.x, pos.y); (greenLight) ? cout << char(220) : cout << char(223);
+	gotoxy(pos.x, pos.y);
+	if (greenLight) {
+		cout << char(220);
+	}
+	else {
+		cout << char(223);
+	}
 }
 
 void Traffic::green()
