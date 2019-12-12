@@ -2,8 +2,8 @@
 CPEOPLE::CPEOPLE()
 {
 	mState = 1;
-	mX = screenSize_H / 2;
-	mY = screenSize_V;
+	mX = delta_screenSize_H / 2;
+	mY = delta_screenSize_V+3;
 	//print People
 	gotoxy(mX, mY);
 	cout << char(219) << char(219) << char(219);
@@ -13,8 +13,8 @@ CPEOPLE::CPEOPLE()
 void CPEOPLE::Up(int n)
 {
 	mY -= n;
-	if (mY < 0)
-		mY = 0;
+	if (mY < screenSize_V_top-1)
+		mY = screenSize_V_top-1;
 	gotoxy(mX, mY);
 	cout << char(219) << char(219) << char(219);
 	gotoxy(mX, mY + 1);
@@ -25,8 +25,8 @@ void CPEOPLE::Up(int n)
 void CPEOPLE::Down(int n)
 {
 	mY += n;
-	if (mY > screenSize_V)
-		mY = screenSize_V;
+	if (mY > screenSize_V_bot)
+		mY = screenSize_V_bot;
 	gotoxy(mX, mY);
 	cout << char(219) << char(219) << char(219);
 	gotoxy(mX, mY + 1);
@@ -37,8 +37,8 @@ void CPEOPLE::Down(int n)
 void CPEOPLE::Left(int n)
 {
 	mX -= n;
-	if (mX < 0)
-		mX = 0;
+	if (mX < screenSize_H_left+2)
+		mX = screenSize_H_left+2;
 	gotoxy(mX, mY);
 	cout << char(219) << char(219) << char(219) << "  ";
 	gotoxy(mX, mY + 1);
@@ -48,8 +48,8 @@ void CPEOPLE::Left(int n)
 void CPEOPLE::Right(int n)
 {
 	mX += n;
-	if (mX > screenSize_H)
-		mX = screenSize_H;
+	if (mX > screenSize_H_right-5)
+		mX = screenSize_H_right-5;
 	gotoxy(mX-2, mY);
 	cout << "  " << char(219) << char(219) << char(219);
 	gotoxy(mX-2, mY + 1);
@@ -68,4 +68,8 @@ Point CPEOPLE::currentPos()
 	peoPos.x = mX;
 	peoPos.y = mY;
 	return peoPos;
+}
+int CPEOPLE::getLives()
+{
+	return lives;
 }

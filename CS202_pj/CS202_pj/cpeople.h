@@ -1,10 +1,10 @@
 #pragma once
 #include"Library.h"
-using namespace std;
 class CPEOPLE
 {
 private:
 	int mX, mY;
+	int lives = 3;
 	bool mState; //1 is alive, 0 is dead
 public:
 	CPEOPLE();
@@ -12,6 +12,7 @@ public:
 	void Left(int);
 	void Right(int);
 	void Down(int);
+	int getLives();
 	//bool isImpact(const Enemy*&);
 	//bool isImpact(const CANIMAL*&);
 	//bool isFinish();

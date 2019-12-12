@@ -1,4 +1,5 @@
 #include"cgame.h"
+#include"Library.h"
 void CGame::updatePosPeople(char keyPressed)
 {
 	unique_lock<mutex> lk(CGame::mtx);
@@ -48,6 +49,17 @@ CPEOPLE CGame::getPeople()
 	CPEOPLE peo;
 	return peo;
 }
+vector<Enemy*> CGame::getVehicle()
+{
+	//example to get enemy position 
+	vector<Enemy*> ene(2 * lane.getCar().size() + 2 * lane.getTruck().size(), NULL);
+	copy(ene.end(), lane.getCar().begin(), lane.getCar().end());
+	copy(ene.end(), lane.getTruck().begin(), lane.getTruck().end());
+	copy(ene.end(), lane.getBird().begin(), lane.getBird().end());
+	copy(ene.end(), lane.getDino().begin(), lane.getDino().end());
+	ene[1]->getPos();
+	return ene;
+}
 /*Enemy* CGame::getVehicle()
 {
 
@@ -68,7 +80,7 @@ void CGame::exitGame(HANDLE)
 //void exitGame(HANDLE); 
 void CGame::startGame()
 {
-
+	drawGame();
 }
 void CGame::loadGame(istream)
 {
@@ -107,7 +119,11 @@ void CGame::resumeGame(HANDLE t)
 //void resumeGame(HANDLE); 
 void CGame::updatePosVehicle()
 {
+<<<<<<< HEAD
 	
+=======
+	lane.updateLane();
+>>>>>>> b7fce5dc1574d60fe43c556ccf9449fcaad56bc5
 }
 void CGame::updatePosAnimal()
 {
@@ -115,31 +131,33 @@ void CGame::updatePosAnimal()
 }
 void CGame::drawGame()
 {
+	system("cls");
+	SCREEN_COLOR;
 	const int delta = 3;
 	const int scoreBoard_H = 25;
 	const int scoreBoard_V = 5;
-	for (int i = 4; i < screenSize_H; ++i)
+	for (int i = screenSize_H_left; i < screenSize_H_right; ++i)
 	{
 		gotoxy(i, 1);
 		cout << char(196);
 	}
-	gotoxy(screenSize_H, 1);
+	gotoxy(screenSize_H_right, 1);
 	cout << char(191);
-	for (int i = 2; i < screenSize_V + delta; ++i)
+	for (int i = screenSize_V_top-1; i < screenSize_V_bot + delta; ++i)
 	{
-		gotoxy(screenSize_H, i);
+		gotoxy(screenSize_H_right, i);
 		cout << char(179);
 	}
-	gotoxy(screenSize_H, screenSize_V + delta);
+	gotoxy(screenSize_H_right, screenSize_V_bot + delta);
 	cout << char(217);
-	for (int i = 4; i < screenSize_H; ++i)
+	for (int i = 4; i < screenSize_H_right; ++i)
 	{
-		gotoxy(i, screenSize_V + delta);
+		gotoxy(i, screenSize_V_bot + delta);
 		cout << char(196);
 	}
-	gotoxy(3, screenSize_V + delta);
+	gotoxy(3, screenSize_V_bot + delta);
 	cout << char(192);
-	for (int i = 2; i < screenSize_V + delta; ++i)
+	for (int i = 2; i < screenSize_V_bot + delta; ++i)
 	{
 		gotoxy(3, i);
 		cout << char(179);
@@ -147,34 +165,48 @@ void CGame::drawGame()
 	gotoxy(3, 1);
 	cout << char(218);
 	//SCORE BOARD
-	gotoxy(screenSize_H + 4, 7);
+	gotoxy(screenSize_H_right + 4, 7);
 	cout << char(218);
-	for (int i = screenSize_H + 5; i < screenSize_H + 5 + scoreBoard_H; ++i)
+	for (int i = screenSize_H_right + 5; i < screenSize_H_right + 5 + scoreBoard_H; ++i)
 	{
 		gotoxy(i, 7);
 		cout << char(196);
 	}
-	gotoxy(screenSize_H + 5 + scoreBoard_H, 7);
+	gotoxy(screenSize_H_right + 5 + scoreBoard_H, 7);
 	cout << char(191);
 	for (int i = 8; i < scoreBoard_V + 15; ++i)
 	{
-		gotoxy(scoreBoard_H + screenSize_H + 5, i);
+		gotoxy(scoreBoard_H + screenSize_H_right + 5, i);
 		cout << char(179);
 	}
 	for (int i = 8; i < scoreBoard_V + 15; ++i)
 	{
-		gotoxy(screenSize_H + 4, i);
+		gotoxy(screenSize_H_right + 4, i);
 		cout << char(179);
 	}
-	gotoxy(screenSize_H + 4, scoreBoard_V + 15);
+	gotoxy(screenSize_H_right + 4, scoreBoard_V + 15);
 	cout << char(192);
-	for (int i = screenSize_H + 5; i < screenSize_H + 5 + scoreBoard_H; ++i)
+	for (int i = screenSize_H_right + 5; i < screenSize_H_right + 5 + scoreBoard_H; ++i)
 	{
 		gotoxy(i, scoreBoard_V + 15);
 		cout << char(196);
 	}
-	gotoxy(screenSize_H + 5 + scoreBoard_H, scoreBoard_V + 15);
+	gotoxy(screenSize_H_right + 5 + scoreBoard_H, scoreBoard_V + 15);
 	cout << char(217);
+	//Score Board menu
+	gotoxy(screenSize_H_right + 12, screenSize_V_top + 5);
+	cout << "S T A T U S";
+	gotoxy(screenSize_H_right + 6, screenSize_V_top + 8);
+	cout << "L E V E L";
+	gotoxy(screenSize_H_right + 6, screenSize_V_top + 11);
+	cout << "L I V E S";
+	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+	for (int i = 0; i < cn.getLives()*5; ++i)
+		cout << char(222);
+	gotoxy(screenSize_H_right+4, screenSize_V_top + 18);
+	cout << "Press WASD to MOVE";
+	gotoxy(screenSize_H_right + 10, screenSize_V_top + 19);
+	cout << "Esc to EXIT";
 }
 bool CGame::exportMap(const char* path)
 {
@@ -196,4 +228,105 @@ bool CGame::exportMap(const char* path)
 Point CGame::peoplePos()
 {
 	return cn.currentPos();
+}
+void CGame::menu()
+{
+
+	//MAIN MENU
+	SCREEN_COLOR;
+	int ki;
+	const int SL = 4;
+	system("cls");
+	const char* tenmuc[] = { "N E W  G A M E","L O A D  G A M E","S E T T I N G S","M Y P R O F I L E" };
+	for (ki = 1; ki < SL; ki++)
+	{
+		gotoxy(52, ki + 1 + 10);
+		SCREEN_COLOR;
+		_cprintf(tenmuc[ki]);
+	}
+	gotoxy(52, 1 + 10);
+	SCREEN_COLOR;
+	BUTTON_COLOR;
+	_cprintf(tenmuc[0]);
+	char ch;
+	int stt = 0;
+	while (1)
+	{
+		ch = _getch();
+		if (ch == 0)
+			ch = _getch();
+		if (ch == KEY_UP)
+		{
+			stt--;
+			if (stt < 0)
+			{
+				stt = SL - 1;
+				gotoxy(52, 1 + 10);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[0]);
+				gotoxy(52, SL + 10);
+				BUTTON_COLOR;
+				_cprintf(tenmuc[stt]);
+			}
+			else
+			{
+
+				gotoxy(52, stt + 2 + 10);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[stt + 1]);
+				gotoxy(52, stt + 1 + 10);
+				BUTTON_COLOR;
+				_cprintf(tenmuc[stt]);
+			}
+		}
+		else if (ch == KEY_DOWN)
+		{
+			stt++;
+			if (stt > SL - 1)
+			{
+				gotoxy(52, SL + 10);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[SL - 1]);
+				stt = 0;
+				gotoxy(52, 1 + 10);
+				BUTTON_COLOR;
+				_cprintf(tenmuc[stt]);
+			}
+			else
+			{
+				gotoxy(52, stt + 10);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[stt - 1]);
+				gotoxy(52, stt + 1 + 10);
+				BUTTON_COLOR;
+				_cprintf(tenmuc[stt]);
+			}
+		}
+		else if ((ch == ENTER) && (stt == 0))
+		{
+			startGame();
+			break; //START GAME
+		}
+		else if ((ch == ENTER) && (stt == 1))
+		{
+			
+			break; //LOAD GAME
+		}
+		else if ((ch == ENTER) && (stt == 2))
+		{
+			
+			break;//SETTINGS
+		}
+		else if ((ch == ENTER) && (stt == 3))
+		{
+			
+			
+			break;//MY PROFILE
+		}
+
+	}
+}
+void CGame::setting()
+{
+
 }
