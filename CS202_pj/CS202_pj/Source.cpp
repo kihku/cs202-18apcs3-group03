@@ -1,27 +1,33 @@
 #include"Library.h"
 //start x,y CDINAUSOR is (4,3)
 //for testing purpose
+
 mutex CGame::mtx;
+
 void vehicleMove()
 {
-	Lane lane;
+	Lane l;
 	while (true) {
-		lane.updateLane();
+		l.updateLane();
 	}
 }
 int main()
 {
 	ShowConsoleCursor(false);
-	
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	//SetColor(14);
 	char keyPressed;
 	bool pause_game = false;
 	CGame game;
-	game.drawGame();
+	game.menu();
+	//game.drawGame();
 	thread th1(vehicleMove);
 	HANDLE th1_handle= th1.native_handle();
 	game.exportMap("map.txt");
 	Point peopos = game.peoplePos();
 	//peopos.display();
+	
 	while (1)
 	{
 		
@@ -47,11 +53,11 @@ int main()
 			string save;
 			game.pauseGame(th1_handle);
 
-			cout << "Enter filename: ";
-			cin >> save;
+			//cout << "Enter filename: ";
+			//cin >> save;
 			
 			ofstream fout;
-			fout.open(save + ".txt");
+			fout.open("test.txt");
 			game.saveGame(fout);
 			pause_game = true;
 		}

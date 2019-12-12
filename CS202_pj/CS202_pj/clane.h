@@ -1,22 +1,26 @@
 #pragma once
 #include"Library.h"
-using namespace std;
 class Level
 {
 private:
 	int level;
+	int mode;
 
-	const int ezSpeed[5] = {200,200,100,100,20};
+	const int ezSpeed[3] = {200,200,100};
 	
-	const int harSpeed[5] = { 50,50,40,30,20 };
+	const int harSpeed[3] = { 50,40,30 };
 	
-	const int numCar[5] = { 2,3,4,4,4 };
-	const int numTruck[5] = { 2,2,3,4,4 };
-	const int maxEne[4] = {6,5,5,5};
+	const int numCar[3] = { 2,3,3 };
+	const int numTruck[3] = { 2,2,3 };
+
+	const int distCar[3] = {50,30,20};
+	const int distTruck[3] = {40,30,30};
+
+	const int maxEne[4] = {6,5,5};
 	
-	const int maxLevel = 5;
+	const int maxLevel = 3;
 	const int diff = 50;
-	int minSpd, maxSpd;
+	//int minSpd, maxSpd;
 	//int maxEne, numEne;
 	//int nRow;
 	//  int nColumn;
@@ -28,9 +32,12 @@ public:
 	int getLevel();
 
 	int getEzSpeed();
-
+	int getHarSpeed();
 	int getNumCar();
 	int getNumTruck();
+
+	int getDistCar();
+	int getDistTruck();
 
 	int getMaxSpeed();
 	int getMinSpeed();
@@ -43,25 +50,32 @@ public:
 };
 //-------------------------------------------------------
 class Lane {
-
-	vector<Car*> car;
-	vector<Truck*> truck;
-	vector<Bird*> bird;
-	vector<Dinosaur*> dino;
+	vector<Enemy*> car;
+	vector<Enemy*> truck;
+	vector<Enemy*> bird;
+	vector<Enemy*> dino;
 	vector<Traffic*>traf;
-	bool dir;		//0: left, 1: right
+//	bool dir;		//0: left, 1: right
 	Level lev;
 	int count, stopCount;
 	int stopCar;
+
 	//int curLaneRow;
 public:
 	Lane();
 	~Lane();
-	Lane(bool d, bool g, int s, int c);
 	void updateTraffic();
 	
 	void updateLane();
 	
+	vector<Enemy*>getCar() { return car; }
+
+	vector<Enemy*>getTruck() { return truck; }
+
+	vector<Enemy*>getBird() { return bird; }
+
+	vector<Enemy*>getDino() { return dino; }
+
 	Point  getVehiclePoint();
 	void updatePosEnemy(int t);
 	

@@ -1,4 +1,3 @@
-#include"cgame.h"
 #include"Library.h"
 void CGame::updatePosPeople(char keyPressed)
 {
@@ -53,11 +52,10 @@ vector<Enemy*> CGame::getVehicle()
 {
 	//example to get enemy position 
 	vector<Enemy*> ene(2 * lane.getCar().size() + 2 * lane.getTruck().size(), NULL);
-	copy(ene.end(), lane.getCar().begin(), lane.getCar().end());
-	copy(ene.end(), lane.getTruck().begin(), lane.getTruck().end());
+	ene.insert(ene.end(), lane.getCar().begin(), lane.getCar().end());
+	ene.insert(ene.end(), lane.getTruck().begin(), lane.getTruck().end());
 	copy(ene.end(), lane.getBird().begin(), lane.getBird().end());
 	copy(ene.end(), lane.getDino().begin(), lane.getDino().end());
-	ene[1]->getPos();
 	return ene;
 }
 /*Enemy* CGame::getVehicle()
@@ -93,8 +91,8 @@ void CGame::saveGame(ofstream &fout)
 	fout << cn.currentPos().y << endl;
 	//SAVE ENEMY
 		//save truck 
-	/*fout << lane. << endl;*/
-	//fout << axt->getPos().y << endl;
+	fout << getVehicle()[0]->getPos().x << endl;
+	fout << getVehicle()[0]->getPos().y << endl;
 	//	//save car
 	//fout << axh->getPos().x << endl;
 	//fout << axh->getPos().y << endl;
@@ -119,11 +117,7 @@ void CGame::resumeGame(HANDLE t)
 //void resumeGame(HANDLE); 
 void CGame::updatePosVehicle()
 {
-<<<<<<< HEAD
-	
-=======
 	lane.updateLane();
->>>>>>> b7fce5dc1574d60fe43c556ccf9449fcaad56bc5
 }
 void CGame::updatePosAnimal()
 {
