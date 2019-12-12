@@ -1,4 +1,4 @@
-#include"cgame.h"
+#include"Library.h"
 void CGame::updatePosPeople(char keyPressed)
 {
 	unique_lock<mutex> lk(CGame::mtx);
