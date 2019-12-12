@@ -1,6 +1,5 @@
 #pragma once
 #include"Library.h"
-using namespace std;
 class CPEOPLE
 {
 private:

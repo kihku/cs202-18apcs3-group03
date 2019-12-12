@@ -4,13 +4,13 @@
 
 mutex CGame::mtx;
 
-void vehicleMove()
-{
-	Lane l;
-	while (true) {
-		l.updateLane();
-	}
-}
+//void vehicleMove()
+//{
+//	Lane l;
+//	while (true) {
+//		l.updateLane();
+//	}
+//}
 int main()
 {
 	ShowConsoleCursor(false);
@@ -22,7 +22,7 @@ int main()
 	CGame game;
 	game.menu();
 	//game.drawGame();
-	thread th1(vehicleMove);
+	thread th1(game.updatePosVehicle);
 	HANDLE th1_handle= th1.native_handle();
 	game.exportMap("map.txt");
 	Point peopos = game.peoplePos();

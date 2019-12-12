@@ -48,6 +48,17 @@ CPEOPLE CGame::getPeople()
 	CPEOPLE peo;
 	return peo;
 }
+vector<Enemy*> CGame::getVehicle()
+{
+	//example to get enemy position 
+	vector<Enemy*> ene(2 * lane.getCar().size() + 2 * lane.getTruck().size(), NULL);
+	copy(ene.end(), lane.getCar().begin(), lane.getCar().end());
+	copy(ene.end(), lane.getTruck().begin(), lane.getTruck().end());
+	copy(ene.end(), lane.getBird().begin(), lane.getBird().end());
+	copy(ene.end(), lane.getDino().begin(), lane.getDino().end());
+	ene[1]->getPos();
+	return ene;
+}
 /*Enemy* CGame::getVehicle()
 {
 
@@ -107,7 +118,7 @@ void CGame::resumeGame(HANDLE t)
 //void resumeGame(HANDLE); 
 void CGame::updatePosVehicle()
 {
-
+	lane.updateLane();
 }
 void CGame::updatePosAnimal()
 {

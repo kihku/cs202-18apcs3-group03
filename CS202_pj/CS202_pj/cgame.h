@@ -8,13 +8,14 @@ class CGame {
 	CPEOPLE cn;
 	int map[85][24];
 	bool mode;	//0: easy, 1: hard
-	//Level clevel;
+	Lane lane;
+	Level clevel;
 public:
 	CGame(); //Chuẩn bị dữ liệu cho tất cả các đối tượng
 	void drawGame(); //Thực hiện vẽ trò chơi ra màn hình sau khi có dữ liệu
 	~CGame(); // Hủy tài nguyên đã cấp phát
 	CPEOPLE getPeople();//Lấy thông tin người
-	Enemy* getVehicle();//Lấy danh sách các xe
+	vector<Enemy*> getVehicle();//Lấy danh sách các xe
 	//CANIMAL* getAnimal(); //Lấy danh sách các thú
 	void resetGame(); // Thực hiện thiết lập lại toàn bộ dữ liệu như lúc đầu
 	void exitGame(HANDLE); // Thực hiện thoát Thread

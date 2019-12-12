@@ -20,7 +20,7 @@ private:
 	
 	const int maxLevel = 3;
 	const int diff = 50;
-	int minSpd, maxSpd;
+	//int minSpd, maxSpd;
 	//int maxEne, numEne;
 	//int nRow;
 	//  int nColumn;
@@ -50,13 +50,12 @@ public:
 };
 //-------------------------------------------------------
 class Lane {
-	
-	vector<Car*> car;
-	vector<Truck*> truck;
-	vector<Bird*> bird;
-	vector<Dinosaur*> dino;
+	vector<Enemy*> car;
+	vector<Enemy*> truck;
+	vector<Enemy*> bird;
+	vector<Enemy*> dino;
 	vector<Traffic*>traf;
-	bool dir;		//0: left, 1: right
+//	bool dir;		//0: left, 1: right
 	Level lev;
 	int count, stopCount;
 	int stopCar;
@@ -65,11 +64,18 @@ class Lane {
 public:
 	Lane();
 	~Lane();
-	Lane(bool d, bool g, int s, int c);
 	void updateTraffic();
 	
 	void updateLane();
 	
+	vector<Enemy*>getCar() { return car; }
+
+	vector<Enemy*>getTruck() { return truck; }
+
+	vector<Enemy*>getBird() { return bird; }
+
+	vector<Enemy*>getDino() { return dino; }
+
 	Point  getVehiclePoint();
 	void updatePosEnemy(int t);
 	
