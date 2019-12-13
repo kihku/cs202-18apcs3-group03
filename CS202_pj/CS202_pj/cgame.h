@@ -9,15 +9,13 @@ class CGame {
 	int map[85][24];
 	bool mode;	//0: easy, 1: hard
 	Lane lane;
-	
-	Level clevel;
+	//Level clevel;
 public:
 	CGame(); //Chuẩn bị dữ liệu cho tất cả các đối tượng
 	void drawGame(); //Thực hiện vẽ trò chơi ra màn hình sau khi có dữ liệu
 	~CGame(); // Hủy tài nguyên đã cấp phát
 	CPEOPLE getPeople();//Lấy thông tin người
-	vector<Enemy*> getVehicle();//Lấy danh sách các xe
-
+	Enemy* getVehicle();//Lấy danh sách các xe
 	//CANIMAL* getAnimal(); //Lấy danh sách các thú
 	void resetGame(); // Thực hiện thiết lập lại toàn bộ dữ liệu như lúc đầu
 	void exitGame(HANDLE); // Thực hiện thoát Thread
@@ -37,7 +35,5 @@ public:
 	//For arrayTesting
 	bool exportMap(const char* a);
 	Point peoplePos();
-	void Collide();
 	static mutex mtx;
-
 };
