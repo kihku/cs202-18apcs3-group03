@@ -1,4 +1,4 @@
-#include "clane.h"
+#include "Library.h"
 
 Lane::Lane()
 {
@@ -29,10 +29,10 @@ Lane::Lane()
 		traf[i]=new Traffic(pTra),pTra.y+=4;
 	
 	//dir = rand() % 2;
-	car = vector<Car*>(6, NULL);
+	car = vector<Enemy*>(6, NULL);
 	for (int i = 0; i < lev.getNumCar(); ++i)
 		car[i]=new Car(pC,0),car[i]->drawEne(), pC.x += lev.getDistCar();
-	truck = vector<Truck*>(6, NULL);
+	truck = vector<Enemy*>(6, NULL);
 	//dir = rand() % 2;
 
 	for (int i = 0; i < lev.getNumTruck(); ++i)
@@ -40,11 +40,11 @@ Lane::Lane()
 
 	pC = { 5, pT.y + 4 }, pT = { 5, pC.y + 4 };
 	//dir = rand() % 2;
-	bird = vector<Bird*>(6, NULL);
+	bird = vector<Enemy*>(6, NULL);
 	for (int i = 0; i < lev.getNumCar(); ++i)
 		bird[i] = new Bird(pC, 0), bird[i]->drawEne(), pC.x += lev.getDistCar();
 	//dir = rand() % 2;
-	dino = vector<Dinosaur*>(6, NULL);
+	dino = vector<Enemy*>(6, NULL);
 	for (int i = 0; i < lev.getNumTruck(); ++i)
 		dino[i] = new Dinosaur(pT, 1), dino[i]->drawEne(), pT.x += lev.getDistTruck();
 }
@@ -59,10 +59,6 @@ Lane::~Lane()
 		delete traf[i], traf[i] = NULL;
 }
 
-Lane::Lane(bool d, bool g, int s, int row)
-{
-	dir = d;// curLaneRow = row;
-}
 
 void Lane::updateTraffic()
 {		
@@ -166,15 +162,15 @@ int Level::getDistTruck()
 {
 	return distTruck[level - 1];
 }
-int Level::getMaxSpeed()
-{
-	return maxSpd;
-}
-
-int Level::getMinSpeed()
-{
-	return minSpd;
-}
+//int Level::getMaxSpeed()
+//{
+//	return maxSpd;
+//}
+//
+//int Level::getMinSpeed()
+//{
+//	return minSpd;
+//}
 
 //Enemy* Level::getNewEnemy(Point p, int type)
 //{

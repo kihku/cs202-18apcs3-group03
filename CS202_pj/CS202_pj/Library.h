@@ -22,12 +22,6 @@ struct ShapeSize {
 	int w, h;
 };
 
-#include"extra.h"
-#include"cpeople.h"
-#include"enemy.h"
-#include"clane.h"
-#include"CGame.h"
-
 //const int screenSize_V = 24;
 //const int screenSize_H = 84;
 const int screenSize_H_left = 3;
@@ -53,6 +47,12 @@ const int MAXSPEED = 100;		//1s
 #define SCREEN_COLOR system("Color B0");
 #define RED_LIGHT SetColor(10);
 #define GREEN_LIGHT SetColor(8);
+#include"extra.h"
+#include"cpeople.h"
+#include"enemy.h"
+#include"clane.h"
+#include"cgame.h"
+
 
 
 

@@ -1,6 +1,5 @@
 #pragma once
 #include"Library.h"
-using namespace std;
 class CPEOPLE
 {
 private:
@@ -20,4 +19,5 @@ public:
 	bool isDead();
 	//For arrayTesting
 	Point currentPos();
+	bool isCrash(Point Pos);
 };

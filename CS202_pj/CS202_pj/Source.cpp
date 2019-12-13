@@ -44,11 +44,11 @@ int main()
 			string save;
 			game.pauseGame(th1_handle);
 
-			cout << "Enter filename: ";
-			cin >> save;
+			//cout << "Enter filename: ";
+			//cin >> save;
 			
 			ofstream fout;
-			fout.open(save + ".txt");
+			fout.open("test.txt");
 			game.saveGame(fout);
 			pause_game = true;
 		}
