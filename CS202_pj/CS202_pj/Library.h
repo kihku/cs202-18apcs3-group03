@@ -44,7 +44,6 @@ const int MAXSPEED = 100;		//1s
 #define KEY_LEFT 75
 #define KEY_RIGHT 77
 #define KEY_BACK 8
-#define ESC 27
 #define BUTTON_COLOR SetColor(14);
 #define SCREEN_COLOR system("Color B0");
 #define RED_LIGHT SetColor(10);
