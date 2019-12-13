@@ -16,7 +16,7 @@ Lane::Lane()
 		distCar = lev.getDistCar();
 		distTruck = lev.getDistTruck();
 	}*/
-	srand(time(NULL));
+	//srand(time(NULL));
 	int topLeft = 2;
 	Point pTra = {screenSize_H_right+2,topLeft+4}
 	, pC = { 5, topLeft + 3 }, pT = { 5,pC.y + 4 };
@@ -25,7 +25,7 @@ Lane::Lane()
 	stopCount = 0, stopCar = -1;
 	
 	traf=vector<Traffic*>(4, NULL);
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 2; ++i)
 		traf[i]=new Traffic(pTra),pTra.y+=4;
 	
 	//dir = rand() % 2;
@@ -67,14 +67,14 @@ Lane::Lane(bool d, bool g, int s, int row)
 void Lane::updateTraffic()
 {		
 	//traffic light
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		traf[i] ->green();
 	}
 	if (stopCar != -1) {
 		traf[stopCar] ->red();
 	}
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		traf[i]->drawTrafficLight();
 	}
@@ -96,17 +96,17 @@ void Lane::updateLane() {
 		if (stopCar != 1)
 			for (int i = 0; i < lev.getNumTruck(); i++)
 				truck[i]->moveEne(), truck[i]->drawEne();
-		if (stopCar != 2)
+		//if (stopCar != 2)
 			for (int i = 0; i < lev.getNumCar(); i++)
 				bird[i]->moveEne(), bird[i]->drawEne();
-		if (stopCar != 3)
+	//	if (stopCar != 3)
 			for (int i = 0; i < lev.getNumTruck(); i++)
 				dino[i]->moveEne(), dino[i]->drawEne();
 	}
 	//	Tam dung xe 
 	if (count == 2000000000)count = 0;
 	stopCount++;
-	if (stopCount == 100) stopCar = rand() % 4;
+	if (stopCount == 100) stopCar = rand() % 2;
 	if (stopCount == 2000) {
 		stopCount = 0;
 		stopCar = -1;
@@ -118,7 +118,7 @@ void Lane::updateLane() {
 Level::Level()
 {
 	mode = 0;
-	level = 1;
+	level = 3;
 
 	//maxSpd = diff - level*2, minSpd=diff-level;
 }
@@ -130,6 +130,7 @@ bool Level::levelUp()
 		
 		return true;
 	}
+	return false;
 }
 
 int Level::getLevel()

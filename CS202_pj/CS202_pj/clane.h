@@ -6,9 +6,9 @@ private:
 	int level;
 	int mode;
 
-	const int ezSpeed[3] = {200,200,100};
+	const int ezSpeed[3] = {200,200,200};
 	
-	const int harSpeed[3] = { 50,40,30 };
+	const int harSpeed[3] = { 100,100,100 };
 	
 	const int numCar[3] = { 2,3,3 };
 	const int numTruck[3] = { 2,2,3 };

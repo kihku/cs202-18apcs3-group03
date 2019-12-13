@@ -8,6 +8,7 @@ class CGame {
 	CPEOPLE cn;
 	int map[85][24];
 	bool mode;	//0: easy, 1: hard
+	Lane lane;
 	//Level clevel;
 public:
 	CGame(); //Chuẩn bị dữ liệu cho tất cả các đối tượng

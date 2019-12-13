@@ -107,7 +107,9 @@ void CGame::resumeGame(HANDLE t)
 //void resumeGame(HANDLE); 
 void CGame::updatePosVehicle()
 {
-
+	while (true) {
+		lane.updateLane();
+	}
 }
 void CGame::updatePosAnimal()
 {

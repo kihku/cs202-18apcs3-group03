@@ -2,15 +2,6 @@
 //start x,y CDINAUSOR is (4,3)
 //for testing purpose
 
-mutex CGame::mtx;
-
-void vehicleMove()
-{
-	Lane l;
-	while (true) {
-		l.updateLane();
-	}
-}
 int main()
 {
 	ShowConsoleCursor(false);
@@ -22,7 +13,7 @@ int main()
 	CGame game;
 	game.menu();
 	//game.drawGame();
-	thread th1(vehicleMove);
+	thread th1(&CGame::updatePosVehicle, game);
 	HANDLE th1_handle= th1.native_handle();
 	game.exportMap("map.txt");
 	Point peopos = game.peoplePos();
