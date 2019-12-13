@@ -73,3 +73,9 @@ int CPEOPLE::getLives()
 {
 	return lives;
 }
+bool CPEOPLE::isCrash(Point pos) {
+	if (abs(mX - pos.x) <=5 && abs(mY - pos.y) <= 5) {
+		return true;
+	}
+	return false;
+}

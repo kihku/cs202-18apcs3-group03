@@ -320,6 +320,20 @@ void CGame::menu()
 
 	}
 }
+//vector <Enemy*> enemyList = rowsData.listEnemy(); //enemyList = 0 
+void CGame::Collide() {
+	for (int i = 0; i < (int)getVehicle().size(); ++i) {
+	 	//drawEnemies(enemyList[i]);
+		if (cn.isCrash(getVehicle()[i]->getPos())== true) {
+			//if (!constantVar::isMute) enemyList[i]->sound();
+			//cn.killPlayer();
+			gotoxy(30, 30);
+			cout<<" CRASH";
+			system("cls");
+		}
+	}
+}
+
 void CGame::setting()
 {
 

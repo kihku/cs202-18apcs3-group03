@@ -19,4 +19,5 @@ public:
 	bool isDead();
 	//For arrayTesting
 	Point currentPos();
+	bool isCrash(Point Pos);
 };
