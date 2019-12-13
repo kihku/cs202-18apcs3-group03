@@ -31,6 +31,9 @@ public:
 	void updatePosAnimal();//Thực hiện cho CDINAUSOR & CBird di chuyển
 	void menu();
 	void setting();
+	bool isCrash();
+
+	bool gameOver();
 	//For arrayTesting
 	bool exportMap(const char* a);
 	Point peoplePos();

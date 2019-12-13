@@ -55,12 +55,15 @@ void CPEOPLE::Right(int n)
 	gotoxy(mX-2, mY + 1);
 	cout << "   " << char(219);
 }
+
 bool CPEOPLE::isDead()
 {
-	if (mState == 0)
-		return 1;
+	if (lives <= 0)
+	{
+		return true;
+	}
 	else
-		return 0;
+		return false;
 }
 Point CPEOPLE::currentPos()
 {
@@ -72,10 +75,4 @@ Point CPEOPLE::currentPos()
 int CPEOPLE::getLives()
 {
 	return lives;
-}
-bool CPEOPLE::isCrash(Point pos) {
-	if (abs(mX - pos.x) <=5 && abs(mY - pos.y) <= 5) {
-		return true;
-	}
-	return false;
 }

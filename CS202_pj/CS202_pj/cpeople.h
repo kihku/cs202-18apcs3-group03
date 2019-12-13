@@ -5,7 +5,7 @@ class CPEOPLE
 private:
 	int mX, mY;
 	int lives = 3;
-	bool mState; //1 is alive, 0 is dead
+	//bool mState; //1 is alive, 0 is dead
 public:
 	CPEOPLE();
 	void Up(int);
@@ -19,5 +19,5 @@ public:
 	bool isDead();
 	//For arrayTesting
 	Point currentPos();
-	bool isCrash(Point Pos);
+	//bool isCrash(Point Pos);
 };

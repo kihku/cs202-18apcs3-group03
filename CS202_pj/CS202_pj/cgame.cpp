@@ -321,18 +321,31 @@ void CGame::menu()
 	}
 }
 //vector <Enemy*> enemyList = rowsData.listEnemy(); //enemyList = 0 
+
+bool CGame::isCrash() {
+	if (abs(cn.mX - pos.x) <= 5 && abs(mY - pos.y) <= 5) {
+		return true;
+	}
+	return false;
+}
+
 void CGame::Collide() {
 	for (int i = 0; i < (int)getVehicle().size(); ++i) {
+		int x = getVehicle()[i]->getPos().x;
+		int y = getVehicle()[i]->getPos().y;
+		map[x][y]=1;
+		exportMap("map.txt");
 	 	//drawEnemies(enemyList[i]);
 		if (cn.isCrash(getVehicle()[i]->getPos())== true) {
 			//if (!constantVar::isMute) enemyList[i]->sound();
 			//cn.killPlayer();
 			gotoxy(30, 30);
 			cout<<" CRASH";
-			system("cls");
+			//system("cls");
 		}
 	}
 }
+//for testing
 
 void CGame::setting()
 {

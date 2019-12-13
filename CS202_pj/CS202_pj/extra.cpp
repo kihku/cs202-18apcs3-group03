@@ -1,4 +1,6 @@
 #include"Library.h"
+
+PlaySound(TEXT("CompleteStage.wav"), NULL, SND_ASYNC);
 void gotoxy(int x, int y)
 {
 	static HANDLE h = NULL;

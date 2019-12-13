@@ -9,7 +9,8 @@
 #include <ctime>
 #include<mutex>
 #include<fstream>
-
+#include <iomanip>
+#include < Windows.h >
 using namespace std;
 struct Point { 
 	int x, y;

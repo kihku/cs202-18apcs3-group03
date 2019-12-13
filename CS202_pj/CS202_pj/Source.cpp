@@ -3,7 +3,6 @@
 //for testing purpose
 
 mutex CGame::mtx;
-
 void vehicleMove()
 {
 	Lane l;
