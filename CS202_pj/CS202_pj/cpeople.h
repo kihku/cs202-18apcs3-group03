@@ -19,5 +19,8 @@ public:
 	bool isDead();
 	//For arrayTesting
 	Point currentPos();
+<<<<<<< HEAD
 	//bool isCrash(Point Pos);
+=======
+>>>>>>> parent of 1b25bd0... add Collision
 };

@@ -9,13 +9,21 @@ class CGame {
 	int map[85][24];
 	bool mode;	//0: easy, 1: hard
 	Lane lane;
+<<<<<<< HEAD
 	//Level clevel;
+=======
+	Level clevel;
+>>>>>>> parent of 1b25bd0... add Collision
 public:
 	CGame(); //Chuẩn bị dữ liệu cho tất cả các đối tượng
 	void drawGame(); //Thực hiện vẽ trò chơi ra màn hình sau khi có dữ liệu
 	~CGame(); // Hủy tài nguyên đã cấp phát
 	CPEOPLE getPeople();//Lấy thông tin người
+<<<<<<< HEAD
 	Enemy* getVehicle();//Lấy danh sách các xe
+=======
+	vector<Enemy*> getVehicle();//Lấy danh sách các xe
+>>>>>>> parent of 1b25bd0... add Collision
 	//CANIMAL* getAnimal(); //Lấy danh sách các thú
 	void resetGame(); // Thực hiện thiết lập lại toàn bộ dữ liệu như lúc đầu
 	void exitGame(HANDLE); // Thực hiện thoát Thread

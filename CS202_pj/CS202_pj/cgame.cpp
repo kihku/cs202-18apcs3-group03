@@ -320,6 +320,7 @@ void CGame::menu()
 
 	}
 }
+<<<<<<< HEAD
 //vector <Enemy*> enemyList = rowsData.listEnemy(); //enemyList = 0 
 
 bool CGame::isCrash() {
@@ -347,6 +348,8 @@ void CGame::Collide() {
 }
 //for testing
 
+=======
+>>>>>>> parent of 1b25bd0... add Collision
 void CGame::setting()
 {
 

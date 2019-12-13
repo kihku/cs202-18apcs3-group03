@@ -75,4 +75,8 @@ Point CPEOPLE::currentPos()
 int CPEOPLE::getLives()
 {
 	return lives;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of 1b25bd0... add Collision
