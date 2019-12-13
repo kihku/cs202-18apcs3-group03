@@ -14,8 +14,12 @@ int main()
 	CGame game;
 	game.menu();
 	//game.drawGame();
+
+
 	thread th1(&CGame::updatePosVehicle,game);
+	
 	HANDLE th1_handle= th1.native_handle();
+	
 	game.exportMap("map.txt");
 	Point peopos = game.peoplePos();
 	//peopos.display();
@@ -29,6 +33,7 @@ int main()
 		if (pause_game == false)
 		{
 			game.updatePosPeople(keyPressed);
+			
 		}
 		if (keyPressed == 13 && pause_game == false)
 		{

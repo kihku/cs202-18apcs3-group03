@@ -20,6 +20,7 @@ void CGame::updatePosPeople(char keyPressed)
 	{
 		cn.Down(step_vertical);
 	}
+	Collide();
 }
 CGame::CGame()
 {
@@ -51,11 +52,19 @@ CPEOPLE CGame::getPeople()
 vector<Enemy*> CGame::getVehicle()
 {
 	//example to get enemy position 
-	vector<Enemy*> ene(2 * lane.getCar().size() + 2 * lane.getTruck().size(), NULL);
-	ene.insert(ene.end(), lane.getCar().begin(), lane.getCar().end());
-	ene.insert(ene.end(), lane.getTruck().begin(), lane.getTruck().end());
-	ene.insert(ene.end(), lane.getBird().begin(), lane.getBird().end());
-	ene.insert(ene.end(), lane.getDino().begin(), lane.getDino().end());
+	vector<Enemy*> ene, tmp;
+	tmp = lane.getCar();
+	ene.insert(ene.end(), tmp.begin(), tmp.end());
+	tmp.clear();
+	tmp = lane.getTruck();
+	ene.insert(ene.end(), tmp.begin(), tmp.end());
+	tmp.clear();
+	tmp = lane.getBird();
+	ene.insert(ene.end(), tmp.begin(), tmp.end());
+	tmp.clear();
+	tmp = lane.getDino();
+	ene.insert(ene.end(), tmp.begin(), tmp.end());
+	tmp.clear();
 	return ene;
 }
 /*Enemy* CGame::getVehicle()
@@ -79,6 +88,7 @@ void CGame::exitGame(HANDLE)
 void CGame::startGame()
 {
 	drawGame();
+	//Collide();
 }
 void CGame::loadGame(istream)
 {
@@ -118,7 +128,10 @@ void CGame::resumeGame(HANDLE t)
 void CGame::updatePosVehicle()
 {
 	while(true)
+	//Collide();
 	lane.updateLane();
+	//Collide();
+	
 }
 void CGame::updatePosAnimal()
 {
@@ -202,6 +215,7 @@ void CGame::drawGame()
 	cout << "Press WASD to MOVE";
 	gotoxy(screenSize_H_right + 10, screenSize_V_top + 19);
 	cout << "Esc to EXIT";
+	
 }
 bool CGame::exportMap(const char* path)
 {
@@ -321,16 +335,25 @@ void CGame::menu()
 
 	}
 }
+//bool CGame::isCrash(Point pos) {
+//		if (abs(cn.mX - pos.x) <=5 && abs(mY - pos.y) <= 5) {
+//			return true;
+//		}
+//		return false;
+//	}
 //vector <Enemy*> enemyList = rowsData.listEnemy(); //enemyList = 0 
 void CGame::Collide() {
 	for (int i = 0; i < (int)getVehicle().size(); ++i) {
-	 	//drawEnemies(enemyList[i]);
-		if (cn.isCrash(getVehicle()[i]->getPos())== true) {
-			//if (!constantVar::isMute) enemyList[i]->sound();
-			//cn.killPlayer();
-			gotoxy(30, 30);
-			cout<<" CRASH";
-			system("cls");
+		//drawEnemies(enemyList[i]);
+		if (getVehicle()[i])
+		{
+			if (cn.isCrash(getVehicle()[i]->getPos()) == true) {
+				//if (!constantVar::isMute) enemyList[i]->sound();
+				//cn.killPlayer();
+				gotoxy(20, 20);
+				cout << " CRASH";
+				
+			}
 		}
 	}
 }

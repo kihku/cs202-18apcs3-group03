@@ -34,6 +34,7 @@ public:
 	//For arrayTesting
 	bool exportMap(const char* a);
 	Point peoplePos();
+	
 	void Collide();
 	static mutex mtx;
 
