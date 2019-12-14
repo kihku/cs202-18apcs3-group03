@@ -95,16 +95,15 @@ void CGame::startGame()
 	
 	//drawgame
 	drawGame();
-	//draw people
-	Point pos = cn.currentPos();
-	gotoxy(pos.x, pos.y);
-	cout << char(219) << char(219) << char(219);
-	gotoxy(pos.x, pos.y + 1);
-	cout << " " << char(219) << "   ";
+	
 	thread th1(&CGame::updatePosVehicle, this);
 	HANDLE th1_handle = th1.native_handle();
 	while (1)
 	{
+		if (cn.getLives() <= 0)
+		{
+			break;
+		}
 		keyPressed = _getch();
 		if (keyPressed == 0)
 			keyPressed = _getch();
@@ -279,6 +278,12 @@ void CGame::drawGame()
 	cout << "Press WASD to MOVE";
 	gotoxy(screenSize_H_right + 10, screenSize_V_top + 19);
 	cout << "Esc to EXIT";
+	//draw people
+	Point pos = cn.currentPos();
+	gotoxy(pos.x, pos.y);
+	cout << char(219) << char(219) << char(219);
+	gotoxy(pos.x, pos.y + 1);
+	cout << " " << char(219) << "   ";
 	
 }
 bool CGame::exportMap(const char* path)
