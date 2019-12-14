@@ -24,12 +24,14 @@ public:
 	void startGame(); // Thực hiện bắt đầu vào trò chơi
 	void loadGame(istream); // Thực hiện tải lại trò chơi đã lưu
 	void saveGame(ofstream &fout); // Thực hiện lưu lại dữ liệu trò chơi
-	void pauseGame(HANDLE); // Tạm dừng Thread
+	void pauseGame(HANDLE, bool&); // Tạm dừng Thread
 	void resumeGame(HANDLE); //Quay lai Thread
 	void updatePosPeople(char); //Thực hiện điều khiển di chuyển của CPEOPLE
 	void updatePosVehicle(); //Thực hiện cho Truck & Car di chuyển
 	void updatePosAnimal();//Thực hiện cho CDINAUSOR & CBird di chuyển
+	//MENU
 	void menu();
+	void pauseMenu(HANDLE, bool&);
 	void setting();
 	//For arrayTesting
 	bool exportMap(const char* a);

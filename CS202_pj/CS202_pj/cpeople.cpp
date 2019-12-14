@@ -5,10 +5,6 @@ CPEOPLE::CPEOPLE()
 	mX = delta_screenSize_H / 2;
 	mY = delta_screenSize_V+3;
 	//print People
-	gotoxy(mX, mY);
-	cout << char(219) << char(219) << char(219);
-	gotoxy(mX, mY + 1);
-	cout << " "<< char(219) << "   ";
 }
 void CPEOPLE::Up(int n)
 {
@@ -54,6 +50,7 @@ void CPEOPLE::Right(int n)
 	cout << "  " << char(219) << char(219) << char(219);
 	gotoxy(mX-2, mY + 1);
 	cout << "   " << char(219);
+	
 }
 bool CPEOPLE::isDead()
 {
