@@ -73,9 +73,38 @@ int CPEOPLE::getLives()
 {
 	return lives;
 }
-bool CPEOPLE::isCrash(Point pos) {
-	if (abs(mX - pos.x) <=3 && abs(mY - pos.y) <= 3) {
-		return true;
+
+bool CPEOPLE::isCrash(Point pos, ShapeSize ss) {
+	if ((mX - pos.x) >= 0 & (mY - pos.y) >= 0)
+	{
+		if ((mX - pos.x) <= ss.w && (mY - pos.y) <= ss.h) {
+			lives--;
+			return true;
+		}
 	}
+	else 
+		if ((mX - pos.x) < 0 & (mY - pos.y) < 0) {
+			if ((mX - pos.x) ==0 && (mY - pos.y) == 0) {
+				lives--;
+				return true;
+			}
+		}
+		else
+			if ((mX - pos.x) < 0 & (mY - pos.y) >= 0) {
+				if ((mX - pos.x) == 0 && (mY - pos.y) <= ss.h) {
+					lives--;
+					return true;
+				}
+			}
+			else
+				if ((mX - pos.x) >= 0 & (mY - pos.y) < 0) {
+					if ((mX - pos.x) <=ss.w && (mY - pos.y) == 0) {
+						lives--;
+						return true;
+					}
+				}
 	return false;
 }
+	
+	
+	

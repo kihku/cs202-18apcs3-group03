@@ -1,4 +1,4 @@
-#include"Library.h"
+﻿#include"Library.h"
 void CGame::updatePosPeople(char keyPressed)
 {
 	unique_lock<mutex> lk(CGame::mtx);
@@ -347,17 +347,64 @@ void CGame::Collide() {
 		//drawEnemies(enemyList[i]);
 		if (getVehicle()[i])
 		{
-			if (cn.isCrash(getVehicle()[i]->getPos()) == true) {
+			if (cn.isCrash(getVehicle()[i]->getPos(), getVehicle()[i]->getShapeSize()) == true) {
 				//if (!constantVar::isMute) enemyList[i]->sound();
 				//cn.killPlayer();
 				gotoxy(20, 20);
 				cout << " CRASH";
-				
+				system("cls");
+			
+				//Destroy thread enemy;
+				bombEffect();
 			}
 		}
 	}
 }
+void CGame::gameOver() {
+	//cout<<""
+}
+void CGame:: nextlevel() {
 
+}
+void CGame::bombEffect()
+{
+	/*string line;
+	ifstream in("Explode.txt");
+	in >> line;
+	
+	while (getline(in, line))
+	{
+		cout << line;
+		
+	}
+	in.close();*/
+	const int baseX = 10, baseY = 10;
+	gotoxy(baseX, baseY);
+	cout << R"(                                               ____                       )" << "\n";
+	gotoxy(baseX, baseY + 1);
+	cout << R"(                                           __,-~~/~    `---.                  )" << "\n";
+	gotoxy(baseX, baseY + 2);
+	cout << R"(                                         _/_,---(      ,    )                 )" << "\n";
+	gotoxy(baseX, baseY + 3);
+	cout << R"(                                     __ /        <    /   )  \___             )" << "\n";
+	gotoxy(baseX, baseY + 4);
+	cout << R"(                      - ------===;;;'====------------------===;;;===----- -  -)" << "\n";
+	gotoxy(baseX, baseY + 5);
+	cout << R"(                                      \/  ~"~"~"~"~"~\~"~)~" / )" << "\n";
+	gotoxy(baseX, baseY + 6);
+	cout << R"(                                        (_ (   \  (     >    \)               )" << "\n";
+	gotoxy(baseX, baseY + 7);
+	cout << R"(                                         \_( _ <         >_>'                 )" << "\n";
+	gotoxy(baseX, baseY + 8);
+	cout << R"(                                            ~ `-i' ::>|--"                    )" << "\n";
+	gotoxy(baseX, baseY + 9);
+	cout << R"(                                                I;|.|.|                       )" << "\n";
+	gotoxy(baseX, baseY + 10);
+	cout << R"(                                               <|i::|i|`.                     )" << "\n";
+	gotoxy(baseX, baseY + 11);
+	cout << R"(                                              (` ^'"`-' ")                    )";
+
+}
 void CGame::setting()
 {
 

@@ -60,4 +60,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Explode.txt" />
+  </ItemGroup>
 </Project>
