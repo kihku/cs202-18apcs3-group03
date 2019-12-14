@@ -4,7 +4,7 @@ class CPEOPLE
 {
 private:
 	int mX, mY;
-	int lives = 3;
+	int lives = 5;
 	bool mState; //1 is alive, 0 is dead
 public:
 	CPEOPLE();
@@ -13,6 +13,7 @@ public:
 	void Right(int);
 	void Down(int);
 	int getLives();
+	void reduceLive();
 	//bool isImpact(const Enemy*&);
 	//bool isImpact(const CANIMAL*&);
 	//bool isFinish();
