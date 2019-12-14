@@ -24,6 +24,7 @@ void CGame::updatePosPeople(char keyPressed)
 }
 CGame::CGame()
 {
+	menu();
 	for (int i = 0; i < 24; ++i)
 	{
 		for (int j = 0; j < 85; ++j)
@@ -87,6 +88,8 @@ void CGame::exitGame(HANDLE)
 //void exitGame(HANDLE); 
 void CGame::startGame()
 {
+	int keyPressed;
+	bool isPause = false;
 	drawGame();
 	
 	thread th1(&CGame::updatePosVehicle, this);
@@ -156,7 +159,7 @@ void CGame::saveGame(ofstream &fout)
 
 
 }
-void CGame::pauseGame(HANDLE t)
+void CGame::pauseGame(HANDLE t,bool &isPause)
 {
 	SuspendThread(t);
 }
@@ -250,7 +253,7 @@ void CGame::drawGame()
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 11);
 	cout << "L I V E S";
 	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-	for (int i = 0; i < cn.getLives()*5; ++i)
+	for (int i = 0; i < cn.getLives()*3; ++i)
 		cout << char(222);
 	gotoxy(screenSize_H_right+4, screenSize_V_top + 18);
 	cout << "Press WASD to MOVE";
@@ -382,6 +385,105 @@ void CGame::menu()
 
 	}
 }
+void CGame::pauseMenu(HANDLE handle, bool& isPause)
+{
+	int ki;
+	int menu_x = screenSize_H_right + 15, menu_y = screenSize_V_top;
+	const int SL = 3;
+	//system("cls");
+	const char* tenmuc[] = { "Resume","Restart","Exit" };
+	for (ki = 1; ki < SL; ki++)
+	{
+		gotoxy(menu_x, ki + 1 + menu_y);
+		SCREEN_COLOR;
+		_cprintf(tenmuc[ki]);
+	}
+	gotoxy(menu_x, 1 + menu_y);
+	SCREEN_COLOR;
+	BUTTON_COLOR;
+	_cprintf(tenmuc[0]);
+	char ch;
+	int stt = 0;
+	while (1)
+	{
+		ch = _getch();
+		if (ch == 0)
+			ch = _getch();
+		if (ch == KEY_UP)
+		{
+			stt--;
+			if (stt < 0)
+			{
+				stt = SL - 1;
+				gotoxy(menu_x, 1 + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[0]);
+				gotoxy(menu_x, SL + menu_y);
+				BUTTON_COLOR;
+				_cprintf(tenmuc[stt]);
+			}
+			else
+			{
+
+				gotoxy(menu_x, stt + 2 + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[stt + 1]);
+				gotoxy(menu_x, stt + 1 + menu_y);
+				BUTTON_COLOR;
+				_cprintf(tenmuc[stt]);
+			}
+		}
+		else if (ch == KEY_DOWN)
+		{
+			stt++;
+			if (stt > SL - 1)
+			{
+				gotoxy(menu_x, SL + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[SL - 1]);
+				stt = 0;
+				gotoxy(menu_x, 1 + menu_y);
+				BUTTON_COLOR;
+				_cprintf(tenmuc[stt]);
+			}
+			else
+			{
+				gotoxy(menu_x, stt + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[stt - 1]);
+				gotoxy(menu_x, stt + 1 + menu_y);
+				BUTTON_COLOR;
+				_cprintf(tenmuc[stt]);
+			}
+		}
+		else if ((ch == ENTER) && (stt == 0))
+		{
+			resumeGame(handle);
+			isPause = false;
+			break; //resume
+		}
+		else if ((ch == ENTER) && (stt == 1))
+		{
+
+			break; //restart
+		}
+		else if ((ch == ENTER) && (stt == 2))
+		{
+
+			break;//exit
+		}
+	}
+}
+void CPEOPLE::reduceLive()
+{
+	unique_lock<mutex> lk(CGame::mtx);
+	lives -= 1;
+	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+	cout << "               ";
+	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+	for (int i = 0; i < lives * 3; ++i)
+		cout << char(222);
+}
 //bool CGame::isCrash(Point pos) {
 //		if (abs(cn.mX - pos.x) <=5 && abs(mY - pos.y) <= 5) {
 //			return true;
@@ -397,12 +499,11 @@ void CGame::Collide() {
 			if (cn.isCrash(getVehicle()[i]->getPos(), getVehicle()[i]->getShapeSize()) == true) {
 				//if (!constantVar::isMute) enemyList[i]->sound();
 				//cn.killPlayer();
-				gotoxy(20, 20);
-				cout << " CRASH";
-				system("cls");
+				//gotoxy(20, 20);
+				cn.reduceLive();
 			
 				//Destroy thread enemy;
-				bombEffect();
+				//bombEffect();
 			}
 		}
 	}
