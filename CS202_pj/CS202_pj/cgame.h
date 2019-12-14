@@ -36,8 +36,10 @@ public:
 	//For arrayTesting
 	bool exportMap(const char* a);
 	Point peoplePos();
-	
 	void Collide();
+	void gameOver();
+	void nextlevel();
+	void bombEffect();
 	static mutex mtx;
 
 };

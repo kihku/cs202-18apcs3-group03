@@ -5,6 +5,10 @@ CPEOPLE::CPEOPLE()
 	mX = delta_screenSize_H / 2;
 	mY = delta_screenSize_V+3;
 	//print People
+	gotoxy(mX, mY);
+	cout << char(219) << char(219) << char(219);
+	gotoxy(mX, mY + 1);
+	cout << " "<< char(219) << "   ";
 }
 void CPEOPLE::Up(int n)
 {
@@ -50,7 +54,6 @@ void CPEOPLE::Right(int n)
 	cout << "  " << char(219) << char(219) << char(219);
 	gotoxy(mX-2, mY + 1);
 	cout << "   " << char(219);
-	
 }
 bool CPEOPLE::isDead()
 {
@@ -70,19 +73,38 @@ int CPEOPLE::getLives()
 {
 	return lives;
 }
-void CPEOPLE::reduceLive()
-{
-	unique_lock<mutex> lk(CGame::mtx);
-	lives -= 1;
-	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-	cout << "               ";
-	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-	for (int i = 0; i < lives* 3; ++i)
-		cout << char(222);
-}
-bool CPEOPLE::isCrash(Point pos) {
-	if (abs(mX - pos.x) <=3 && abs(mY - pos.y) <= 3) {
-		return true;
+
+bool CPEOPLE::isCrash(Point pos, ShapeSize ss) {
+	if ((mX - pos.x) >= 0 & (mY - pos.y) >= 0)
+	{
+		if ((mX - pos.x) <= ss.w && (mY - pos.y) <= ss.h) {
+			lives--;
+			return true;
+		}
 	}
+	else 
+		if ((mX - pos.x) < 0 & (mY - pos.y) < 0) {
+			if ((mX - pos.x) ==0 && (mY - pos.y) == 0) {
+				lives--;
+				return true;
+			}
+		}
+		else
+			if ((mX - pos.x) < 0 & (mY - pos.y) >= 0) {
+				if ((mX - pos.x) == 0 && (mY - pos.y) <= ss.h) {
+					lives--;
+					return true;
+				}
+			}
+			else
+				if ((mX - pos.x) >= 0 & (mY - pos.y) < 0) {
+					if ((mX - pos.x) <=ss.w && (mY - pos.y) == 0) {
+						lives--;
+						return true;
+					}
+				}
 	return false;
 }
+	
+	
+	

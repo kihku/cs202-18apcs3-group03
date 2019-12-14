@@ -1,4 +1,4 @@
-#include"Library.h"
+﻿#include"Library.h"
 void CGame::updatePosPeople(char keyPressed)
 {
 	unique_lock<mutex> lk(CGame::mtx);
@@ -20,13 +20,10 @@ void CGame::updatePosPeople(char keyPressed)
 	{
 		cn.Down(step_vertical);
 	}
-	lk.unlock();
 	Collide();
 }
 CGame::CGame()
 {
-	menu();
-
 	for (int i = 0; i < 24; ++i)
 	{
 		for (int j = 0; j < 85; ++j)
@@ -90,10 +87,6 @@ void CGame::exitGame(HANDLE)
 //void exitGame(HANDLE); 
 void CGame::startGame()
 {
-	int keyPressed;
-	bool isPause = false;
-	
-	//drawgame
 	drawGame();
 	
 	thread th1(&CGame::updatePosVehicle, this);
@@ -163,26 +156,12 @@ void CGame::saveGame(ofstream &fout)
 
 
 }
-void CGame::pauseGame(HANDLE t, bool &isPause)
+void CGame::pauseGame(HANDLE t)
 {
-	unique_lock<mutex> lk(CGame::mtx);
-	SetColor(13);
-	gotoxy(screenSize_H_right + 14, screenSize_V_top-1);
-	cout << "P A U S E";
-	gotoxy(screenSize_H_right + 15, screenSize_V_top + 1);
-	cout << "Resume";
-	gotoxy(screenSize_H_right + 15, screenSize_V_top + 2);
-	cout << "Restart";
-	gotoxy(screenSize_H_right + 15, screenSize_V_top + 3);
-	cout << "Exit";
-	lk.unlock();
 	SuspendThread(t);
-	//PAUSEWINDOW
-	
 }
 void CGame::resumeGame(HANDLE t)
 {
-	SCREEN_COLOR;
 	ResumeThread(t);
 }
 //void pauseGame(HANDLE);
@@ -270,9 +249,8 @@ void CGame::drawGame()
 	cout << "L E V E L";
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 11);
 	cout << "L I V E S";
-	//print live
 	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-	for (int i = 0; i < cn.getLives()*3; ++i)
+	for (int i = 0; i < cn.getLives()*5; ++i)
 		cout << char(222);
 	gotoxy(screenSize_H_right+4, screenSize_V_top + 18);
 	cout << "Press WASD to MOVE";
@@ -307,97 +285,9 @@ Point CGame::peoplePos()
 {
 	return cn.currentPos();
 }
-void CGame::pauseMenu(HANDLE handle,bool &isPause)
-{
-	int ki;
-	int menu_x = screenSize_H_right + 15, menu_y = screenSize_V_top;
-	const int SL = 3;
-	//system("cls");
-	const char* tenmuc[] = {"Resume","Restart","Exit" };
-	for (ki = 1; ki < SL; ki++)
-	{
-		gotoxy(menu_x, ki + 1 + menu_y);
-		SCREEN_COLOR;
-		_cprintf(tenmuc[ki]);
-	}
-	gotoxy(menu_x, 1 + menu_y);
-	SCREEN_COLOR;
-	BUTTON_COLOR;
-	_cprintf(tenmuc[0]);
-	char ch;
-	int stt = 0;
-	while (1)
-	{
-		ch = _getch();
-		if (ch == 0)
-			ch = _getch();
-		if (ch == KEY_UP)
-		{
-			stt--;
-			if (stt < 0)
-			{
-				stt = SL - 1;
-				gotoxy(menu_x, 1 + menu_y);
-				SCREEN_COLOR;
-				_cprintf(tenmuc[0]);
-				gotoxy(menu_x, SL + menu_y);
-				BUTTON_COLOR;
-				_cprintf(tenmuc[stt]);
-			}
-			else
-			{
-
-				gotoxy(menu_x, stt + 2 + menu_y);
-				SCREEN_COLOR;
-				_cprintf(tenmuc[stt + 1]);
-				gotoxy(menu_x, stt + 1 + menu_y);
-				BUTTON_COLOR;
-				_cprintf(tenmuc[stt]);
-			}
-		}
-		else if (ch == KEY_DOWN)
-		{
-			stt++;
-			if (stt > SL - 1)
-			{
-				gotoxy(menu_x, SL + menu_y);
-				SCREEN_COLOR;
-				_cprintf(tenmuc[SL - 1]);
-				stt = 0;
-				gotoxy(menu_x, 1 + menu_y);
-				BUTTON_COLOR;
-				_cprintf(tenmuc[stt]);
-			}
-			else
-			{
-				gotoxy(menu_x, stt + menu_y);
-				SCREEN_COLOR;
-				_cprintf(tenmuc[stt - 1]);
-				gotoxy(menu_x, stt + 1 + menu_y);
-				BUTTON_COLOR;
-				_cprintf(tenmuc[stt]);
-			}
-		}
-		else if ((ch == ENTER) && (stt == 0))
-		{
-			resumeGame(handle);
-			isPause = false;
-			break; //resume
-		}
-		else if ((ch == ENTER) && (stt == 1))
-		{
-
-			break; //restart
-		}
-		else if ((ch == ENTER) && (stt == 2))
-		{
-
-			break;//exit
-		}
-	}
-}
 void CGame::menu()
 {
+
 	//MAIN MENU
 	SCREEN_COLOR;
 	int ki;
@@ -504,17 +394,64 @@ void CGame::Collide() {
 		//drawEnemies(enemyList[i]);
 		if (getVehicle()[i])
 		{
-			if (cn.isCrash(getVehicle()[i]->getPos()) == true) {
+			if (cn.isCrash(getVehicle()[i]->getPos(), getVehicle()[i]->getShapeSize()) == true) {
 				//if (!constantVar::isMute) enemyList[i]->sound();
 				//cn.killPlayer();
-				//gotoxy(20, 20);
-				//cout << " CRASH";
-				cn.reduceLive();
+				gotoxy(20, 20);
+				cout << " CRASH";
+				system("cls");
+			
+				//Destroy thread enemy;
+				bombEffect();
 			}
 		}
 	}
 }
+void CGame::gameOver() {
+	//cout<<""
+}
+void CGame:: nextlevel() {
 
+}
+void CGame::bombEffect()
+{
+	/*string line;
+	ifstream in("Explode.txt");
+	in >> line;
+	
+	while (getline(in, line))
+	{
+		cout << line;
+		
+	}
+	in.close();*/
+	const int baseX = 10, baseY = 10;
+	gotoxy(baseX, baseY);
+	cout << R"(                                               ____                       )" << "\n";
+	gotoxy(baseX, baseY + 1);
+	cout << R"(                                           __,-~~/~    `---.                  )" << "\n";
+	gotoxy(baseX, baseY + 2);
+	cout << R"(                                         _/_,---(      ,    )                 )" << "\n";
+	gotoxy(baseX, baseY + 3);
+	cout << R"(                                     __ /        <    /   )  \___             )" << "\n";
+	gotoxy(baseX, baseY + 4);
+	cout << R"(                      - ------===;;;'====------------------===;;;===----- -  -)" << "\n";
+	gotoxy(baseX, baseY + 5);
+	cout << R"(                                      \/  ~"~"~"~"~"~\~"~)~" / )" << "\n";
+	gotoxy(baseX, baseY + 6);
+	cout << R"(                                        (_ (   \  (     >    \)               )" << "\n";
+	gotoxy(baseX, baseY + 7);
+	cout << R"(                                         \_( _ <         >_>'                 )" << "\n";
+	gotoxy(baseX, baseY + 8);
+	cout << R"(                                            ~ `-i' ::>|--"                    )" << "\n";
+	gotoxy(baseX, baseY + 9);
+	cout << R"(                                                I;|.|.|                       )" << "\n";
+	gotoxy(baseX, baseY + 10);
+	cout << R"(                                               <|i::|i|`.                     )" << "\n";
+	gotoxy(baseX, baseY + 11);
+	cout << R"(                                              (` ^'"`-' ")                    )";
+
+}
 void CGame::setting()
 {
 
