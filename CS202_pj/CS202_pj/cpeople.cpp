@@ -54,10 +54,10 @@ void CPEOPLE::Right(int n)
 }
 bool CPEOPLE::isDead()
 {
-	if (mState == 0)
-		return 1;
+	if (lives>0)
+		return false;
 	else
-		return 0;
+		return true;
 }
 Point CPEOPLE::currentPos()
 {
@@ -71,7 +71,7 @@ int CPEOPLE::getLives()
 	return lives;
 }
 bool CPEOPLE::isCrash(Point pos) {
-	if (abs(mX - pos.x) <=5 && abs(mY - pos.y) <= 5) {
+	if (abs(mX - pos.x) <=3 && abs(mY - pos.y) <= 3) {
 		return true;
 	}
 	return false;
