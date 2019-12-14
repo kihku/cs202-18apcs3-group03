@@ -20,7 +20,7 @@ void CGame::updatePosPeople(char keyPressed)
 	{
 		cn.Down(step_vertical);
 	}
-	Collide();
+	//Collide();
 }
 CGame::CGame()
 {
@@ -86,7 +86,7 @@ void CGame::exitGame(HANDLE)
 	//t->join();
 }
 //void exitGame(HANDLE); 
-void CGame::startGame()
+void CGame::gamePlay()
 {
 	int keyPressed;
 	bool isPause = false;
@@ -106,7 +106,7 @@ void CGame::startGame()
 
 		if (keyPressed == 13 && isPause == false)
 		{
-			pauseGame(th1_handle, isPause);
+			pauseGame(th1_handle);
 			isPause = true;
 		}
 		else if (isPause == true && (keyPressed == KEY_UP||keyPressed==KEY_DOWN))
@@ -116,7 +116,7 @@ void CGame::startGame()
 		else if (keyPressed == 'c' || keyPressed == 'C')
 		{
 			string save;
-			pauseGame(th1_handle, isPause);
+			pauseGame(th1_handle);
 
 			//cout << "Enter filename: ";
 			//cin >> save;
@@ -129,10 +129,11 @@ void CGame::startGame()
 		{
 			updatePosPeople(keyPressed);
 		}
+		Collide();
 	}
 	if (th1.joinable())
 		th1.join();
-	Collide();
+	
 }
 void CGame::loadGame(istream)
 {
@@ -159,13 +160,25 @@ void CGame::saveGame(ofstream &fout)
 
 
 }
-void CGame::pauseGame(HANDLE t,bool &isPause)
+void CGame::pauseGame(HANDLE t)
 {
+	unique_lock<mutex> lk(CGame::mtx);
+	SetColor(13);
+	gotoxy(screenSize_H_right + 14, screenSize_V_top - 1);
+	cout << "P A U S E";
+	gotoxy(screenSize_H_right + 15, screenSize_V_top + 1);
+	cout << "Resume";
+	gotoxy(screenSize_H_right + 15, screenSize_V_top + 2);
+	cout << "Restart";
+	gotoxy(screenSize_H_right + 15, screenSize_V_top + 3);
+	cout << "Exit";
+	lk.unlock();
 	SuspendThread(t);
 }
 void CGame::resumeGame(HANDLE t)
 {
 	ResumeThread(t);
+	SCREEN_COLOR;
 }
 //void pauseGame(HANDLE);
 //void resumeGame(HANDLE); 
@@ -363,7 +376,7 @@ void CGame::menu()
 		}
 		else if ((ch == ENTER) && (stt == 0))
 		{
-			startGame();
+			gamePlay();
 			break; //START GAME
 		}
 		else if ((ch == ENTER) && (stt == 1))
@@ -476,13 +489,16 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause)
 }
 void CPEOPLE::reduceLive()
 {
-	unique_lock<mutex> lk(CGame::mtx);
-	lives -= 1;
-	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-	cout << "               ";
-	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-	for (int i = 0; i < lives * 3; ++i)
-		cout << char(222);
+	if (lives > 0)
+	{
+		lives -= 1;
+		unique_lock<mutex> lk(CGame::mtx);
+		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+		cout << "               ";
+		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+		for (int i = 0; i < lives * 3; ++i)
+			cout << char(222);
+	}
 }
 //bool CGame::isCrash(Point pos) {
 //		if (abs(cn.mX - pos.x) <=5 && abs(mY - pos.y) <= 5) {
