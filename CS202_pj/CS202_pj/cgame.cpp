@@ -20,11 +20,13 @@ void CGame::updatePosPeople(char keyPressed)
 	{
 		cn.Down(step_vertical);
 	}
+	lk.unlock();
 	Collide();
 }
 CGame::CGame()
 {
 	menu();
+
 	for (int i = 0; i < 24; ++i)
 	{
 		for (int j = 0; j < 85; ++j)
@@ -135,7 +137,7 @@ void CGame::startGame()
 	}
 	if (th1.joinable())
 		th1.join();
-	//Collide();
+	Collide();
 }
 void CGame::loadGame(istream)
 {
@@ -269,8 +271,9 @@ void CGame::drawGame()
 	cout << "L E V E L";
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 11);
 	cout << "L I V E S";
+	//print live
 	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-	for (int i = 0; i < cn.getLives()*5; ++i)
+	for (int i = 0; i < cn.getLives()*3; ++i)
 		cout << char(222);
 	gotoxy(screenSize_H_right+4, screenSize_V_top + 18);
 	cout << "Press WASD to MOVE";
@@ -499,9 +502,9 @@ void CGame::Collide() {
 			if (cn.isCrash(getVehicle()[i]->getPos()) == true) {
 				//if (!constantVar::isMute) enemyList[i]->sound();
 				//cn.killPlayer();
-				gotoxy(20, 20);
-				cout << " CRASH";
-				
+				//gotoxy(20, 20);
+				//cout << " CRASH";
+				cn.reduceLive();
 			}
 		}
 	}

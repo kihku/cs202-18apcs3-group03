@@ -70,6 +70,16 @@ int CPEOPLE::getLives()
 {
 	return lives;
 }
+void CPEOPLE::reduceLive()
+{
+	unique_lock<mutex> lk(CGame::mtx);
+	lives -= 1;
+	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+	cout << "               ";
+	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+	for (int i = 0; i < lives* 3; ++i)
+		cout << char(222);
+}
 bool CPEOPLE::isCrash(Point pos) {
 	if (abs(mX - pos.x) <=3 && abs(mY - pos.y) <= 3) {
 		return true;
