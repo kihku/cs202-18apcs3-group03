@@ -3,7 +3,7 @@ void CGame::updatePosPeople(char keyPressed)
 {
 	unique_lock<mutex> lk(CGame::mtx);
 	const int step_horizontal = 2;
-	const int step_vertical = 1;
+	const int step_vertical = 2;
 	if (keyPressed == 'd')
 	{
 		cn.Right(step_horizontal);
@@ -266,7 +266,7 @@ void CGame::drawGame()
 	gotoxy(screenSize_H_right + 12, screenSize_V_top + 5);
 	cout << "S T A T U S";
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 8);
-	cout << "L E V E L";
+	cout << "L E V E L " << clevel.getLevel();
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 11);
 	cout << "L I V E S";
 	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);

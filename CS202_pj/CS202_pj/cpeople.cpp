@@ -35,6 +35,8 @@ void CPEOPLE::Up(int n)
 	gotoxy(mX, mY + 1);
 	cout << " " << char(219) << "   ";
 	gotoxy(mX, mY + 2);
+	cout << "   ";
+	gotoxy(mX, mY + 3);
 	cout << "    ";
 }
 void CPEOPLE::Down(int n)
@@ -46,7 +48,9 @@ void CPEOPLE::Down(int n)
 	cout << char(219) << char(219) << char(219);
 	gotoxy(mX, mY + 1);
 	cout << " " << char(219) << "   ";
-	gotoxy(mX, mY -1);
+	gotoxy(mX, mY - 1);
+	cout << "   ";
+	gotoxy(mX, mY -2);
 	cout << "    ";
 }
 void CPEOPLE::Left(int n)
