@@ -98,10 +98,14 @@ public:
 	//	 ▀█████► █►		 ◄█ ◄█████▀     
 	//	 ▄██████▀▀        ▀▀██████▄    
  	//  12345678901
+//    (\(\    
+//    (-x-)   
+//    o_(")(")
+//    12345678
 class Dinosaur : public Enemy {
 private:
 	//char shape1[3][11];
-	char shape1[3][11];
+	static char shape1[3][8];
 	static ShapeSize ss;
 public:
 	Dinosaur(Point p, bool d);
