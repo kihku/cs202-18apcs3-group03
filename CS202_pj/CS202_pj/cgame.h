@@ -1,16 +1,11 @@
 ﻿#pragma once
 #include"Library.h"
 class CGame {
-	Truck* axt;
-	Car* axh;
-	Dinosaur* akl;
-	Bird* ac;
 	CPEOPLE cn;
 	int map[85][24];
 	bool mode;	//0: easy, 1: hard
+	Level level;
 	Lane lane;
-	
-	Level clevel;
 public:
 	CGame(); //Chuẩn bị dữ liệu cho tất cả các đối tượng
 	void drawGame(); //Thực hiện vẽ trò chơi ra màn hình sau khi có dữ liệu
@@ -35,6 +30,9 @@ public:
 	bool exportMap(const char* a);
 	Point peoplePos();
 	void Collide();
+
+	void gameOver();
+	void youWin();
 	static mutex mtx;
 
 };

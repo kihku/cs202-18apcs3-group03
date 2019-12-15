@@ -21,7 +21,7 @@ void CGame::updatePosPeople(char keyPressed)
 		cn.Down(step_vertical);
 	}
 }
-CGame::CGame()
+CGame::CGame():lane(level)
 {
 	for (int i = 0; i < 24; ++i)
 	{
@@ -45,8 +45,7 @@ CGame::~CGame()
 }
 CPEOPLE CGame::getPeople()
 {
-	CPEOPLE peo;
-	return peo;
+	return cn;
 }
 vector<Enemy*> CGame::getVehicle()
 {
@@ -117,8 +116,24 @@ void CGame::resumeGame(HANDLE t)
 //void resumeGame(HANDLE); 
 void CGame::updatePosVehicle()
 {
-	while(true)
-	lane.updateLane();
+	bool isCrash = false;
+	while (!isCrash)
+	{
+		lane.updateLane(level);
+		cout << cn.currentPos().x;
+		if (cn.currentPos().y == 3)
+		{
+			cout << "E qua level";
+			if (level.levelUp())
+			{
+				lane.~Lane();
+				lane = Lane(level);
+			}
+			else
+				youWin();
+		}
+	}
+	gameOver();
 }
 void CGame::updatePosAnimal()
 {
@@ -265,7 +280,6 @@ void CGame::menu()
 			}
 			else
 			{
-
 				gotoxy(52, stt + 2 + 10);
 				SCREEN_COLOR;
 				_cprintf(tenmuc[stt + 1]);
@@ -333,6 +347,21 @@ void CGame::Collide() {
 			system("cls");
 		}
 	}
+}
+
+void CGame::gameOver()
+{
+	system("cls");
+	cout << "Game over. Start again?";
+	bool playAgain = true;
+//Dung!!!
+}
+
+void CGame::youWin()
+{
+	system("cls");
+	cout << "You win. Back to menu?";
+	//Dung!!!
 }
 
 void CGame::setting()

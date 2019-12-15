@@ -1,6 +1,6 @@
 #include "Library.h"
 
-Lane::Lane()
+Lane::Lane(Level lev)
 {
 	/*int mode = 1;
 	int numCar, numTruck, distCar, distTruck;
@@ -82,7 +82,7 @@ void Lane::updateTraffic()
 	//}
 }
 
-void Lane::updateLane() {
+void Lane::updateLane(Level lev) {
 	count++;
 	if (count % lev.getHarSpeed() == 0)
 	{
@@ -126,6 +126,7 @@ bool Level::levelUp()
 		
 		return true;
 	}
+	return false;
 }
 
 int Level::getLevel()
