@@ -93,7 +93,7 @@ void Lane::drawLane(Level& lev)
 
 void Lane::updateLane(Level& lev) {
 	count++;
-	if (count % lev.getHarSpeed() == 0)
+	if (count % lev.getSpeed() == 0)
 	{
 		if (stopCar != 0)
 			for (int i = 0; i < lev.getNumCar(); i++)
@@ -122,9 +122,8 @@ void Lane::updateLane(Level& lev) {
 
 Level::Level()
 {
-	mode = 0;
 	level = 1;
-
+	mode = 1;
 	//maxSpd = diff - level*2, minSpd=diff-level;
 }
 
@@ -142,14 +141,12 @@ int Level::getLevel()
 	return level;
 }
 
-int Level::getEzSpeed()
+int Level::getSpeed()
 {
-	return ezSpeed[level-1];
-}
-
-int Level::getHarSpeed()
-{
-	return harSpeed[level-1];
+	if (mode)
+		return ezSpeed[level - 1];
+	else
+		return harSpeed[level - 1];
 }
 
 int Level::getNumCar()
@@ -170,6 +167,17 @@ int Level::getDistTruck()
 {
 	return distTruck[level - 1];
 }
+void Level::switchMode()
+{
+	mode = !mode;
+}
+//Level* Level::createLevel(int mode)
+//{
+//	if (mode)
+//		return new EzLevel(); 
+//	else
+//		return new HarLevel();
+//}
 //int Level::getMaxSpeed()
 //{
 //	return maxSpd;
