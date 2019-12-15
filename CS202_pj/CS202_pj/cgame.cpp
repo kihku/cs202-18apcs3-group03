@@ -1,4 +1,24 @@
 ﻿#include"Library.h"
+CGame::CGame() :lane(level)
+{
+	settingMenu();
+	menu();
+	for (int i = 0; i < 24; ++i)
+	{
+		for (int j = 0; j < 85; ++j)
+		{
+			map[j][i] = 0;
+		}
+	}
+	//init people pos 
+	//people Pos: 42 24
+	map[42][22] = 1;
+	map[43][22] = 1;
+	map[44][22] = 1;
+	map[43][23] = 1;
+	//mX = screenSize_H / 2;
+	//mY = screenSize_V;
+}
 void CGame::updatePosPeople(char keyPressed)
 {
 	unique_lock<mutex> lk(CGame::mtx);
@@ -22,25 +42,7 @@ void CGame::updatePosPeople(char keyPressed)
 	}
 	//Collide();
 }
-CGame::CGame():lane(level)
-{
-	menu();
-	for (int i = 0; i < 24; ++i)
-	{
-		for (int j = 0; j < 85; ++j)
-		{
-			map[j][i] = 0;
-		}
-	}
-	//init people pos 
-	//people Pos: 42 24
-	map[42][22] = 1;
-	map[43][22] = 1;
-	map[44][22] = 1;
-	map[43][23] = 1;
-	//mX = screenSize_H / 2;
-	//mY = screenSize_V;
-}
+
 CGame::~CGame()
 {
 	
@@ -607,7 +609,38 @@ void CGame::bombEffect()
 	cout << R"(                                              (` ^'"`-' ")                    )";
 
 }
-void CGame::setting()
+void CGame::settingMenu()
 {
+	const int x_menu = 40, y_menu = 12;
+	int ch, index = 0;
+	const char* tenmuc[] = { "E A S Y","H A R D","O N","O F F","B A C K" };
+	system("cls");
+	SCREEN_COLOR;
+	gotoxy(x_menu, y_menu);
+	cout << "M O D E";
+	gotoxy(x_menu, y_menu+2);
+	cout << "S O U N D";
+	gotoxy(x_menu + 17, y_menu);
+	cout << "E A S Y   H A R D";
+	gotoxy(x_menu+17, y_menu + 2);
+	cout << "O N       O F F";
+	gotoxy(x_menu + 17, y_menu + 4);
+	cout << "B A C K";
+	//in dam luc khoi tao
+	gotoxy(x_menu + 17, y_menu);
+	SETTING_BUT_CO;
+	cout << tenmuc[0];
+	while (1)
+	{
+		ch = _getch();
+		if (ch == 0)
+			ch = _getch();
+		
+	}
 
+
+
+	gotoxy(50, 20);
+	system("pause");
+	
 }

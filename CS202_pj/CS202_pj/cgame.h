@@ -29,7 +29,7 @@ public:
 	//MENU
 	void menu();
 	void pauseMenu(HANDLE, bool&);
-	void setting();
+	void settingMenu();
 	//For arrayTesting
 	bool exportMap(const char* a);
 	Point peoplePos();
