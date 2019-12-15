@@ -43,7 +43,7 @@ CGame::CGame():lane(level)
 }
 CGame::~CGame()
 {
-
+	
 }
 CPEOPLE CGame::getPeople()
 {

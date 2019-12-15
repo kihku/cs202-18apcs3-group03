@@ -1,10 +1,6 @@
 ﻿#pragma once
 #include"Library.h"
 class CGame {
-	Truck* axt;
-	Car* axh;
-	Dinosaur* akl;
-	Bird* ac;
 	CPEOPLE cn;
 	int map[85][24];
 	bool mode;	//0: easy, 1: hard
