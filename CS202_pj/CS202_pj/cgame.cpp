@@ -215,6 +215,7 @@ void CGame::updatePosAnimal()
 void CGame::drawGame()
 {
 	system("cls");
+	PlaySound(TEXT("smw_bonus_game_end.wav"), NULL, SND_ASYNC);
 	//SCREEN_COLOR;
 	const int delta = 3;
 	const int scoreBoard_H = 25;
@@ -554,6 +555,7 @@ void CGame::Collide() {
 void CGame::gameOver() {
 	char choice;
 	bombEffect();
+	PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
 	gotoxy(20, 4);
 	cout << "P L A Y  A G A I N? (y/n)";
 	cin >> choice;
@@ -566,7 +568,7 @@ void CGame:: nextlevel(HANDLE handle) {
 	
 	level.levelUp();
 	resetGame();
-	
+	PlaySound(TEXT("smw_power-up.wav"), NULL, SND_ASYNC);
 	cn.eraseCorpse();
 	cn.backToCheckPoint();
 }
