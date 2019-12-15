@@ -4,8 +4,6 @@
 class Enemy {
 	Point pos;
 	bool dir;
-protected:
-	const int l = 4, r = 84 ;
 public:
 
 	Enemy(Point p, bool d) { pos = p, dir = d; }
@@ -48,10 +46,8 @@ public:
 		// 123456789
 class Car : public Enemy {
 private:
-	const char shape[3][9] = { {' ',' ','_','_','_','_','_',' ',' '},
-	{' ','/','|',' ',' ',' ','|','\\',' ' },
-	{'|','_','O','_','_','_','O','_','|' } };
-const ShapeSize ss = {9,3};
+	static char shape[3][9];
+	static ShapeSize ss;
 public:
 	Car(Point p,bool d);
 
@@ -66,9 +62,7 @@ public:
 	//void Move();
 	//void pause();
 	//virtual char** getShape();		//return array of shape
-
 };	
-
 		//  _________   3-13
 		// |///////|_\_ 
 		// |_/O____O\__|
@@ -78,14 +72,13 @@ public:
 		// 1234567890123
 
 class Truck : public Enemy {
-	char shape1[3][13] = { {' ','_','_','_','_','_','_','_','_','_',' ',' ',' '},
-	{ '|','/','/','/','/','/','/','/','|','_','\\','_',' ' },
-	{ '|','_','/','O','_','_','_','_','O','\\','_','_','|' } };
-	char shape0[3][13] = { {' ',' ',' ','_','_','_','_','_','_','_','_','_',' '},
+	/*char shape0[3][13] = { {' ',' ',' ','_','_','_','_','_','_','_','_','_',' '},
 	{' ','_','/','_','|','/','/','/','/','/','/','/','|'},
 	{'|','_','_','/','O','_','_','_','_','O','\\','_','|'} };
+	*/
+	static char shape1[3][13];
 
-	const ShapeSize ss = { 13,3 };
+	static ShapeSize ss;
 public:
 	Truck(Point p, bool d);
 
@@ -107,9 +100,9 @@ public:
  	//  12345678901
 class Dinosaur : public Enemy {
 private:
+	//char shape1[3][11];
 	char shape1[3][11];
-	char shape0[3][11];
-	const ShapeSize ss = { 11,3 };
+	static ShapeSize ss;
 public:
 	Dinosaur(Point p, bool d);
 
@@ -127,13 +120,11 @@ public:
 	//  /_<),)     (,(>_\                                  
 	//  1234567
 class Bird : public Enemy {
-	const char shape1[3][7] = { {' ',' ',',',',',',',' ',' '},
+	static char shape0[3][7];
+	/*const char shape1[3][7] =  { {' ',' ',',',',',',',' ',' '},
 	{'(',' ',' ',' ','.',')','>' },
 	{ '/','_','<',')',',',')',' '} };
-	const char shape0[3][7] = { {' ',' ',',',',',',',' ',' '},
-	{ '<','(','.',' ',' ',' ',')' },
-	{ ' ','(',',','(','>','_','\\'} };
-	const ShapeSize ss = { 7,3 };
+	*/static ShapeSize ss;
 public:
 	Bird(Point p, bool d) :Enemy(p, d) {};
 

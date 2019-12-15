@@ -190,11 +190,9 @@ void CGame::resumeGame(HANDLE t)
 //void resumeGame(HANDLE); 
 void CGame::updatePosVehicle()
 {
-	while(true)
+	while (true)
 	//Collide();
-	lane.updateLane();
-	//Collide();
-	
+		lane.updateLane();
 }
 void CGame::updatePosAnimal()
 {
