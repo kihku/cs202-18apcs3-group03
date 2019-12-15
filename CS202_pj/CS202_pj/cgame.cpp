@@ -2,7 +2,7 @@
 void CGame::updatePosPeople(char keyPressed)
 {
 	unique_lock<mutex> lk(CGame::mtx);
-	const int step_horizontal = 4;
+	const int step_horizontal = 2;
 	const int step_vertical = 2;
 	if (keyPressed == 'd')
 	{
@@ -83,7 +83,7 @@ void CGame::resetGame()
 	drawGame();
 	//Lane();
 }
-void CGame::exitGame(HANDLE)
+void CGame::exitGame()
 {
 	//IS_RUNNING = false;
 	system("cls");
@@ -105,10 +105,18 @@ void CGame::gamePlay()
 	HANDLE th1_handle = th1.native_handle();
 	while (1)
 	{
+		//level up
+		if (cn.isFinish())
+		{
+			//pauseGame(th1_handle);
+			nextlevel(th1_handle);
+		}
+		//gameover
 		if (cn.getLives() <= 0)
 		{
 			SuspendThread(th1_handle);
-			break;
+			system("cls");
+			gameOver();
 		}
 		keyPressed = _getch();
 		if (keyPressed == 0)
@@ -145,7 +153,6 @@ void CGame::gamePlay()
 	}
 	if (th1.joinable())
 		th1.join();
-	menu();
 }
 void CGame::loadGame(istream)
 {
@@ -318,7 +325,7 @@ void CGame::menu()
 	int ki;
 	const int SL = 4;
 	system("cls");
-	const char* tenmuc[] = { "N E W  G A M E","L O A D  G A M E","S E T T I N G S","M Y P R O F I L E" };
+	const char* tenmuc[] = { "N E W  G A M E","L O A D  G A M E","S E T T I N G S","Q U I T" };
 	for (ki = 1; ki < SL; ki++)
 	{
 		gotoxy(52, ki + 1 + 10);
@@ -400,7 +407,7 @@ void CGame::menu()
 		}
 		else if ((ch == ENTER) && (stt == 3))
 		{
-			
+			exit(0);
 			break;//MY PROFILE
 		}
 
@@ -446,7 +453,6 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause)
 			}
 			else
 			{
-
 				gotoxy(menu_x, stt + 2 + menu_y);
 				PAUSE_SCREEN_CO;
 				_cprintf(tenmuc[stt + 1]);
@@ -499,7 +505,7 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause)
 		}
 		else if ((ch == ENTER) && (stt == 2))
 		{
-			exitGame(handle);
+			exitGame();
 			break;//exit
 		}
 	}
@@ -544,10 +550,23 @@ void CGame::Collide() {
 	}
 }
 void CGame::gameOver() {
-	//cout<<""
+	char choice;
+	bombEffect();
+	gotoxy(20, 4);
+	cout << "P L A Y  A G A I N? (y/n)";
+	cin >> choice;
+	if (choice == 'y')
+	{
+		exitGame();
+	}
 }
-void CGame:: nextlevel() {
-
+void CGame:: nextlevel(HANDLE handle) {
+	
+	level.levelUp();
+	resetGame();
+	
+	cn.eraseCorpse();
+	cn.backToCheckPoint();
 }
 void CGame::bombEffect()
 {

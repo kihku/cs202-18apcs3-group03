@@ -138,9 +138,6 @@
     <ClInclude Include="extra.h" />
     <ClInclude Include="Library.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="Explode.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

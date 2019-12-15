@@ -96,7 +96,13 @@ void CPEOPLE::resetLives()
 {
 	lives = peopleLives;
 }
-
+bool CPEOPLE::isFinish()
+{
+	if (mY == screenSize_V_top + 1)
+		return true;
+	else
+		return false;
+}
 bool CPEOPLE::isCrash(Point pos, ShapeSize ss) {
 	if ((mX - pos.x) >= 0 && (mY - pos.y) >= 0)
 	{

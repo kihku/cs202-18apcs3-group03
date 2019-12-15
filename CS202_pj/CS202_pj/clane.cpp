@@ -2,6 +2,7 @@
 
 Lane::Lane(Level& lev)
 {
+	const int carNum = 6;
 	/*int mode = 1;
 	int numCar, numTruck, distCar, distTruck;
 	if (!mode) {
@@ -30,22 +31,22 @@ Lane::Lane(Level& lev)
 	
 	//dir = rand() % 2;
 	car = vector<Enemy*>(6, NULL);
-	for (int i = 0; i < lev.getNumCar(); ++i)
+	for (int i = 0; i < carNum; ++i)
 		car[i]=new Car(pC,0), pC.x += lev.getDistCar();
 	truck = vector<Enemy*>(6, NULL);
 	//dir = rand() % 2;
 
-	for (int i = 0; i < lev.getNumTruck(); ++i)
+	for (int i = 0; i < carNum; ++i)
 		truck[i] = new Truck(pT, 1), pT.x += lev.getDistTruck();
 
 	pC = { 5, pT.y + 4 }, pT = { 5, pC.y + 4 };
 	//dir = rand() % 2;
 	bird = vector<Enemy*>(6, NULL);
-	for (int i = 0; i < lev.getNumCar(); ++i)
+	for (int i = 0; i < carNum; ++i)
 		bird[i] = new Bird(pC, 0), pC.x += lev.getDistCar();
 	//dir = rand() % 2;
 	dino = vector<Enemy*>(6, NULL);
-	for (int i = 0; i < lev.getNumTruck(); ++i)
+	for (int i = 0; i < carNum; ++i)
 		dino[i] = new Dinosaur(pT, 1), pT.x += lev.getDistTruck();
 }
 

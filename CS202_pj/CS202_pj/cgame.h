@@ -21,7 +21,7 @@ public:
 
 	//CANIMAL* getAnimal(); //Lấy danh sách các thú
 	void resetGame(); // Thực hiện thiết lập lại toàn bộ dữ liệu như lúc đầu
-	void exitGame(HANDLE); // Thực hiện thoát Thread
+	void exitGame(); // Thực hiện thoát Thread
 	void gamePlay(); // Thực hiện bắt đầu vào trò chơi
 	void loadGame(istream); // Thực hiện tải lại trò chơi đã lưu
 	void saveGame(ofstream &fout); // Thực hiện lưu lại dữ liệu trò chơi
@@ -39,7 +39,7 @@ public:
 	Point peoplePos();
 	void Collide();
 	void gameOver();
-	void nextlevel();
+	void nextlevel(HANDLE);
 	void bombEffect();
 	static mutex mtx;
 
