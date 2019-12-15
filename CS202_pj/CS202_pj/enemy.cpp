@@ -54,6 +54,11 @@ void Car::drawEne()
 		}
 }
 
+void Car::sound()
+{
+	PlaySound(TEXT("car.wav"), NULL, SND_ASYNC);
+}
+
 Truck::Truck(Point p, bool d):Enemy(p,d) {}
 
 ShapeSize Truck::getShapeSize()
@@ -102,6 +107,11 @@ void Truck::drawEne()
 		}
 }
 
+void Truck::sound()
+{
+	PlaySound(TEXT("car.wav"), NULL, SND_ASYNC);
+}
+
 ShapeSize Bird::getShapeSize()
 {
 	return ss;
@@ -146,6 +156,10 @@ void Bird::drawEne()
 			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
 				cout << shape0[i][j];
 		}
+}
+void Bird::sound()
+{
+	PlaySound(TEXT("bird.wav"), NULL, SND_ASYNC);
 }
 Dinosaur::Dinosaur(Point p, bool d):Enemy(p, d) {
 	};
@@ -196,6 +210,11 @@ void Dinosaur::drawEne()
 				printf("%c", shape1[i][j]);
 			lk.unlock();
 		}
+}
+
+void Dinosaur::sound()
+{
+	PlaySound(TEXT("rabbit.wav"), NULL, SND_ASYNC);
 }
 
 Traffic::Traffic(Point p)
