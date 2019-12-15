@@ -77,12 +77,17 @@ vector<Enemy*> CGame::getVehicle()
 
 void CGame::resetGame()
 {
-
+	system("cls");
+	SCREEN_COLOR;
+	//lane.~Lane();
+	drawGame();
+	//Lane();
 }
 void CGame::exitGame(HANDLE)
 {
 	//IS_RUNNING = false;
 	system("cls");
+	CGame();
 	//t->join();
 }
 //void exitGame(HANDLE); 
@@ -483,11 +488,18 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause)
 		else if ((ch == ENTER) && (stt == 1))
 		{
 
-			break; //restart
+			resetGame();
+			
+			ResumeThread(handle);
+			isPause = false;
+			cn.eraseCorpse();
+			cn.backToCheckPoint();
+			break;//restart
+
 		}
 		else if ((ch == ENTER) && (stt == 2))
 		{
-
+			exitGame(handle);
 			break;//exit
 		}
 	}
