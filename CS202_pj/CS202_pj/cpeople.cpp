@@ -1,14 +1,29 @@
 #include"Library.h"
 CPEOPLE::CPEOPLE()
 {
+	lives = peopleLives;
 	mState = 1;
 	mX = delta_screenSize_H / 2;
 	mY = delta_screenSize_V+3;
-	//print People
+}
+void CPEOPLE::backToCheckPoint()
+{
+	mX = delta_screenSize_H / 2;
+	mY = delta_screenSize_V + 3;
+	//print People at checkpoint
+	unique_lock<mutex>lk(CGame::mtx);
 	gotoxy(mX, mY);
 	cout << char(219) << char(219) << char(219);
 	gotoxy(mX, mY + 1);
-	cout << " "<< char(219) << "   ";
+	cout << " " << char(219) << "   ";
+}
+void CPEOPLE::eraseCorpse()
+{
+	unique_lock<mutex>lk(CGame::mtx);
+	gotoxy(mX, mY);
+	cout << "   ";
+	gotoxy(mX, mY + 1);
+	cout << "     ";
 }
 void CPEOPLE::Up(int n)
 {
@@ -72,6 +87,10 @@ Point CPEOPLE::currentPos()
 int CPEOPLE::getLives()
 {
 	return lives;
+}
+void CPEOPLE::resetLives()
+{
+	lives = peopleLives;
 }
 
 bool CPEOPLE::isCrash(Point pos, ShapeSize ss) {

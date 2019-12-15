@@ -30,7 +30,7 @@ const int screenSize_V_top = 3;
 const int screenSize_V_bot = 24;
 const int delta_screenSize_H = screenSize_H_right - screenSize_H_left;
 const int delta_screenSize_V = screenSize_V_bot - screenSize_V_top;
-
+const int peopleLives = 5;
 
 const int MAXLEVEL = 5;
 const int MAXCAR = 5;
@@ -46,8 +46,10 @@ const int MAXSPEED = 100;		//1s
 
 #define BUTTON_COLOR SetColor(14);
 #define SCREEN_COLOR system("Color B0");
-#define RED_LIGHT SetColor(10);
-#define GREEN_LIGHT SetColor(8);
+#define PAUSE_BUTTON_CO TextColor(8);
+#define PAUSE_SCREEN_CO system("Color C0");
+//#define RED_LIGHT SetColor(10);
+//#define GREEN_LIGHT SetColor(8);
 #include"extra.h"
 #include"cpeople.h"
 #include"enemy.h"

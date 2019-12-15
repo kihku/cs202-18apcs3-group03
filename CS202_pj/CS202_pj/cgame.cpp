@@ -88,8 +88,12 @@ void CGame::exitGame(HANDLE)
 //void exitGame(HANDLE); 
 void CGame::gamePlay()
 {
+	SCREEN_COLOR;
 	int keyPressed;
 	bool isPause = false;
+	//return init lives for people
+	cn.resetLives();
+	cn.backToCheckPoint();
 	drawGame();
 	
 	thread th1(&CGame::updatePosVehicle, this);
@@ -98,6 +102,7 @@ void CGame::gamePlay()
 	{
 		if (cn.getLives() <= 0)
 		{
+			SuspendThread(th1_handle);
 			break;
 		}
 		keyPressed = _getch();
@@ -106,11 +111,12 @@ void CGame::gamePlay()
 
 		if (keyPressed == 13 && isPause == false)
 		{
+			unique_lock<mutex>lk(CGame::mtx);
+			gotoxy(screenSize_H_right + 14, screenSize_V_top - 1);
+			cout << "P A U S E";
+			lk.unlock();
 			pauseGame(th1_handle);
 			isPause = true;
-		}
-		else if (isPause == true && (keyPressed == KEY_UP||keyPressed==KEY_DOWN))
-		{
 			pauseMenu(th1_handle, isPause);
 		}
 		else if (keyPressed == 'c' || keyPressed == 'C')
@@ -128,12 +134,13 @@ void CGame::gamePlay()
 		else if(isPause==false)
 		{
 			updatePosPeople(keyPressed);
+			Collide();
 		}
-		Collide();
+		
 	}
 	if (th1.joinable())
 		th1.join();
-	
+	menu();
 }
 void CGame::loadGame(istream)
 {
@@ -162,23 +169,22 @@ void CGame::saveGame(ofstream &fout)
 }
 void CGame::pauseGame(HANDLE t)
 {
-	unique_lock<mutex> lk(CGame::mtx);
-	SetColor(13);
-	gotoxy(screenSize_H_right + 14, screenSize_V_top - 1);
-	cout << "P A U S E";
-	gotoxy(screenSize_H_right + 15, screenSize_V_top + 1);
-	cout << "Resume";
-	gotoxy(screenSize_H_right + 15, screenSize_V_top + 2);
-	cout << "Restart";
-	gotoxy(screenSize_H_right + 15, screenSize_V_top + 3);
-	cout << "Exit";
-	lk.unlock();
 	SuspendThread(t);
 }
 void CGame::resumeGame(HANDLE t)
 {
-	ResumeThread(t);
 	SCREEN_COLOR;
+	//erase menu
+	gotoxy(screenSize_H_right + 14, screenSize_V_top - 1);
+	cout << "         ";
+	gotoxy(screenSize_H_right + 15, screenSize_V_top +1);
+	cout << "      "; 
+	gotoxy(screenSize_H_right + 15, screenSize_V_top + 2);
+	cout << "        ";
+	gotoxy(screenSize_H_right + 15, screenSize_V_top + 3);
+	cout << "    ";
+	ResumeThread(t);
+
 }
 //void pauseGame(HANDLE);
 //void resumeGame(HANDLE); 
@@ -197,7 +203,7 @@ void CGame::updatePosAnimal()
 void CGame::drawGame()
 {
 	system("cls");
-	SCREEN_COLOR;
+	//SCREEN_COLOR;
 	const int delta = 3;
 	const int scoreBoard_H = 25;
 	const int scoreBoard_V = 5;
@@ -377,7 +383,7 @@ void CGame::menu()
 		else if ((ch == ENTER) && (stt == 0))
 		{
 			gamePlay();
-			break; //START GAME
+			//START GAME
 		}
 		else if ((ch == ENTER) && (stt == 1))
 		{
@@ -392,7 +398,6 @@ void CGame::menu()
 		else if ((ch == ENTER) && (stt == 3))
 		{
 			
-			
 			break;//MY PROFILE
 		}
 
@@ -400,20 +405,21 @@ void CGame::menu()
 }
 void CGame::pauseMenu(HANDLE handle, bool& isPause)
 {
+	//unique_lock<mutex>lk(CGame::mtx);
 	int ki;
 	int menu_x = screenSize_H_right + 15, menu_y = screenSize_V_top;
 	const int SL = 3;
 	//system("cls");
+
 	const char* tenmuc[] = { "Resume","Restart","Exit" };
 	for (ki = 1; ki < SL; ki++)
 	{
 		gotoxy(menu_x, ki + 1 + menu_y);
-		SCREEN_COLOR;
+		PAUSE_SCREEN_CO;
 		_cprintf(tenmuc[ki]);
 	}
 	gotoxy(menu_x, 1 + menu_y);
-	SCREEN_COLOR;
-	BUTTON_COLOR;
+	PAUSE_BUTTON_CO;
 	_cprintf(tenmuc[0]);
 	char ch;
 	int stt = 0;
@@ -429,20 +435,20 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause)
 			{
 				stt = SL - 1;
 				gotoxy(menu_x, 1 + menu_y);
-				SCREEN_COLOR;
+				PAUSE_SCREEN_CO;
 				_cprintf(tenmuc[0]);
 				gotoxy(menu_x, SL + menu_y);
-				BUTTON_COLOR;
+				PAUSE_BUTTON_CO;
 				_cprintf(tenmuc[stt]);
 			}
 			else
 			{
 
 				gotoxy(menu_x, stt + 2 + menu_y);
-				SCREEN_COLOR;
+				PAUSE_SCREEN_CO;
 				_cprintf(tenmuc[stt + 1]);
 				gotoxy(menu_x, stt + 1 + menu_y);
-				BUTTON_COLOR;
+				PAUSE_BUTTON_CO;
 				_cprintf(tenmuc[stt]);
 			}
 		}
@@ -452,20 +458,20 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause)
 			if (stt > SL - 1)
 			{
 				gotoxy(menu_x, SL + menu_y);
-				SCREEN_COLOR;
+				PAUSE_SCREEN_CO;
 				_cprintf(tenmuc[SL - 1]);
 				stt = 0;
 				gotoxy(menu_x, 1 + menu_y);
-				BUTTON_COLOR;
+				PAUSE_BUTTON_CO;
 				_cprintf(tenmuc[stt]);
 			}
 			else
 			{
 				gotoxy(menu_x, stt + menu_y);
-				SCREEN_COLOR;
+				PAUSE_SCREEN_CO;
 				_cprintf(tenmuc[stt - 1]);
 				gotoxy(menu_x, stt + 1 + menu_y);
-				BUTTON_COLOR;
+				PAUSE_BUTTON_CO;
 				_cprintf(tenmuc[stt]);
 			}
 		}
@@ -473,6 +479,7 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause)
 		{
 			resumeGame(handle);
 			isPause = false;
+			//lk.unlock();
 			break; //resume
 		}
 		else if ((ch == ENTER) && (stt == 1))
@@ -517,6 +524,8 @@ void CGame::Collide() {
 				//cn.killPlayer();
 				//gotoxy(20, 20);
 				cn.reduceLive();
+				cn.eraseCorpse();
+				cn.backToCheckPoint();
 			
 				//Destroy thread enemy;
 				//bombEffect();
