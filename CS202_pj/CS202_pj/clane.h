@@ -56,17 +56,17 @@ class Lane {
 	vector<Enemy*> dino;
 	vector<Traffic*>traf;
 //	bool dir;		//0: left, 1: right
-	Level lev;
+	//Level lev;
 	int count, stopCount;
 	int stopCar;
 
 	//int curLaneRow;
 public:
-	Lane();
+	Lane(Level& lev);
 	~Lane();
 	void updateTraffic();
-	
-	void updateLane();
+	void drawLane(Level& lev);
+	void updateLane(Level& lev);
 	
 	vector<Enemy*>getCar() { return car; }
 

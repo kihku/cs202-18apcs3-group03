@@ -1,6 +1,6 @@
 #include "Library.h"
 
-Lane::Lane()
+Lane::Lane(Level& lev)
 {
 	/*int mode = 1;
 	int numCar, numTruck, distCar, distTruck;
@@ -31,22 +31,22 @@ Lane::Lane()
 	//dir = rand() % 2;
 	car = vector<Enemy*>(6, NULL);
 	for (int i = 0; i < lev.getNumCar(); ++i)
-		car[i]=new Car(pC,0),car[i]->drawEne(), pC.x += lev.getDistCar();
+		car[i]=new Car(pC,0), pC.x += lev.getDistCar();
 	truck = vector<Enemy*>(6, NULL);
 	//dir = rand() % 2;
 
 	for (int i = 0; i < lev.getNumTruck(); ++i)
-		truck[i] = new Truck(pT, 1), truck[i]->drawEne(), pT.x += lev.getDistTruck();
+		truck[i] = new Truck(pT, 1), pT.x += lev.getDistTruck();
 
 	pC = { 5, pT.y + 4 }, pT = { 5, pC.y + 4 };
 	//dir = rand() % 2;
 	bird = vector<Enemy*>(6, NULL);
 	for (int i = 0; i < lev.getNumCar(); ++i)
-		bird[i] = new Bird(pC, 0), bird[i]->drawEne(), pC.x += lev.getDistCar();
+		bird[i] = new Bird(pC, 0), pC.x += lev.getDistCar();
 	//dir = rand() % 2;
 	dino = vector<Enemy*>(6, NULL);
 	for (int i = 0; i < lev.getNumTruck(); ++i)
-		dino[i] = new Dinosaur(pT, 1), dino[i]->drawEne(), pT.x += lev.getDistTruck();
+		dino[i] = new Dinosaur(pT, 1), pT.x += lev.getDistTruck();
 }
 
 Lane::~Lane()
@@ -82,7 +82,16 @@ void Lane::updateTraffic()
 	//}
 }
 
-void Lane::updateLane() {
+void Lane::drawLane(Level& lev)
+{
+	for (int i = 0; i < lev.getNumCar(); ++i)
+		car[i]->drawEne(),  bird[i]->drawEne();
+	
+	for (int i = 0; i < lev.getNumTruck(); ++i)
+		truck[i]->drawEne(), dino[i]->drawEne();
+}
+
+void Lane::updateLane(Level& lev) {
 	count++;
 	if (count % lev.getHarSpeed() == 0)
 	{

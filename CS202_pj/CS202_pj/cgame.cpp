@@ -2,7 +2,7 @@
 void CGame::updatePosPeople(char keyPressed)
 {
 	unique_lock<mutex> lk(CGame::mtx);
-	const int step_horizontal = 2;
+	const int step_horizontal = 4;
 	const int step_vertical = 2;
 	if (keyPressed == 'd')
 	{
@@ -22,7 +22,7 @@ void CGame::updatePosPeople(char keyPressed)
 	}
 	//Collide();
 }
-CGame::CGame()
+CGame::CGame():lane(level)
 {
 	menu();
 	for (int i = 0; i < 24; ++i)
@@ -197,7 +197,7 @@ void CGame::updatePosVehicle()
 {
 	while (true)
 	//Collide();
-		lane.updateLane();
+		lane.updateLane(level);
 }
 void CGame::updatePosAnimal()
 {
@@ -271,7 +271,7 @@ void CGame::drawGame()
 	gotoxy(screenSize_H_right + 12, screenSize_V_top + 5);
 	cout << "S T A T U S";
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 8);
-	cout << "L E V E L " << clevel.getLevel();
+	cout << "L E V E L " << level.getLevel();
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 11);
 	cout << "L I V E S";
 	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
@@ -287,7 +287,7 @@ void CGame::drawGame()
 	cout << char(219) << char(219) << char(219);
 	gotoxy(pos.x, pos.y + 1);
 	cout << " " << char(219) << "   ";
-	
+	lane.drawLane(level);
 }
 bool CGame::exportMap(const char* path)
 {

@@ -8,9 +8,10 @@ class CGame {
 	CPEOPLE cn;
 	int map[85][24];
 	bool mode;	//0: easy, 1: hard
+	Level level;
 	Lane lane;
 	
-	Level clevel;
+	
 public:
 	CGame(); //Chuẩn bị dữ liệu cho tất cả các đối tượng
 	void drawGame(); //Thực hiện vẽ trò chơi ra màn hình sau khi có dữ liệu
