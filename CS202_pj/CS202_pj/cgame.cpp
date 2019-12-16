@@ -454,7 +454,7 @@ void CGame::menu()
 {
 	system("cls");
 	if (!isMute)
-		PlaySound(TEXT("Christmas.wav"), NULL, SND_ASYNC);
+		PlaySound(TEXT("jingleBell.wav"), NULL, SND_ASYNC);
 	//MAIN MENU
 	titleMenu();
 	///
