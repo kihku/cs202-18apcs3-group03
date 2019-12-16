@@ -57,11 +57,6 @@ CGame::~CGame()
 {
 	
 }
-CPEOPLE CGame::getPeople()
-{
-	CPEOPLE peo;
-	return peo;
-}
 vector<Enemy*> CGame::getVehicle()
 {
 	//example to get enemy position 
@@ -695,21 +690,98 @@ void CGame::gameOver(HANDLE th1) {
 	bombEffect();
 	PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
 	gotoxy(20, 4);
-	cout << "P L A Y  A G A I N? (y/n)";
-	cin >> choice;
-	if (choice == 'n'||choice=='N')
+	cout << "P L A Y  A G A I N?";
+	
+	const int menu_x = 40+10, menu_y = 4;
+	int dist_y = 2;
+	int index_y=0, ch;
+	const char* tenmuc[2] = { " Y E S "," N O " };
+	SCREEN_COLOR;
+	gotoxy(menu_x, menu_y);
+	cout << " Y E S ";
+	gotoxy(menu_x, menu_y+dist_y);
+	cout << " N O ";
+
+	//in dam luc khoi tao
+	gotoxy(menu_x, menu_y);
+	SETTING_BUT_CO;
+	cout << tenmuc[0];
+	while (1)
 	{
-		exitGame();
-	}
-	else if (choice == 'y' || choice == 'Y')
-	{
-		resetGame(0);
-		cn.resetLives();
-		//for (int i = 0; i < cn.getLives() * 3; ++i)
-			//cout << char(222);
-		cn.eraseCorpse();
-		cn.backToCheckPoint();
-		ResumeThread(th1);
+		ch = _getch();
+		if (ch == 0)
+			ch = _getch();
+		if (ch == KEY_UP)
+		{
+			index_y--;
+			//gap bien tren
+			if (index_y < 0)
+			{
+				index_y = 1;
+				gotoxy(menu_x, menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[0]);
+				gotoxy(menu_x, dist_y + menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[1]);
+			}
+			else
+			{
+				//xoa duoi
+				gotoxy(menu_x, dist_y + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[1]);
+				//in hien tai
+				gotoxy(menu_x, menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[0]);
+			}
+		}
+		else if (ch == KEY_DOWN)
+		{
+			index_y++;
+			if (index_y > 1)
+			{
+				//xoa tren
+				gotoxy(menu_x, dist_y + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[1]);
+				index_y = 0;
+				gotoxy(menu_x, menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[0]);
+			}
+			else
+			{
+				//xoa tren
+				gotoxy(menu_x , menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[0]);
+				//in hien tai
+				gotoxy(menu_x, dist_y + menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[1]);
+			}
+		}
+
+		//YES
+		else if (ch == ENTER && index_y == 0)
+		{
+			resetGame(0);
+			cn.resetLives();
+			gotoxy(screenSize_H_right + 10, screenSize_V_top + 13); 
+			for (int i = 0; i < cn.getLives() * 3; ++i)
+				cout << char(222);
+			cn.eraseCorpse();
+			cn.backToCheckPoint();
+			ResumeThread(th1);
+			break;
+		}
+		//NO
+		else if (ch == ENTER && index_y == 1)
+		{
+			exitGame();
+		}
 	}
 }
 
@@ -934,9 +1006,7 @@ void CGame::settingMenu()
 		{
 			menu();
 		}
-
 	}
-
 }
 
 
