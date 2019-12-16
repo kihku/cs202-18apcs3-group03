@@ -156,8 +156,9 @@ void CGame::gamePlay()
 		}
 		else if(isPause==false)
 		{
+			//Collide();
 			updatePosPeople(keyPressed);
-			Collide();
+			//Collide();
 		}
 		
 	}
@@ -219,6 +220,7 @@ void CGame::updatePosVehicle(bool nextLevel)
 		//Collide();
 		lane.updateLane(level);
 	}
+
 }
 void CGame::updatePosAnimal()
 {
