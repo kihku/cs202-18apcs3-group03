@@ -23,31 +23,31 @@ CGame::CGame() :lane(level)
 void CGame::updatePosPeople(char keyPressed,bool lvUp)
 {
 	unique_lock<mutex> lk(CGame::mtx);
-	const int step_horizontal = 1;
+	const int step_horizontal = 2;
 
 	const int step_vertical = 2;
 	if (keyPressed == 'd')
 	{
-		if (!isMute)
-			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);
+		/*if (!isMute)
+			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);*/
 		cn.Right(step_horizontal);
 	}
 	else if (keyPressed == 'a')
 	{
-		if (!isMute)
-			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);
+		/*if (!isMute)
+			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);*/
 		cn.Left(step_horizontal);
 	}
 	else if (keyPressed == 'w')
 	{
-		if (!isMute)
-			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);
+		/*if (!isMute)
+			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);*/
 		cn.Up(step_vertical);
 	}
 	else if (keyPressed == 's')
 	{
-		if (!isMute)
-			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);
+		/*if (!isMute)
+			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);*/
 		cn.Down(step_vertical);
 	}
 	//Collide();
@@ -146,7 +146,7 @@ void CGame::gamePlay()
 		{
 			SuspendThread(th1_handle);
 			system("cls");
-			gameOver();
+			gameOver(th1_handle);
 		}
 		keyPressed = _getch();
 		if (keyPressed == 0)
@@ -459,11 +459,18 @@ void CGame::menu()
 	titleMenu();
 	///
 	//dino
-	
-	drawDino(7, 5, 0);
-	drawDino(105, 5, 1);
-	drawDino(80, 15, 1);
-	drawDino(20, 20, 1);
+	drawDino(92, 12, 0);
+	drawDino(20, 12, 1);
+	drawDino(7, 19, 0);
+	drawDino(105, 19, 1);
+	drawDino(50, 21, 1);
+	drawDino(62, 21, 0);
+	gotoxy(59, 18);
+	cout << " " << char(220) << " " << char(220);
+	gotoxy(59, 19);
+	cout << char(219) << char(219) << char(219) << char(219) << char(219);
+	gotoxy(59, 20);
+	cout << " " << char(223) << char(219) << char(223);
 	SCREEN_COLOR;
 	int ki;
 	const int SL = 4;
@@ -694,16 +701,26 @@ void CGame::Collide() {
 		}
 	}
 }
-void CGame::gameOver() {
+void CGame::gameOver(HANDLE th1) {
 	char choice;
 	bombEffect();
 	PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
 	gotoxy(20, 4);
 	cout << "P L A Y  A G A I N? (y/n)";
 	cin >> choice;
-	if (choice == 'y')
+	if (choice == 'n'||choice=='N')
 	{
 		exitGame();
+	}
+	else if (choice == 'y' || choice == 'Y')
+	{
+		resetGame(0);
+		cn.resetLives();
+		//for (int i = 0; i < cn.getLives() * 3; ++i)
+			//cout << char(222);
+		cn.eraseCorpse();
+		cn.backToCheckPoint();
+		ResumeThread(th1);
 	}
 }
 
@@ -711,7 +728,10 @@ void CGame:: nextlevel(HANDLE handle,bool nextLevel) {
 	
 	resetGame(nextLevel);
 	if (!isMute)
-		PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
+	{
+		PlaySound(TEXT("smw_power-up.wav"), NULL, SND_ASYNC);
+		//PlaySound(TEXT("zelda_13.wav"), NULL, SND_ASYNC);
+	}
 	cn.eraseCorpse();
 	cn.backToCheckPoint();
 }
@@ -966,7 +986,7 @@ void CGame::loadmenu()
 		{
 			SuspendThread(th1_handle);
 			system("cls");
-			gameOver();
+			gameOver(th1_handle);
 		}
 		keyPressed = _getch();
 		if (keyPressed == 0)

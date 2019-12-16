@@ -37,7 +37,7 @@ public:
 	bool exportMap(const char* a);
 	Point peoplePos();
 	void Collide();
-	void gameOver();
+	void gameOver(HANDLE);
 	void nextlevel(HANDLE,bool);
 	void bombEffect();
 	static mutex mtx;
