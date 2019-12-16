@@ -10,7 +10,7 @@ private:
 
 	const int distCar[3] = {50,30,20};
 	const int distTruck[3] = {40,30,30};
-	const int ezSpeed[3] = { 200,200,200 };
+	const int ezSpeed[3] = { 100,100,100 };
 	const int harSpeed[3] = { 80,80,80 };
 	const int maxLevel = 3;
 	//int minSpd, maxSpd;
@@ -61,9 +61,10 @@ class Lane {
 public:
 	Lane();
 	~Lane();
+	void initLane();
 	void updateTraffic();
-	void drawLane();
-	void updateLane();
+	void drawLane(bool);
+	void updateLane(bool);
 	
 	vector<Enemy*>getCar() { return car; }
 
@@ -77,7 +78,7 @@ public:
 	Point  getVehiclePoint();
 	void updatePosEnemy(int t);
 	
-	bool drawEne();
+	//bool drawlane(bool);
 	//void deleteOldEnemy(Point pos, ShapeSize s);
 	//bool printNewEnemy(Point pos, char** shape, ShapeSize s);	//return if printable
 	

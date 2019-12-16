@@ -17,9 +17,10 @@ int Car::getType()
 	return 2;
 }
 
-void Car::moveEne()
+void Car::moveEne(bool lvUp)
 {
-	unique_lock<mutex> lk(CGame::mtx);
+	if (lvUp == false)
+		unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 	for (int i = 0; i < ss.h; ++i)
 		for (int j = 0; j < ss.w; ++j)
@@ -39,9 +40,10 @@ void Car::moveEne()
 }
 
 
-void Car::drawEne()
+void Car::drawEne(bool lvUp)
 {
-	unique_lock<mutex> lk(CGame::mtx);
+	if (lvUp == false)
+		unique_lock<mutex> lk(CGame::mtx); 
 	Point pos = getPos();
 
 	for (int i = 0; i < ss.h; ++i)
@@ -70,9 +72,10 @@ int Truck::getType()
 	return 3;
 }
 
-void Truck::moveEne()
+void Truck::moveEne(bool lvUp)
 {
-	unique_lock<mutex> lk(CGame::mtx);
+	if (lvUp == false)
+		unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 	for (int i = 0; i < ss.h; ++i)
 		for (int j = 0; j < ss.w; ++j)
@@ -92,9 +95,10 @@ void Truck::moveEne()
 }
 
 
-void Truck::drawEne()
+void Truck::drawEne(bool lvUp)
 {
-	unique_lock<mutex> lk(CGame::mtx);
+	if (lvUp == false)
+		unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 
 	for (int i = 0; i < ss.h; ++i)
@@ -121,9 +125,10 @@ int Bird::getType()
 	return 4;
 }
 
-void Bird::moveEne()
+void Bird::moveEne(bool lvUp)
 {
-	unique_lock<mutex> lk(CGame::mtx);
+	if (lvUp == false)
+		unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 	for (int i = 0; i < ss.h; ++i)
 		for (int j = 0; j < ss.w; ++j)
@@ -143,9 +148,11 @@ void Bird::moveEne()
 }
 
 
-void Bird::drawEne()
+void Bird::drawEne(bool lvUp)
 {
-	unique_lock<mutex> lk(CGame::mtx);
+
+	if (lvUp == false)
+		unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 
 	for (int i = 0; i < ss.h; ++i)
@@ -173,9 +180,10 @@ int Dinosaur::getType()
 	return 5;
 }
 
-void Dinosaur::moveEne()
+void Dinosaur::moveEne(bool lvUp)
 {
-	unique_lock<mutex> lk(CGame::mtx);
+	if (lvUp == false)
+		unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
 	for (int i = 0; i < ss.h; ++i)
 		for (int j = 0; j < ss.w; ++j)
@@ -195,19 +203,20 @@ void Dinosaur::moveEne()
 }
 
 
-void Dinosaur::drawEne()
+void Dinosaur::drawEne(bool lvUp)
 {
-	unique_lock<mutex> lk(CGame::mtx);
+	if (lvUp == false)
+		unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
-	lk.unlock();
+	
 	for (int i = 0; i < ss.h; ++i)
 		for (int j = 0; j < ss.w; ++j)
 		{
-			lk.lock();
+			
 			gotoxy(pos.x + j, pos.y + i);
 			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
 				printf("%c", shape1[i][j]);
-			lk.unlock();
+			
 		}
 }
 

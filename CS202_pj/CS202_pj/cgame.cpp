@@ -216,8 +216,8 @@ void CGame::updatePosVehicle(bool nextLevel)
 	{
 		if (nextLevel == true)
 			break;
-		//Collide();
-		lane.updateLane();
+		Collide();
+		lane.updateLane(nextLevel);
 	}
 
 }
@@ -314,7 +314,7 @@ void CGame::drawGame(bool nextLevel)
 	cout << char(219) << char(219) << char(219);
 	gotoxy(pos.x, pos.y + 1);
 	cout << " " << char(219) << "   ";
-	lane.drawLane();
+	lane.drawLane(nextLevel);
 }
 bool CGame::exportMap(const char* path)
 {
@@ -551,11 +551,12 @@ void CPEOPLE::reduceLive()
 //	}
 //vector <Enemy*> enemyList = rowsData.listEnemy(); //enemyList = 0 
 void CGame::Collide() {
-	for (int i = 0; i < (int)getVehicle().size(); ++i) {
+	vector<Enemy*>ene = getVehicle();
+	for (int i = 0; i < ene.size(); ++i) {
 		//drawEnemies(enemyList[i]);
-		if (getVehicle()[i])
+		if (ene[i])
 		{
-			if (cn.isCrash(getVehicle()[i]->getPos(), getVehicle()[i]->getShapeSize()) == true) {
+			if (cn.isCrash(ene[i]->getPos(), ene[i]->getShapeSize()) == true) {
 				//if (!constantVar::isMute) enemyList[i]->sound();
 				//cn.killPlayer();
 				//gotoxy(20, 20);
@@ -636,11 +637,11 @@ void CGame::settingMenu()
 	SCREEN_COLOR;
 	gotoxy(menu_x, menu_y);
 	cout << "M O D E";
-	gotoxy(menu_x, menu_y+2);
+	gotoxy(menu_x, menu_y + 2);
 	cout << "S O U N D";
 	gotoxy(menu_x + 17, menu_y);
 	cout << "E A S Y   H A R D";
-	gotoxy(menu_x+17, menu_y + 2);
+	gotoxy(menu_x + 17, menu_y + 2);
 	cout << "O N       O F F";
 	gotoxy(menu_x + 17, menu_y + 4);
 	cout << "B A C K";
@@ -678,7 +679,7 @@ void CGame::settingMenu()
 			if (ch == KEY_DOWN)
 			{
 				index_y++;
-				if (index_y==0)
+				if (index_y == 0)
 				{
 					index_y = 0;
 					gotoxy(menu_x + 17, menu_y);
