@@ -26,16 +26,16 @@ void Car::moveEne()
 		for (int j = 0; j < ss.w; ++j)
 		{
 			gotoxy(pos.x + j, pos.y + i);
-			if (l + 1 <= pos.x + j && pos.x + j <= r-1)
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
 				cout << ' ';
 		}
 	//if (getDir()) {
 	//		setPos({ pos.x + 1, pos.y });
-	//	if (getPos().x >= r) setPos({ l - ss.w, pos.y });	//l-1?
+	//	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });	//l-1?
 	//}
 	//else {
-		setPos({ pos.x - 1, pos.y });
-		if (getPos().x + ss.w - 1 <= l) setPos({ r , pos.y });
+	setPos({ pos.x - 1, pos.y });
+	if (getPos().x +ss.w-1<=  screenSize_H_left) setPos({ screenSize_H_right, pos.y });
 	//}
 }
 
@@ -44,14 +44,14 @@ void Car::drawEne()
 {
 	unique_lock<mutex> lk(CGame::mtx);
 	Point pos = getPos();
-	
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0;j<ss.w;++j)
-			{
-				gotoxy(pos.x+j, pos.y + i);
-				if(l+1<=pos.x+j&&pos.x+j<=r-1)
-					cout << shape[i][j];
-			}
+
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
+		{
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				cout << shape[i][j];
+		}
 }
 
 Truck::Truck(Point p, bool d):Enemy(p,d) {}
@@ -74,16 +74,16 @@ void Truck::moveEne()
 		for (int j = 0; j < ss.w; ++j)
 		{
 			gotoxy(pos.x + j, pos.y + i);
-			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
 				cout << ' ';
 		}
 	//if (getDir()) {
-		setPos({ pos.x + 1, pos.y });
-		if (getPos().x >= r) setPos({ l - ss.w, pos.y });
+	setPos({ pos.x + 1, pos.y });
+	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });
 	//}
 	//else {
 	//	setPos({ pos.x - 1, pos.y });
-	//	if (getPos().x + ss.w - 1 <= l) setPos({ r , pos.y });
+	//	if (getPos().x >= screenSize_H_left) setPos({ screenSize_H_right - ss.w, pos.y });
 	//}
 }
 
@@ -97,10 +97,177 @@ void Truck::drawEne()
 		for (int j = 0; j < ss.w; ++j)
 		{
 			gotoxy(pos.x + j, pos.y + i);
-			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
-				getDir() ? cout << shape1[i][j] : cout << shape0[i][j];
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				cout << shape1[i][j];
 		}
 }
+
+ShapeSize Bird::getShapeSize()
+{
+	return ss;
+}
+
+int Bird::getType()
+{
+	return 4;
+}
+
+void Bird::moveEne()
+{
+	unique_lock<mutex> lk(CGame::mtx);
+	Point pos = getPos();
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
+		{
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				cout << ' ';
+		}
+	//if (getDir()) {
+	//		setPos({ pos.x + 1, pos.y });
+	//	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });	//l-1?
+	//}
+	//else {
+	setPos({ pos.x - 1, pos.y });
+	if (getPos().x + ss.w - 1 <= screenSize_H_left) setPos({ screenSize_H_right, pos.y });
+	//}
+}
+
+
+void Bird::drawEne()
+{
+	unique_lock<mutex> lk(CGame::mtx);
+	Point pos = getPos();
+
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
+		{
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				cout << shape0[i][j];
+		}
+}
+Dinosaur::Dinosaur(Point p, bool d):Enemy(p, d) {
+	};
+
+ShapeSize Dinosaur::getShapeSize()
+{
+	return ss;
+}
+
+int Dinosaur::getType()
+{
+	return 5;
+}
+
+void Dinosaur::moveEne()
+{
+	unique_lock<mutex> lk(CGame::mtx);
+	Point pos = getPos();
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
+		{
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				printf(" ");
+		}
+	//if (!getDir()) {
+	setPos({ pos.x + 1, pos.y });
+	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });
+	//	}
+		////else {
+		//	setPos({ pos.x - 1, pos.y });
+		//	if (getPos().x >= screenSize_H_left) setPos({ screenSize_H_right - ss.w, pos.y });
+		////}
+}
+
+
+void Dinosaur::drawEne()
+{
+	unique_lock<mutex> lk(CGame::mtx);
+	Point pos = getPos();
+	lk.unlock();
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
+		{
+			lk.lock();
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				printf("%c", shape1[i][j]);
+			lk.unlock();
+		}
+}
+
+Traffic::Traffic(Point p)
+{
+	++numTraffic;
+	greenLight = true;
+	pos = p;
+}
+
+Traffic::Traffic(const Traffic& src)
+{
+	++numTraffic; greenLight = src.greenLight; pos = src.pos;
+}
+
+void Traffic::drawTrafficLight()
+{
+	unique_lock<mutex> lk(CGame::mtx);
+	gotoxy(pos.x, pos.y);
+	if (greenLight) {
+		cout << char(220);
+	}
+	else {
+		cout << char(223);
+	}
+}
+
+void Traffic::green()
+{
+	greenLight = true;
+}
+
+void Traffic::red()
+{
+	greenLight = false;
+}
+
+void Traffic::toggle(int i)
+{
+	greenLight = !greenLight;
+}
+
+Traffic::~Traffic()
+{
+	--numTraffic;
+}
+
+bool Traffic::isGreen()
+{
+	return greenLight;
+}
+
+char Car::shape[3][9] = { {' ',' ','_','_','_','_','_',' ',' '},
+	{' ','/','|',' ',' ',' ','|','\\',' ' },
+	{'|','_','O','_','_','_','O','_','|' } };
+ShapeSize Car::ss = { 9,3 };
+
+char Truck::shape1[3][13] = { {' ','_','_','_','_','_','_','_','_','_',' ',' ',' '},
+	{ '|','/','/','/','/','/','/','/','|','_','\\','_',' ' },
+	{ '|','_','/','O','_','_','_','_','O','\\','_','_','|' } }; 
+ShapeSize Truck::ss = { 13,3 }; 
+
+char Bird::shape0[3][7] = { {' ',' ',',',',',',',' ',' '},
+	{ '<','(','.',' ',' ',' ',')' },
+	{ ' ','(',',','(','>','_','\\'} };
+ShapeSize Bird::ss = { 7,3 };
+
+char Dinosaur::shape1[3][8] ={{'(','\\','(','\\',' ',' ',' ',' '}, 
+{'(','-','x','-',')',' ',' ','  '  },
+{'o','_','(','"',')','(','"',')'}};
+ShapeSize Dinosaur::ss = { 8,3 };
+
+
 //
 //void Car::Move()
 //{
@@ -205,55 +372,7 @@ void Truck::drawEne()
 //{
 //	drawVeh();
 //}
-
-ShapeSize Bird::getShapeSize()
-{
-	return ss;
-}
-
-int Bird::getType()
-{
-	return 4;
-}
-
-void Bird::moveEne()
-{
-	unique_lock<mutex> lk(CGame::mtx);
-	Point pos = getPos();
-	for (int i = 0; i < ss.h; ++i)
-		for (int j = 0; j < ss.w; ++j)
-		{
-			gotoxy(pos.x + j, pos.y + i);
-			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
-				cout << ' ';
-		}
-	/*if (getDir()) {
-		setPos({ pos.x + 1, pos.y });
-		if (getPos().x >= r) setPos({ l - ss.w, pos.y });
-	}*/
-	//else {
-		setPos({ pos.x - 1, pos.y });
-		if (getPos().x + ss.w - 1 <= l) setPos({ r , pos.y });
-	//}
-}
-
-
-void Bird::drawEne()
-{
-	unique_lock<mutex> lk(CGame::mtx);
-	Point pos = getPos();
-
-	for (int i = 0; i < ss.h; ++i)
-		for (int j = 0; j < ss.w; ++j)
-		{
-			gotoxy(pos.x + j, pos.y + i);
-			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
-				getDir() ? cout << shape1[i][j] : cout << shape0[i][j];
-		}
-}
-
-Dinosaur::Dinosaur(Point p, bool d):Enemy(p, d) {
-	/*for (int i = 0; i < 4; ++i) shape1[0][i] = ' ';
+/*for (int i = 0; i < 4; ++i) shape1[0][i] = ' ';
 	for (int i = 4; i < 10; ++i) shape1[0][i] = char(220);
 	shape1[0][10] = ' ';
 	for (int i = 0; i < 3; ++i) shape1[1][i] = shape1[2][i] = ' ';
@@ -278,101 +397,3 @@ Dinosaur::Dinosaur(Point p, bool d):Enemy(p, d) {
 	for (int i = 8; i < 10; ++i) shape0[4][i] = char(223);
 	shape0[3][0] = shape0[3][8] = shape0[4][10] = shape0[4][0] = ' ';
 	shape0[1][7] = shape0[2][7] = shape0[3][7] = shape0[3][10] = char(175);*/
-};
-
-ShapeSize Dinosaur::getShapeSize()
-{
-	return ss;
-}
-
-int Dinosaur::getType()
-{
-	return 5;
-}
-
-void Dinosaur::moveEne()
-{
-	unique_lock<mutex> lk(CGame::mtx);
-	Point pos = getPos();
-	for (int i = 0; i < ss.h; ++i)
-		for (int j = 0; j < ss.w; ++j)
-		{
-			gotoxy(pos.x + j, pos.y + i);
-			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
-				printf(" ");
-		}
-	//if (!getDir()) {
-		setPos({ pos.x + 1, pos.y });
-		if (getPos().x >= r) setPos({ l - ss.w, pos.y });
-//	}
-	////else {
-	//	setPos({ pos.x - 1, pos.y });
-	//	if (getPos().x + ss.w - 1 <= l) setPos({ r , pos.y });
-	////}
-}
-
-
-void Dinosaur::drawEne()
-{
-	unique_lock<mutex> lk(CGame::mtx);
-	Point pos = getPos();
-	lk.unlock();
-	for (int i = 0; i < ss.h; ++i)
-		for (int j = 0; j < ss.w; ++j)
-		{
-			lk.lock();
-			gotoxy(pos.x + j, pos.y + i);
-			if (l + 1 <= pos.x + j && pos.x + j <= r - 1)
-				getDir() ? printf("%c" ,shape1[i][j]) : printf("%c", shape0[i][j]);
-			lk.unlock();
-		}
-}
-
-Traffic::Traffic(Point p)
-{
-	++numTraffic;
-	greenLight = true;
-	pos = p;
-}
-
-Traffic::Traffic(const Traffic& src)
-{
-	++numTraffic; greenLight = src.greenLight; pos = src.pos;
-}
-
-void Traffic::drawTrafficLight()
-{
-	unique_lock<mutex> lk(CGame::mtx);
-	gotoxy(pos.x, pos.y);
-	if (greenLight) {
-		cout << char(220);
-	}
-	else {
-		cout << char(223);
-	}
-}
-
-void Traffic::green()
-{
-	greenLight = true;
-}
-
-void Traffic::red()
-{
-	greenLight = false;
-}
-
-void Traffic::toggle(int i)
-{
-	greenLight = !greenLight;
-}
-
-Traffic::~Traffic()
-{
-	--numTraffic;
-}
-
-bool Traffic::isGreen()
-{
-	return greenLight;
-}

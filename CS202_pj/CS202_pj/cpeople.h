@@ -4,20 +4,25 @@ class CPEOPLE
 {
 private:
 	int mX, mY;
-	int lives = 3;
+	int lives;
 	bool mState; //1 is alive, 0 is dead
+	static int obj;
 public:
 	CPEOPLE();
+	CPEOPLE(int x, int y, int live);
+	~CPEOPLE() { mX = 0; mY = 0; lives = 0; mState = 0; };
 	void Up(int);
 	void Left(int);
 	void Right(int);
 	void Down(int);
 	int getLives();
-	//bool isImpact(const Enemy*&);
-	//bool isImpact(const CANIMAL*&);
+	void resetLives();
+	void reduceLive();
+	void backToCheckPoint();
+	void eraseCorpse();
 	//bool isFinish();
 	bool isDead();
 	//For arrayTesting
 	Point currentPos();
-	bool isCrash(Point Pos);
+	bool isCrash(Point Pos, ShapeSize ss);
 };

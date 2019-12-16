@@ -26,7 +26,8 @@ private:
 	//  int nColumn;
 public:
 	Level();
-	
+	Level(int &l) { level = l; mode = 0; };
+	~Level() { level = 0; mode = 0; }
 	bool levelUp();
 
 	int getLevel();
@@ -56,17 +57,17 @@ class Lane {
 	vector<Enemy*> dino;
 	vector<Traffic*>traf;
 //	bool dir;		//0: left, 1: right
+	//Level lev;
 	int count, stopCount;
 	int stopCar;
 
 	//int curLaneRow;
 public:
-	//Lane() = default;
-	Lane(Level lev);
+	Lane(Level& lev);
 	~Lane();
 	void updateTraffic();
-	
-	void updateLane(Level lev);
+	void drawLane(Level& lev);
+	void updateLane(Level& lev);
 	
 	vector<Enemy*>getCar() { return car; }
 

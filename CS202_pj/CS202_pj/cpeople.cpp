@@ -1,14 +1,38 @@
 #include"Library.h"
 CPEOPLE::CPEOPLE()
 {
+	lives = peopleLives;
 	mState = 1;
 	mX = delta_screenSize_H / 2;
 	mY = delta_screenSize_V+3;
-	//print People
+}
+CPEOPLE::CPEOPLE(int x,int y,int live)
+{
+	lives = live;
+	if (live < 0)
+		mState = 0;
+	else mState = 1;
+	mX = x;
+	mY = y;
+}
+void CPEOPLE::backToCheckPoint()
+{
+	mX = delta_screenSize_H / 2;
+	mY = delta_screenSize_V + 3;
+	//print People at checkpoint
+	unique_lock<mutex>lk(CGame::mtx);
 	gotoxy(mX, mY);
 	cout << char(219) << char(219) << char(219);
 	gotoxy(mX, mY + 1);
-	cout << " "<< char(219) << "   ";
+	cout << " " << char(219) << "   ";
+}
+void CPEOPLE::eraseCorpse()
+{
+	unique_lock<mutex>lk(CGame::mtx);
+	gotoxy(mX, mY);
+	cout << "   ";
+	gotoxy(mX, mY + 1);
+	cout << "     ";
 }
 void CPEOPLE::Up(int n)
 {
@@ -20,6 +44,8 @@ void CPEOPLE::Up(int n)
 	gotoxy(mX, mY + 1);
 	cout << " " << char(219) << "   ";
 	gotoxy(mX, mY + 2);
+	cout << "   ";
+	gotoxy(mX, mY + 3);
 	cout << "    ";
 }
 void CPEOPLE::Down(int n)
@@ -31,7 +57,9 @@ void CPEOPLE::Down(int n)
 	cout << char(219) << char(219) << char(219);
 	gotoxy(mX, mY + 1);
 	cout << " " << char(219) << "   ";
-	gotoxy(mX, mY -1);
+	gotoxy(mX, mY - 1);
+	cout << "   ";
+	gotoxy(mX, mY -2);
 	cout << "    ";
 }
 void CPEOPLE::Left(int n)
@@ -57,10 +85,10 @@ void CPEOPLE::Right(int n)
 }
 bool CPEOPLE::isDead()
 {
-	if (mState == 0)
-		return 1;
+	if (lives>0)
+		return false;
 	else
-		return 0;
+		return true;
 }
 Point CPEOPLE::currentPos()
 {
@@ -73,9 +101,42 @@ int CPEOPLE::getLives()
 {
 	return lives;
 }
-bool CPEOPLE::isCrash(Point pos) {
-	if (abs(mX - pos.x) <=5 && abs(mY - pos.y) <= 5) {
-		return true;
+void CPEOPLE::resetLives()
+{
+	lives = peopleLives;
+}
+
+bool CPEOPLE::isCrash(Point pos, ShapeSize ss) {
+	if ((mX - pos.x) >= 0 && (mY - pos.y) >= 0)
+	{
+		if ((mX - pos.x) <= ss.w && (mY - pos.y) <= ss.h) {
+			//lives--;
+			return true;
+		}
 	}
+	else 
+		if ((mX - pos.x) < 0 && (mY - pos.y) < 0) {
+			if ((mX - pos.x) ==0 && (mY - pos.y) == 0) {
+				//lives--;
+				return true;
+			}
+		}
+		else
+			if ((mX - pos.x) < 0 && (mY - pos.y) >= 0) {
+				if ((mX - pos.x) == 0 && (mY - pos.y) <= ss.h) {
+					//lives--;
+					return true;
+				}
+			}
+			else
+				if ((mX - pos.x) >= 0 && (mY - pos.y) < 0) {
+					if ((mX - pos.x) <=ss.w && (mY - pos.y) == 0) {
+						//lives--;
+						return true;
+					}
+				}
 	return false;
 }
+	
+	
+	
