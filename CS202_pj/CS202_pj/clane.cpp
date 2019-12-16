@@ -84,12 +84,13 @@ void Lane::updateTraffic()
 }
 
 void Lane::drawLane(Level& lev)
-{
-	for (int i = 0; i < lev.getNumCar(); ++i)
-		car[i]->drawEne(),  bird[i]->drawEne();
+{ 
+		for (int i = 0; i < lev.getNumCar(); ++i)
+			car[i]->drawEne(), bird[i]->drawEne();
+
+		for (int i = 0; i < lev.getNumTruck(); ++i)
+			truck[i]->drawEne(), dino[i]->drawEne();
 	
-	for (int i = 0; i < lev.getNumTruck(); ++i)
-		truck[i]->drawEne(), dino[i]->drawEne();
 }
 
 void Lane::updateLane(Level& lev) {

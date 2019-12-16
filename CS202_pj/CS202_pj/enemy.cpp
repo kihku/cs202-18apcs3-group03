@@ -1,6 +1,5 @@
 #pragma once
 #include"Library.h"
-int Traffic::numTraffic = 0;
 //int Car::numCar = 0;
 Car::Car(Point p, bool d) :Enemy(p,d)
 {
@@ -219,19 +218,24 @@ void Dinosaur::sound()
 
 Traffic::Traffic(Point p)
 {
-	++numTraffic;
-	greenLight = true;
-	pos = p;
+	if (this != NULL)
+	{
+		greenLight = true;
+		pos = p;
+	}
 }
 
 Traffic::Traffic(const Traffic& src)
 {
-	++numTraffic; greenLight = src.greenLight; pos = src.pos;
+	if (this != NULL)
+		greenLight = src.greenLight; pos = src.pos;
 }
 
 void Traffic::drawTrafficLight()
 {
 	unique_lock<mutex> lk(CGame::mtx);
+	if (this == NULL)
+		return;
 	gotoxy(pos.x, pos.y);
 	if (greenLight) {
 		cout << char(220);
@@ -243,27 +247,30 @@ void Traffic::drawTrafficLight()
 
 void Traffic::green()
 {
-	greenLight = true;
+	if(this!=NULL)
+		greenLight = true;
 }
 
 void Traffic::red()
 {
-	greenLight = false;
+	if (this != NULL)
+		greenLight = false;
 }
 
 void Traffic::toggle(int i)
 {
-	greenLight = !greenLight;
+	if (this != NULL)
+		greenLight = !greenLight;
 }
 
 Traffic::~Traffic()
 {
-	--numTraffic;
 }
 
 bool Traffic::isGreen()
 {
-	return greenLight;
+	if (this != NULL)
+		return greenLight;
 }
 
 char Car::shape[3][9] = { {' ',' ','_','_','_','_','_',' ',' '},
