@@ -27,18 +27,26 @@ void CGame::updatePosPeople(char keyPressed)
 	if (keyPressed == 'd')
 	{
 		cn.Right(step_horizontal);
+		if (!constVar::isMute) 
+			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);
 	}
 	else if (keyPressed == 'a')
 	{
 		cn.Left(step_horizontal);
+		if (!constVar::isMute)
+			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);
 	}
 	else if (keyPressed == 'w')
 	{
 		cn.Up(step_vertical);
+		if (!constVar::isMute)
+			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);
 	}
 	else if (keyPressed == 's')
 	{
 		cn.Down(step_vertical);
+		if (!constVar::isMute)
+			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);
 	}
 	//Collide();
 }
@@ -220,7 +228,8 @@ void CGame::updatePosAnimal()
 void CGame::drawGame()
 {
 	system("cls");
-	PlaySound(TEXT("smw_bonus_game_end.wav"), NULL, SND_ASYNC);
+	if (!constVar::isMute)
+		PlaySound(TEXT("zelda_13.wav"), NULL, SND_ASYNC);
 	//SCREEN_COLOR;
 	const int delta = 3;
 	const int scoreBoard_H = 25;
@@ -325,14 +334,87 @@ Point CGame::peoplePos()
 {
 	return cn.currentPos();
 }
+string CGame::getFileContents(std::ifstream& File)
+{
+	std::string Lines = "";        //All lines
+
+	if (File)                      //Check if everything is good
+	{
+		while (File.good())
+		{
+			std::string TempLine;                  //Temp line
+			std::getline(File, TempLine);        //Get temp line
+			TempLine += "\n";                      //Add newline character
+
+			Lines += TempLine;                     //Add newline
+		}
+		return Lines;
+	}
+	else                           //Return error
+	{
+		return "ERROR File does not exist.";
+	}
+}
+void CGame::titleMenu() {
+	//Ascii art
+
+	ifstream Reader("CrossyRoad.txt");             //Open file
+	string Art = getFileContents(Reader);       //Get file
+	gotoxy(0,0);
+	cout << Art << std::endl;               //Print it to the screen
+	Reader.close();                           //Close file
+	///
+	SCREEN_COLOR;
+	/*int ki;
+	const int SL = 4;
+	const char* tenmuc[] = { "P H A M  T R A N  H I E N  D U N G","N G U Y E N  T R A N  M I N H  K H U E","V O  M I N H  N H A N","N G U Y E N  T H I  B I C H  V A N" };
+	for (ki = 1; ki < SL; ki++)
+	{
+		gotoxy(32, ki + 1 + 10);
+		SCREEN_COLOR;
+		_cprintf(tenmuc[ki]);
+	}
+	gotoxy(32, 1 + 10);
+	SCREEN_COLOR;
+	BUTTON_COLOR;
+	_cprintf(tenmuc[0]);*/
+	//
+	/*srand(time(0));
+	int x = 0;
+	for (int i = 0; i < 100; i++) {
+		int r = rand() % 500;
+		x++;
+		cout << "\r" << x << "% completed." << flush;
+		if (i < 43) {
+			Sleep(r / 6);
+		}
+		else if (i > 43 && i < 74) {
+			Sleep(r / 8);
+		}
+		else if (i < 98) {
+			Sleep(r / 5);
+		}
+		else if (i > 97 && i != 99) {
+			Sleep(1000);
+		}
+	}*/
+	///
+	/*do
+	{
+		cout << '\n' << "Press a key to continue...";
+	} while (cin.get() != '\n');*/
+}
 void CGame::menu()
 {
-
+	system("cls");
+	if (!constVar::isMute)
+		PlaySound(TEXT("Christmas.wav"), NULL, SND_ASYNC);
 	//MAIN MENU
+	titleMenu();
+	///
 	SCREEN_COLOR;
 	int ki;
 	const int SL = 4;
-	system("cls");
 	const char* tenmuc[] = { "N E W  G A M E","L O A D  G A M E","S E T T I N G S","Q U I T" };
 	for (ki = 1; ki < SL; ki++)
 	{
@@ -547,6 +629,7 @@ void CGame::Collide() {
 				//if (!constantVar::isMute) enemyList[i]->sound();
 				//cn.killPlayer();
 				//gotoxy(20, 20);
+				getVehicle()[i]->sound();
 				cn.reduceLive();
 				cn.eraseCorpse();
 				cn.backToCheckPoint();
@@ -560,7 +643,8 @@ void CGame::Collide() {
 void CGame::gameOver() {
 	char choice;
 	bombEffect();
-	PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
+	if (!constVar::isMute)
+		PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
 	gotoxy(20, 4);
 	cout << "P L A Y  A G A I N? (y/n)";
 	cin >> choice;
@@ -573,22 +657,15 @@ void CGame:: nextlevel(HANDLE handle) {
 	
 	level.levelUp();
 	resetGame();
-	PlaySound(TEXT("smw_power-up.wav"), NULL, SND_ASYNC);
+	if (!constVar::isMute)
+		PlaySound(TEXT("smw_power-up.wav"), NULL, SND_ASYNC);
 	cn.eraseCorpse();
 	cn.backToCheckPoint();
 }
 void CGame::bombEffect()
-{
-	/*string line;
-	ifstream in("Explode.txt");
-	in >> line;
-	
-	while (getline(in, line))
-	{
-		cout << line;
-		
-	}
-	in.close();*/
+{/*
+	if (!constVar::isMute)
+		PlaySound(TEXT("Bomb+1.wav"), NULL, SND_ASYNC);*/
 	const int baseX = 10, baseY = 10;
 	gotoxy(baseX, baseY);
 	cout << R"(                                               ____                       )" << "\n";
@@ -614,7 +691,7 @@ void CGame::bombEffect()
 	cout << R"(                                               <|i::|i|`.                     )" << "\n";
 	gotoxy(baseX, baseY + 11);
 	cout << R"(                                              (` ^'"`-' ")                    )";
-
+	
 }
 void CGame::settingMenu()
 {
