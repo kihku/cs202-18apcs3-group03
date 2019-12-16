@@ -4,7 +4,8 @@ void CGame::updatePosPeople(char keyPressed)
 {
 	unique_lock<mutex> lk(CGame::mtx);
 	const int step_horizontal = 4;
-CGame::CGame() :lane()
+
+CGame::CGame() :lane(level)
 {
 	//settingMenu();
 	menu();
@@ -24,10 +25,11 @@ CGame::CGame() :lane()
 	//mX = screenSize_H / 2;
 	//mY = screenSize_V;
 }
-void CGame::updatePosPeople(char keyPressed)
+void CGame::updatePosPeople(char keyPressed,bool lvUp)
 {
 	unique_lock<mutex> lk(CGame::mtx);
-	const int step_horizontal = 2;
+	const int step_horizontal = 1;
+
 	const int step_vertical = 2;
 	if (keyPressed == 'd')
 	{
@@ -55,28 +57,10 @@ void CGame::updatePosPeople(char keyPressed)
 	}
 	//Collide();
 }
-CGame::CGame():lane(level)
-{
-	menu();
-	for (int i = 0; i < 24; ++i)
-	{
-		for (int j = 0; j < 85; ++j)
-		{
-			map[j][i] = 0;
-		}
-	}
-	//init people pos 
-	//people Pos: 42 24
-	map[42][22] = 1;
-	map[43][22] = 1;
-	map[44][22] = 1;
-	map[43][23] = 1;
-	//mX = screenSize_H / 2;
-	//mY = screenSize_V;
-}
+
 CGame::~CGame()
 {
-
+	
 }
 CPEOPLE CGame::getPeople()
 {
@@ -108,15 +92,18 @@ vector<Enemy*> CGame::getVehicle()
 //	return car;
 }*/
 
-void CGame::resetGame()
+void CGame::resetGame(bool nextLevel)
 {
-	system("cls");
-	SCREEN_COLOR;
+	if (nextLevel == false)
+	{
+		system("cls");
+		SCREEN_COLOR;
+	}
 	//lane.~Lane();
-	drawGame();
+	drawGame(nextLevel);
 	//Lane();
 }
-void CGame::exitGame(HANDLE)
+void CGame::exitGame()
 {
 	//IS_RUNNING = false;
 	system("cls");
@@ -129,12 +116,13 @@ void CGame::gamePlay()
 	SCREEN_COLOR;
 	int keyPressed;
 	bool isPause = false;
+	bool nextLevel = false;
 	//return init lives for people
 	cn.resetLives();
 	cn.backToCheckPoint();
-	drawGame();
+	drawGame(nextLevel);
 	
-	thread th1(&CGame::updatePosVehicle, this);
+	thread th1(&CGame::updatePosVehicle, this, nextLevel);
 	HANDLE th1_handle = th1.native_handle();
 	while (1)
 	{
@@ -145,13 +133,15 @@ void CGame::gamePlay()
 			//pauseGame(th1_handle);
 			lane.levelUp();
 			nextlevel(th1_handle, nextLevel);
+			nextLevel = false;
 			
 		}
 		//gameover
 		if (cn.getLives() <= 0)
 		{
 			SuspendThread(th1_handle);
-			break;
+			system("cls");
+			gameOver();
 		}
 		keyPressed = _getch();
 		if (keyPressed == 0)
@@ -165,7 +155,7 @@ void CGame::gamePlay()
 			lk.unlock();
 			pauseGame(th1_handle);
 			isPause = true;
-			pauseMenu(th1_handle, isPause);
+			pauseMenu(th1_handle, isPause,nextLevel);
 		}
 		else if (keyPressed == 'c' || keyPressed == 'C')
 		{
@@ -173,32 +163,28 @@ void CGame::gamePlay()
 			pauseGame(th1_handle);
 			cout << "Enter filename: ";
 			cin >> save;
-			
-			
+
+
 			saveGame(save);
+			ResumeThread(th1_handle);
 		}
 		else if(isPause==false)
 		{
-			updatePosPeople(keyPressed);
-			
-			updatePosPeople(keyPressed);
-			Collide();
-			//Collide();
+			updatePosPeople(keyPressed, nextLevel);
 		}
 		
 	}
 	if (th1.joinable())
 		th1.join();
-	menu();
 }
 void CGame::loadGame(string load)
 {
 	ifstream fin;
-	fin.open(load +".dat", ios::out | ios::binary);
+	fin.open(load + ".dat", ios::out | ios::binary);
 	level.~Level();
-	int lv;
-	fin >> lv;
-	new(&level) Level(lv);
+	int lv, mode;
+	fin >> lv >> mode;
+	new(&level) Level(lv,mode);
 	new(&lane) Lane(level);
 	int peopleX, peopleY, live;
 	fin >> peopleX;
@@ -210,11 +196,12 @@ void CGame::loadGame(string load)
 void CGame::saveGame(string save)
 {
 	ofstream fout;
-	fout.open(save+".dat", ios::out | ios::binary);
+	fout.open(save + ".dat", ios::out | ios::binary);
 
 	//SAVE LEVEL
-	fout << level.getLevel() << endl;
-	
+	fout << lane.getLevel().getLevel() << endl;
+	//SAVE MODE
+	fout << lane.getLevel().getMode() << endl;
 	//SAVE PEOPLE
 	fout << cn.currentPos().x << endl;
 	fout << cn.currentPos().y << endl;
@@ -235,9 +222,6 @@ void CGame::saveGame(string save)
 
 
 }
-
-
-
 void CGame::pauseGame(HANDLE t)
 {
 	SuspendThread(t);
@@ -259,22 +243,32 @@ void CGame::resumeGame(HANDLE t)
 }
 //void pauseGame(HANDLE);
 //void resumeGame(HANDLE); 
-void CGame::updatePosVehicle()
+void CGame::updatePosVehicle(bool nextLevel)
 {
 	while (true)
-	//Collide();
-		lane.updateLane(level);
+	{
+		if (nextLevel == true)
+			break;
+		Collide();
+		lane.updateLane(nextLevel);
+	}
+
 }
 void CGame::updatePosAnimal()
 {
 
 }
-void CGame::drawGame()
+void CGame::drawGame(bool nextLevel)
 {
+	PlaySound(TEXT("smw_bonus_game_end.wav"), NULL, SND_ASYNC);
+	unique_lock<mutex>lk(CGame::mtx);
+	lk.unlock();
+	if (nextLevel == true)
+		lk.lock(); 
 	system("cls");
 	if (!constVar::isMute)
 		PlaySound(TEXT("zelda_13.wav"), NULL, SND_ASYNC);
-	//SCREEN_COLOR;
+	SCREEN_COLOR;
 	const int delta = 3;
 	const int scoreBoard_H = 25;
 	const int scoreBoard_V = 5;
@@ -339,7 +333,7 @@ void CGame::drawGame()
 	gotoxy(screenSize_H_right + 12, screenSize_V_top + 5);
 	cout << "S T A T U S";
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 8);
-	cout << "L E V E L " << level.getLevel();
+	cout << "L E V E L " << lane.getLevel().getLevel();
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 11);
 	cout << "L I V E S";
 	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
@@ -355,7 +349,7 @@ void CGame::drawGame()
 	cout << char(219) << char(219) << char(219);
 	gotoxy(pos.x, pos.y + 1);
 	cout << " " << char(219) << "   ";
-	lane.drawLane(level);
+	lane.drawLane(nextLevel);
 }
 bool CGame::exportMap(const char* path)
 {
@@ -531,24 +525,23 @@ void CGame::menu()
 		}
 		else if ((ch == ENTER) && (stt == 1))
 		{
-			
 			loadmenu();
 			break; //LOAD GAME
 		}
 		else if ((ch == ENTER) && (stt == 2))
 		{
-			
+			settingMenu();
 			break;//SETTINGS
 		}
 		else if ((ch == ENTER) && (stt == 3))
 		{
-			
-			break;//MY PROFILE
+			exit(0);
+			break;//exit
 		}
 
 	}
 }
-void CGame::pauseMenu(HANDLE handle, bool& isPause)
+void CGame::pauseMenu(HANDLE handle, bool& isPause, bool nextlv)
 {
 	//unique_lock<mutex>lk(CGame::mtx);
 	int ki;
@@ -588,7 +581,6 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause)
 			}
 			else
 			{
-
 				gotoxy(menu_x, stt + 2 + menu_y);
 				PAUSE_SCREEN_CO;
 				_cprintf(tenmuc[stt + 1]);
@@ -630,7 +622,7 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause)
 		else if ((ch == ENTER) && (stt == 1))
 		{
 
-			resetGame();
+			resetGame(nextlv);
 			
 			ResumeThread(handle);
 			isPause = false;
@@ -641,7 +633,7 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause)
 		}
 		else if ((ch == ENTER) && (stt == 2))
 		{
-			exitGame(handle);
+			exitGame();
 			break;//exit
 		}
 	}
@@ -667,11 +659,12 @@ void CPEOPLE::reduceLive()
 //	}
 //vector <Enemy*> enemyList = rowsData.listEnemy(); //enemyList = 0 
 void CGame::Collide() {
-	for (int i = 0; i < (int)getVehicle().size(); ++i) {
+	vector<Enemy*>ene = getVehicle();
+	for (int i = 0; i < ene.size(); ++i) {
 		//drawEnemies(enemyList[i]);
-		if (getVehicle()[i])
+		if (ene[i])
 		{
-			if (cn.isCrash(getVehicle()[i]->getPos(), getVehicle()[i]->getShapeSize()) == true) {
+			if (cn.isCrash(ene[i]->getPos(), ene[i]->getShapeSize()) == true) {
 				//if (!constantVar::isMute) enemyList[i]->sound();
 				//cn.killPlayer();
 				//gotoxy(20, 20);
@@ -687,14 +680,9 @@ void CGame::Collide() {
 	}
 }
 void CGame::gameOver() {
-	//cout<<""
-}
-void CGame:: nextlevel() {
-
 	char choice;
 	bombEffect();
-	if (!constVar::isMute)
-		PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
+	PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
 	gotoxy(20, 4);
 	cout << "P L A Y  A G A I N? (y/n)";
 	cin >> choice;
@@ -703,19 +691,17 @@ void CGame:: nextlevel() {
 		exitGame();
 	}
 }
-void CGame:: nextlevel(HANDLE handle) {
+
+void CGame:: nextlevel(HANDLE handle,bool nextLevel) {
 	
-	level.levelUp();
-	resetGame();
+	resetGame(nextLevel);
 	if (!constVar::isMute)
-		PlaySound(TEXT("smw_power-up.wav"), NULL, SND_ASYNC);
+		PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
 	cn.eraseCorpse();
 	cn.backToCheckPoint();
 }
 void CGame::bombEffect()
-{/*
-	if (!constVar::isMute)
-		PlaySound(TEXT("Bomb+1.wav"), NULL, SND_ASYNC);*/
+{
 	const int baseX = 10, baseY = 10;
 	gotoxy(baseX, baseY);
 	cout << R"(                                               ____                       )" << "\n";
@@ -743,11 +729,87 @@ void CGame::bombEffect()
 	cout << R"(                                              (` ^'"`-' ")                    )";
 	
 }
-void CGame::setting()
+void CGame::settingMenu()
 {
+	const int menu_x = 40, menu_y = 12;
+	int ch, index_x = 0, index_y = 0, sl = 4;
+	const char* tenmuc[] = { "E A S Y","H A R D","O N","O F F","B A C K" };
+	system("cls");
+	SCREEN_COLOR;
+	gotoxy(menu_x, menu_y);
+	cout << "M O D E";
+	gotoxy(menu_x, menu_y + 2);
+	cout << "S O U N D";
+	gotoxy(menu_x + 17, menu_y);
+	cout << "E A S Y   H A R D";
+	gotoxy(menu_x + 17, menu_y + 2);
+	cout << "O N       O F F";
+	gotoxy(menu_x + 17, menu_y + 4);
+	cout << "B A C K";
+	//in dam luc khoi tao
+	gotoxy(menu_x + 17, menu_y);
+	SETTING_BUT_CO;
+	cout << tenmuc[0];
+	while (1)
+	{
+		ch = _getch();
+		if (ch == 0)
+			ch = _getch();
+		if (ch == KEY_UP)
+		{
+			index_y--;
+			if (index_y < 0)
+			{
+				index_y = 4;
+				gotoxy(menu_x + 17, menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[0]);
+				gotoxy(menu_x + 17, sl + menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[index_x + index_y]);
+			}
+			else
+			{
+				gotoxy(menu_x + 17, index_y + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[index_y + 1]);
+				gotoxy(menu_x + 17, index_y + menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[index_y + index_x]);
+			}
+			if (ch == KEY_DOWN)
+			{
+				index_y++;
+				if (index_y == 0)
+				{
+					index_y = 0;
+					gotoxy(menu_x + 17, menu_y);
+					SCREEN_COLOR;
+					_cprintf(tenmuc[0]);
+					gotoxy(menu_x + 17, sl + menu_y);
+					SETTING_BUT_CO;
+					_cprintf(tenmuc[index_x + index_y]);
+				}
+				else
+				{
+					gotoxy(menu_x + 17, index_y + menu_y);
+					SCREEN_COLOR;
+					_cprintf(tenmuc[index_y + 1]);
+					gotoxy(menu_x + 17, index_y + menu_y);
+					SETTING_BUT_CO;
+					_cprintf(tenmuc[index_y + index_x]);
+				}
+			}
 
+		}
+	}
+
+
+
+	gotoxy(50, 20);
+	system("pause");
+	
 }
-//LOADGAMEMENU
 void CGame::loadmenu()
 {
 	system("cls");
@@ -755,20 +817,34 @@ void CGame::loadmenu()
 	cout << "Enter filname:";
 	cin >> load;
 	loadGame(load);
-	drawGame();
 	SCREEN_COLOR;
 	int keyPressed;
-	
-	thread th1(&CGame::updatePosVehicle, this);
-	HANDLE th1_handle = th1.native_handle();
 	bool isPause = true;
-	pauseGame(th1_handle);
+	bool nextLevel = false;
+	drawGame(nextLevel);
+	Sleep(3000);
+	isPause = false;
+	thread th1(&CGame::updatePosVehicle, this, nextLevel);
+	HANDLE th1_handle = th1.native_handle();
+	
 	while (1)
 	{
+		//level up
+		if (cn.isFinish())
+		{
+			nextLevel = true;
+			//pauseGame(th1_handle);
+			lane.levelUp();
+			nextlevel(th1_handle, nextLevel);
+			nextLevel = false;
+
+		}
+		//gameover
 		if (cn.getLives() <= 0)
 		{
 			SuspendThread(th1_handle);
-			break;
+			system("cls");
+			gameOver();
 		}
 		keyPressed = _getch();
 		if (keyPressed == 0)
@@ -782,7 +858,7 @@ void CGame::loadmenu()
 			lk.unlock();
 			pauseGame(th1_handle);
 			isPause = true;
-			pauseMenu(th1_handle, isPause);
+			pauseMenu(th1_handle, isPause, nextLevel);
 		}
 		else if (keyPressed == 'c' || keyPressed == 'C')
 		{
@@ -791,17 +867,19 @@ void CGame::loadmenu()
 			cout << "Enter filename: ";
 			cin >> save;
 
-
 			saveGame(save);
+			resumeGame(th1_handle);
+			isPause = false;
+
 		}
 		else if (isPause == false)
 		{
-			updatePosPeople(keyPressed);
-			Collide();
+			//Collide();
+			updatePosPeople(keyPressed, nextLevel);
+			//Collide();
 		}
 
 	}
 	if (th1.joinable())
 		th1.join();
-	menu();
 }

@@ -19,10 +19,11 @@ private:
 	//  int nColumn;
 public:
 	Level();
-	Level(int &l) { level = l; mode = 0; };
-	~Level() { level = 0; mode = 0; }
+	Level(int& level, int& mode) { this->level = level, this->mode = mode; };
+	Level(const Level& l) { level = l.level, mode = l.mode; };
+	Level& operator=(const Level& l) { level = l.level, mode = l.mode; return* this; }
 	bool levelUp();
-
+	int getMode() { return mode; };
 	int getLevel();
 
 	int getSpeed();
@@ -61,6 +62,8 @@ class Lane {
 	//int curLaneRow;
 public:
 	Lane();
+	
+	Lane(Level& lev);
 	~Lane();
 	void initLane();
 	void updateTraffic();
