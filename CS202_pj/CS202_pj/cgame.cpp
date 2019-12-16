@@ -144,6 +144,7 @@ void CGame::gamePlay()
 			SuspendThread(th1_handle);
 			system("cls");
 			gameOver(th1_handle);
+			
 		}
 		keyPressed = _getch();
 		if (keyPressed == 0)
@@ -343,7 +344,8 @@ void CGame::updatePosAnimal()
 }
 void CGame::drawGame(bool nextLevel)
 {
-	PlaySound(TEXT("smw_bonus_game_end.wav"), NULL, SND_ASYNC);
+	if (!isMute)
+		PlaySound(TEXT("smw_bonus_game_end.wav"), NULL, SND_ASYNC);
 	unique_lock<mutex>lk(CGame::mtx);
 	lk.unlock();
 	if (nextLevel == true)
@@ -481,11 +483,10 @@ string CGame::getFileContents(std::ifstream& File)
 }
 void CGame::titleMenu() {
 	//Ascii art
-
 	ifstream Reader("CrossyRoad.txt");             //Open file
 	string Art = getFileContents(Reader);       //Get file
-	gotoxy(0,0);
-	cout << Art << std::endl;               //Print it to the screen
+	//gotoxy(10,0);
+	cout << "		 "<<Art << std::endl;               //Print it to the screen
 	Reader.close();                           //Close file
 	///
 	SCREEN_COLOR;
@@ -785,7 +786,8 @@ void CGame::Collide() {
 void CGame::gameOver(HANDLE th1) {
 	char choice;
 	bombEffect();
-	PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
+	if(!isMute)
+		PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
 	gotoxy(20, 4);
 	cout << "P L A Y  A G A I N?";
 	
@@ -880,6 +882,7 @@ void CGame::gameOver(HANDLE th1) {
 			exitGame();
 		}
 	}
+
 }
 
 void CGame:: nextlevel(HANDLE handle,bool nextLevel) {
@@ -895,6 +898,7 @@ void CGame:: nextlevel(HANDLE handle,bool nextLevel) {
 }
 void CGame::bombEffect()
 {
+	
 	const int baseX = 10, baseY = 10;
 	gotoxy(baseX, baseY);
 	cout << R"(                                               ____                       )" << "\n";
@@ -920,7 +924,7 @@ void CGame::bombEffect()
 	cout << R"(                                               <|i::|i|`.                     )" << "\n";
 	gotoxy(baseX, baseY + 11);
 	cout << R"(                                              (` ^'"`-' ")                    )";
-	
+	printAnimation();
 }
 void CGame::settingMenu()
 {
@@ -1092,9 +1096,12 @@ void CGame::settingMenu()
 			//on
 			if (!index_x)
 			{
+				isMute = false;
 			}
 			//off
 			else {
+				isMute = true;
+				PlaySound(TEXT("Pop 1.wav"), NULL, SND_ASYNC);
 			}
 			chosen2[0] = index_y, chosen2[1] = index_x;
 		}
@@ -1338,3 +1345,56 @@ void CGame::drawDino(int x, int y, bool dir)
 				(dir)?printf("%c", shape1[i][j]): printf("%c", shape0[i][j]);
 		}	
 }
+
+int CGame::randHeart() {
+	int min = 10, max =50;
+	int range = max - min + 1;
+	int num = rand() % range + min;
+	posHeart = num;
+	return num;
+}
+void CGame::printHeart() {
+	char a;
+	a = 240;
+	gotoxy(randHeart(), 12);
+	cout << a;
+}
+void CGame::isIncreaseLive() {
+	if (cn.isEatHeart(posHeart)) {
+		if (!isMute)
+			PlaySound(TEXT("Earn Points.wav"), NULL, SND_ASYNC);
+		increaseLive();
+	}
+}
+void CGame::increaseLive() {
+	if (cn.getLives() < 5)
+	{
+		cn.plusLive();
+		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+		cout << "               ";
+		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+		for (int i = 0; i < cn.getLives() * 3; ++i)
+			cout << char(222);
+	}
+}
+void CGame::printAnimation() {
+	for (int i=0;i<5; ++i)
+	{
+		ifstream aReader("Animation.txt");             //Open file
+		string a = getFileContents(aReader);       //Get file
+		gotoxy(0, 0);
+		cout << a << std::endl;               //Print it to the screen
+		aReader.close();
+
+		Sleep(100);
+
+		ifstream bReader("Animation2.txt");             //Open file
+		string b = getFileContents(bReader);       //Get file
+		gotoxy(0, 0);
+		cout << b << std::endl;               //Print it to the screen
+		bReader.close();
+		Sleep(100);
+	}
+	
+}
+

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"Library.h"
 
 class CGame {
@@ -55,5 +55,13 @@ public:
 	string getdate() { return date; };
 	//DRAW DINO
 	void drawDino(int, int, bool);
+
+	//eat Live
+	int randHeart();
+	void printHeart();
+	void isIncreaseLive();
+	void increaseLive();
+	//animation
+	void printAnimation();
 
 };
