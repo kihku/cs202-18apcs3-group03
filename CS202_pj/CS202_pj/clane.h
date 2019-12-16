@@ -4,22 +4,15 @@ class Level
 {
 private:
 	int level;
-	int mode;
-
-	const int ezSpeed[3] = {200,200,100};
-	
-	const int harSpeed[3] = { 50,40,30 };
-	
+	bool mode;
 	const int numCar[3] = { 2,3,3 };
 	const int numTruck[3] = { 2,2,3 };
 
 	const int distCar[3] = {50,30,20};
 	const int distTruck[3] = {40,30,30};
-
-	const int maxEne[4] = {6,5,5};
-	
+	const int ezSpeed[3] = { 100,100,100 };
+	const int harSpeed[3] = { 80,80,80 };
 	const int maxLevel = 3;
-	const int diff = 50;
 	//int minSpd, maxSpd;
 	//int maxEne, numEne;
 	//int nRow;
@@ -32,23 +25,27 @@ public:
 
 	int getLevel();
 
-	int getEzSpeed();
-	int getHarSpeed();
+	int getSpeed();
 	int getNumCar();
 	int getNumTruck();
 
 	int getDistCar();
 	int getDistTruck();
-
-	int getMaxSpeed();
-	int getMinSpeed();
-
-	Enemy* getNewEnemy(Point p, int type);
-	// Level(int level, int numEne);
-
-	//void decnumEne(int d);
-	//Enemy* randNewEnemy(cPosition pos);
+	void switchMode();
+	static Level* createLevel(int mode);
 };
+//class EzLevel:public Level {
+//	const int ezSpeed[3] = { 200,200,100 };
+//public:
+//	EzLevel() :Level() {};
+//	virtual int getSpeed() { return ezSpeed[getLevel()-1]; }
+//};
+//class HarLevel :public Level {
+//	const int harSpeed[3] = { 1000,40,30 };
+//public:
+//	HarLevel() :Level() {};
+//	virtual int getSpeed() { return harSpeed[getLevel() - 1]; }
+//};
 //-------------------------------------------------------
 class Lane {
 	vector<Enemy*> car;
@@ -57,17 +54,18 @@ class Lane {
 	vector<Enemy*> dino;
 	vector<Traffic*>traf;
 //	bool dir;		//0: left, 1: right
-	//Level lev;
+	Level lev;
 	int count, stopCount;
 	int stopCar;
 
 	//int curLaneRow;
 public:
-	Lane(Level& lev);
+	Lane();
 	~Lane();
+	void initLane();
 	void updateTraffic();
-	void drawLane(Level& lev);
-	void updateLane(Level& lev);
+	void drawLane(bool);
+	void updateLane(bool);
 	
 	vector<Enemy*>getCar() { return car; }
 
@@ -76,13 +74,14 @@ public:
 	vector<Enemy*>getBird() { return bird; }
 
 	vector<Enemy*>getDino() { return dino; }
-
+	Level getLevel() { return lev; }
+	bool levelUp();
 	Point  getVehiclePoint();
 	void updatePosEnemy(int t);
 	
-	bool drawEne();
-	void deleteOldEnemy(Point pos, ShapeSize s);
-	bool printNewEnemy(Point pos, char** shape, ShapeSize s);	//return if printable
+	//bool drawlane(bool);
+	//void deleteOldEnemy(Point pos, ShapeSize s);
+	//bool printNewEnemy(Point pos, char** shape, ShapeSize s);	//return if printable
 	
 };
 

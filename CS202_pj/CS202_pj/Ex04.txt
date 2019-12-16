@@ -1,0 +1,55 @@
+"Base constructor-0 param"
+"Base constructor-1 param"
+"Base constructor-1 param" ->*
+
+"Base constructor-0 param"
+cout<<"DerivedA constructor-0 param"<<endl;
+
+"Base constructor-0 param"
+cout<<"DerivedA constructor-1 param"<<endl;
+
+"Base constructor-0 param"
+cout<<"DerivedA constructor-2 params"<<endl;
+
+"Base constructor-0 param"
+cout<<"DerivedA constructor-2 params"<<endl;
+
+BAse 0
+
+base 0 - derivedA 2
+
+base 0 cout<<"DerivedB constructor-0 param"<<endl;
+
+"Base constructor-0 param"
+cout<<"DerivedB constructor-1 param"<<endl;
+
+"Base constructor-1 param"
+cout<<"DerivedB constructor-2 params"<<endl;
+
+"Base copy constructor"
+"DerivedB copy constructor"
+"Base constructor-1 param"
+cout<<"DerivedB constructor-2 params"<<endl;
+
+BAse copy constructor -> * 
+cout<<"Function f"
+Base destruct -> *
+
+BAse copy constructor -> * 
+cout<<"Function f"
+Base destruct -> *
+BAse copy constructor -> * 
+cout<<"Function f"
+Base destruct -> *
+
+/*cout<<"DerivedA destructor"
+cout<<"DerivedA destructor"
+cout<<"DerivedA destructor"
+cout<<"DerivedA destructor"
+cout<<"DerivedB destructor"
+cout<<"DerivedB destructor"
+cout<<"DerivedB destructor"
+cout<<"DerivedB destructor"
+cout<<"Base destructor"
+cout<<"Base destructor"*/ ->*
+cout<<"Base destructor"

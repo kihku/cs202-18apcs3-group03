@@ -20,6 +20,7 @@ public:
 	void reduceLive();
 	void backToCheckPoint();
 	void eraseCorpse();
+	bool isFinish();
 	//bool isFinish();
 	bool isDead();
 	//For arrayTesting

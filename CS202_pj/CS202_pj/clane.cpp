@@ -1,7 +1,23 @@
 #include "Library.h"
 
-Lane::Lane(Level& lev)
+Lane::Lane()
 {
+	initLane();
+}
+
+Lane::~Lane()
+{
+	for (int i = 0; i < car.size(); ++i)
+		delete car[i], bird[i], car[i] = NULL, bird[i] = NULL;
+	for (int i = 0; i < truck.size(); ++i)
+		delete truck[i], dino[i], truck[i] = NULL, dino[i] = NULL;
+	for (int i = 0; i < traf.size(); ++i)
+		delete traf[i], traf[i] = NULL;
+}
+
+void Lane::initLane()
+{
+	const int carNum = 6;
 	/*int mode = 1;
 	int numCar, numTruck, distCar, distTruck;
 	if (!mode) {
@@ -18,45 +34,36 @@ Lane::Lane(Level& lev)
 	}*/
 	srand(time(NULL));
 	int topLeft = 2;
-	Point pTra = {screenSize_H_right+2,topLeft+4}
+	Point pTra = { screenSize_H_right + 2,topLeft + 4 }
 	, pC = { 5, topLeft + 3 }, pT = { 5,pC.y + 4 };
-	
+
 	count = 0;
 	stopCount = 0, stopCar = -1;
-	
-	traf=vector<Traffic*>(4, NULL);
+
+	traf = vector<Traffic*>(4, NULL);
 	for (int i = 0; i < 4; ++i)
-		traf[i]=new Traffic(pTra),pTra.y+=4;
-	
+		traf[i] = new Traffic(pTra), pTra.y += 4;
+
 	//dir = rand() % 2;
 	car = vector<Enemy*>(6, NULL);
-	for (int i = 0; i < lev.getNumCar(); ++i)
-		car[i]=new Car(pC,0), pC.x += lev.getDistCar();
+	for (int i = 0; i < carNum; ++i)
+		car[i] = new Car(pC, 0), pC.x += lev.getDistCar();
 	truck = vector<Enemy*>(6, NULL);
 	//dir = rand() % 2;
 
-	for (int i = 0; i < lev.getNumTruck(); ++i)
+	for (int i = 0; i < carNum; ++i)
 		truck[i] = new Truck(pT, 1), pT.x += lev.getDistTruck();
 
 	pC = { 5, pT.y + 4 }, pT = { 5, pC.y + 4 };
 	//dir = rand() % 2;
 	bird = vector<Enemy*>(6, NULL);
-	for (int i = 0; i < lev.getNumCar(); ++i)
+	for (int i = 0; i < carNum; ++i)
 		bird[i] = new Bird(pC, 0), pC.x += lev.getDistCar();
 	//dir = rand() % 2;
 	dino = vector<Enemy*>(6, NULL);
-	for (int i = 0; i < lev.getNumTruck(); ++i)
+	for (int i = 0; i < carNum; ++i)
 		dino[i] = new Dinosaur(pT, 1), pT.x += lev.getDistTruck();
-}
 
-Lane::~Lane()
-{
-	for (int i = 0; i < car.size(); ++i)
-		delete car[i], bird[i], car[i] = NULL, bird[i] = NULL;
-	for (int i = 0; i < truck.size(); ++i)
-		delete truck[i], dino[i], truck[i] = NULL, dino[i] = NULL;
-	for (int i = 0; i < traf.size(); ++i)
-		delete traf[i], traf[i] = NULL;
 }
 
 
@@ -82,31 +89,32 @@ void Lane::updateTraffic()
 	//}
 }
 
-void Lane::drawLane(Level& lev)
-{
-	for (int i = 0; i < lev.getNumCar(); ++i)
-		car[i]->drawEne(),  bird[i]->drawEne();
+void Lane::drawLane(bool lvUp)
+{ 
+		for (int i = 0; i < lev.getNumCar(); ++i)
+			car[i]->drawEne(lvUp), bird[i]->drawEne(lvUp);
+
+		for (int i = 0; i < lev.getNumTruck(); ++i)
+			truck[i]->drawEne(lvUp), dino[i]->drawEne(lvUp);
 	
-	for (int i = 0; i < lev.getNumTruck(); ++i)
-		truck[i]->drawEne(), dino[i]->drawEne();
 }
 
-void Lane::updateLane(Level& lev) {
+void Lane::updateLane(bool lvUp) {
 	count++;
-	if (count % lev.getHarSpeed() == 0)
+	if (count % lev.getSpeed() == 0)
 	{
 		if (stopCar != 0)
 			for (int i = 0; i < lev.getNumCar(); i++)
-				car[i]->moveEne(), car[i]->drawEne();
+				car[i]->moveEne(lvUp), car[i]->drawEne(lvUp);
 		if (stopCar != 1)
 			for (int i = 0; i < lev.getNumTruck(); i++)
-				truck[i]->moveEne(), truck[i]->drawEne();
+				truck[i]->moveEne(lvUp), truck[i]->drawEne(lvUp);
 		if (stopCar != 2)
 			for (int i = 0; i < lev.getNumCar(); i++)
-				bird[i]->moveEne(), bird[i]->drawEne();
+				bird[i]->moveEne(lvUp), bird[i]->drawEne(lvUp);
 		if (stopCar != 3)
 			for (int i = 0; i < lev.getNumTruck(); i++)
-				dino[i]->moveEne(), dino[i]->drawEne();
+				dino[i]->moveEne(lvUp), dino[i]->drawEne(lvUp);
 	}
 	//	Tam dung xe 
 	if (count == 2000000000)count = 0;
@@ -119,12 +127,26 @@ void Lane::updateLane(Level& lev) {
 	updateTraffic();
 }
 
+bool Lane::levelUp()
+{
+	if (lev.levelUp()) {
+		for (int i = 0; i < car.size(); ++i)
+			delete car[i], bird[i], car[i] = NULL, bird[i] = NULL;
+		for (int i = 0; i < truck.size(); ++i)
+			delete truck[i], dino[i], truck[i] = NULL, dino[i] = NULL;
+		for (int i = 0; i < traf.size(); ++i)
+			delete traf[i], traf[i] = NULL;
+		initLane();
+		return true;
+	}
+	return false;
+}
+
 
 Level::Level()
 {
-	mode = 0;
 	level = 1;
-
+	mode = 1;
 	//maxSpd = diff - level*2, minSpd=diff-level;
 }
 
@@ -142,14 +164,12 @@ int Level::getLevel()
 	return level;
 }
 
-int Level::getEzSpeed()
+int Level::getSpeed()
 {
-	return ezSpeed[level-1];
-}
-
-int Level::getHarSpeed()
-{
-	return harSpeed[level-1];
+	if (mode)
+		return ezSpeed[level - 1];
+	else
+		return harSpeed[level - 1];
 }
 
 int Level::getNumCar()
@@ -170,6 +190,17 @@ int Level::getDistTruck()
 {
 	return distTruck[level - 1];
 }
+void Level::switchMode()
+{
+	mode = !mode;
+}
+//Level* Level::createLevel(int mode)
+//{
+//	if (mode)
+//		return new EzLevel(); 
+//	else
+//		return new HarLevel();
+//}
 //int Level::getMaxSpeed()
 //{
 //	return maxSpd;

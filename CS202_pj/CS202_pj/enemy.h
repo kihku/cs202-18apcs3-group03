@@ -18,15 +18,16 @@ public:
 
 	void setPos(Point p) { pos = p; }
 
-	virtual void moveEne() = 0;
-	virtual void drawEne() = 0;
+	virtual void moveEne(bool) = 0;
+	virtual void drawEne(bool) = 0;
+
+	virtual void sound()=0;
 	//virtual char** getShape() = 0;
 };
 
 class Traffic {
 	Point pos;
 	bool greenLight;
-	static int numTraffic;
 public:
 	Traffic(Point p);
 	Traffic(const Traffic& src);
@@ -55,9 +56,11 @@ public:
 	
 	virtual int getType();
 
-	virtual void moveEne();
+	virtual void moveEne(bool);
 
-	virtual void drawEne();
+	virtual void drawEne(bool);
+
+	virtual  void sound();
 	//void drawVeh() {
 	//void Move();
 	//void pause();
@@ -86,9 +89,11 @@ public:
 
 	virtual int getType() ;
 
-	virtual void moveEne();
+	virtual void moveEne(bool);
 
-	virtual void drawEne();
+	virtual void drawEne(bool);
+
+	void sound();
 	//virtual char** getShape() ;		//return array of shape
 };
 
@@ -114,9 +119,11 @@ public:
 
 	  virtual int getType();
 
-	  virtual void moveEne();
+	  virtual void moveEne(bool);
 
-	  virtual void drawEne();
+	  virtual void drawEne(bool);
+	  void sound();
+
 };
 
 	//    ,,,       ,,,             
@@ -136,9 +143,11 @@ public:
 
 	virtual int getType();
 
-	virtual void moveEne();
+	virtual void moveEne(bool);
 
-	virtual void drawEne();
+	virtual void drawEne(bool);
+
+	virtual void sound();
 };
 
 /////////////////////////////////////LANE//////////////////////////
