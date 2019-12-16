@@ -176,6 +176,11 @@ void Lane::updateLane(bool lvUp) {
 	updateTraffic();
 }
 
+void Lane::resetLevel()
+{
+	lev.resetLevel();
+}
+
 bool Lane::levelUp()
 {
 	if (lev.levelUp()) {
@@ -206,6 +211,11 @@ bool Level::levelUp()
 		
 		return true;
 	}
+}
+
+void Level::resetLevel()
+{
+	level = 1;
 }
 
 int Level::getLevel()
