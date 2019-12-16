@@ -778,18 +778,20 @@ void CGame::gameOver(HANDLE th1) {
 		//YES
 		else if (ch == ENTER && index_y == 0)
 		{
-		resetGame(0);
-		cn.resetLives();
-		//for (int i = 0; i < cn.getLives() * 3; ++i)
-			//cout << char(222);
-		cn.eraseCorpse();
-		cn.backToCheckPoint();
-		ResumeThread(th1);
+			resetGame(0);
+			cn.resetLives();
+			gotoxy(screenSize_H_right + 10, screenSize_V_top + 13); 
+			for (int i = 0; i < cn.getLives() * 3; ++i)
+				cout << char(222);
+			cn.eraseCorpse();
+			cn.backToCheckPoint();
+			ResumeThread(th1);
+			break;
 		}
 		//NO
 		else if (ch == ENTER && index_y == 1)
 		{
-				exitGame();
+			exitGame();
 		}
 	}
 }
