@@ -1,7 +1,7 @@
 ﻿#include"Library.h"
 CGame::CGame() :lane(level)
 {
-	settingMenu();
+	//settingMenu();
 	menu();
 	for (int i = 0; i < 24; ++i)
 	{
@@ -404,13 +404,13 @@ void CGame::menu()
 		}
 		else if ((ch == ENTER) && (stt == 2))
 		{
-			
+			settingMenu();
 			break;//SETTINGS
 		}
 		else if ((ch == ENTER) && (stt == 3))
 		{
 			exit(0);
-			break;//MY PROFILE
+			break;//exit
 		}
 
 	}
@@ -611,23 +611,23 @@ void CGame::bombEffect()
 }
 void CGame::settingMenu()
 {
-	const int x_menu = 40, y_menu = 12;
-	int ch, index = 0;
+	const int menu_x = 40, menu_y = 12;
+	int ch, index_x = 0, index_y = 0, sl = 4;
 	const char* tenmuc[] = { "E A S Y","H A R D","O N","O F F","B A C K" };
 	system("cls");
 	SCREEN_COLOR;
-	gotoxy(x_menu, y_menu);
+	gotoxy(menu_x, menu_y);
 	cout << "M O D E";
-	gotoxy(x_menu, y_menu+2);
+	gotoxy(menu_x, menu_y+2);
 	cout << "S O U N D";
-	gotoxy(x_menu + 17, y_menu);
+	gotoxy(menu_x + 17, menu_y);
 	cout << "E A S Y   H A R D";
-	gotoxy(x_menu+17, y_menu + 2);
+	gotoxy(menu_x+17, menu_y + 2);
 	cout << "O N       O F F";
-	gotoxy(x_menu + 17, y_menu + 4);
+	gotoxy(menu_x + 17, menu_y + 4);
 	cout << "B A C K";
 	//in dam luc khoi tao
-	gotoxy(x_menu + 17, y_menu);
+	gotoxy(menu_x + 17, menu_y);
 	SETTING_BUT_CO;
 	cout << tenmuc[0];
 	while (1)
@@ -635,6 +635,29 @@ void CGame::settingMenu()
 		ch = _getch();
 		if (ch == 0)
 			ch = _getch();
+		if (ch == KEY_UP)
+		{
+			index_y--;
+			if (index_y < 0)
+			{
+				index_y = 4;
+				gotoxy(menu_x+17,  menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[0]);
+				gotoxy(menu_x+17, sl + menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[index_x + index_y]);
+			}
+			else
+			{
+				gotoxy(menu_x+17, index_y  + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[index_y + 1]);
+				gotoxy(menu_x+17, index_y + menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[index_y + index_x]);
+			}
+		}
 		
 	}
 
