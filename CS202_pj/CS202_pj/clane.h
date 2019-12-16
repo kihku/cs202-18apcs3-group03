@@ -4,14 +4,14 @@ class Level
 {
 private:
 	int level;
-	bool mode;
+	bool mode;		//0:ez, 1: hard
 	const int numCar[3] = { 2,3,3 };
 	const int numTruck[3] = { 2,2,3 };
 
 	const int distCar[3] = {50,30,20};
 	const int distTruck[3] = {40,30,30};
 	const int ezSpeed[3] = { 100,100,100 };
-	const int harSpeed[3] = { 80,80,80 };
+	const int harSpeed[3] = { 50,50,50 };
 	const int maxLevel = 3;
 	//int minSpd, maxSpd;
 	//int maxEne, numEne;
@@ -69,7 +69,7 @@ public:
 	void updateTraffic();
 	void drawLane(bool);
 	void updateLane(bool);
-	
+	void switchMode() { lev.switchMode(); }
 	vector<Enemy*>getCar() { return car; }
 
 	vector<Enemy*>getTruck() { return truck; }

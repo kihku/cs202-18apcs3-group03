@@ -195,7 +195,7 @@ bool Lane::levelUp()
 Level::Level()
 {
 	level = 1;
-	mode = 1;
+	mode = 0;
 	//maxSpd = diff - level*2, minSpd=diff-level;
 }
 
@@ -215,7 +215,7 @@ int Level::getLevel()
 
 int Level::getSpeed()
 {
-	if (mode)
+	if (!mode)
 		return ezSpeed[level - 1];
 	else
 		return harSpeed[level - 1];

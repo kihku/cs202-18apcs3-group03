@@ -124,6 +124,16 @@ void CGame::gamePlay()
 		//level up
 		if (cn.isFinish())
 		{
+			//win
+			if (lane.getLevel().getLevel()==3)
+			{
+				pauseGame(th1_handle);
+				system("cls");
+				gotoxy(20, 20);
+				cout << "You WIN"; //kiem cai gi do
+				system("pause");
+				menu();
+			}
 			nextLevel = true;
 			//pauseGame(th1_handle);
 			lane.levelUp();
@@ -325,10 +335,13 @@ void CGame::drawGame(bool nextLevel)
 	gotoxy(screenSize_H_right + 5 + scoreBoard_H, scoreBoard_V + 15);
 	cout << char(217);
 	//Score Board menu
-	gotoxy(screenSize_H_right + 12, screenSize_V_top + 5);
-	cout << "S T A T U S";
+	gotoxy(screenSize_H_right + 14, screenSize_V_top + 5);
+	if (!lane.getLevel().getMode())
+		cout << "E A S Y";
+	else
+		cout << "H A R D";
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 8);
-	cout << "L E V E L " << lane.getLevel().getLevel();
+	cout << "L E V E L  " << lane.getLevel().getLevel();
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 11);
 	cout << "L I V E S";
 	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
@@ -445,6 +458,12 @@ void CGame::menu()
 	//MAIN MENU
 	titleMenu();
 	///
+	//dino
+	
+	drawDino(7, 5, 0);
+	drawDino(105, 5, 1);
+	drawDino(80, 15, 1);
+	drawDino(20, 20, 1);
 	SCREEN_COLOR;
 	int ki;
 	const int SL = 4;
@@ -728,7 +747,9 @@ void CGame::settingMenu()
 {
 	const int menu_x = 40, menu_y = 12;
 	int ch, index_x = 0, index_y = 0, sl = 4;
-	const char* tenmuc[] = { "E A S Y","H A R D","O N","O F F","B A C K" };
+	//index_x: 0 1
+	//index_y: 0 1 2			0 0     0 1      1 0    1 1    0 3
+	const char* tenmuc[3][2] = { {" E A S Y ", " H A R D " },{" O N ", " O F F "}, {" B A C K ",""} };
 	system("cls");
 	SCREEN_COLOR;
 	gotoxy(menu_x, menu_y);
@@ -741,70 +762,175 @@ void CGame::settingMenu()
 	cout << "O N       O F F";
 	gotoxy(menu_x + 17, menu_y + 4);
 	cout << "B A C K";
+
 	//in dam luc khoi tao
+	int dist_x = 5 + 5, dist_y = 2;
 	gotoxy(menu_x + 17, menu_y);
 	SETTING_BUT_CO;
-	cout << tenmuc[0];
+	cout << tenmuc[0][0];
+	gotoxy(menu_x + 17, menu_y + dist_y);
+	SETTING_BUT_CO;
+	cout << tenmuc[1][0];
+	int chosen1[2] = { 0,0 }, chosen2[2] = {1,0};
 	while (1)
 	{
+		gotoxy(menu_x + 17+chosen1[1]*dist_x, menu_y+chosen1[0]*dist_y);
+		SETTING_BUT_CO;
+		cout << tenmuc[chosen1[0]][chosen1[1]];
+		gotoxy(menu_x + 17+chosen2[1]*dist_x, menu_y + chosen2[0]*dist_y);
+		SETTING_BUT_CO;
+		cout << tenmuc[chosen2[0]][chosen2[1]];
+
 		ch = _getch();
 		if (ch == 0)
 			ch = _getch();
 		if (ch == KEY_UP)
 		{
 			index_y--;
+			//gap bien tren
 			if (index_y < 0)
 			{
-				index_y = 4;
-				gotoxy(menu_x + 17, menu_y);
+				(!index_x) ? index_y = 2 : index_y = 1;
+				gotoxy(menu_x + 17 + index_x * dist_x, menu_y);
 				SCREEN_COLOR;
-				_cprintf(tenmuc[0]);
-				gotoxy(menu_x + 17, sl + menu_y);
+				_cprintf(tenmuc[0][index_x]);
+				gotoxy(menu_x + 17 + index_x * dist_x, index_y * dist_y + menu_y);
 				SETTING_BUT_CO;
-				_cprintf(tenmuc[index_x + index_y]);
+				_cprintf(tenmuc[index_y][index_x]);
 			}
 			else
 			{
-				gotoxy(menu_x + 17, index_y + menu_y);
+				//xoa duoi
+				gotoxy(menu_x + 17 + index_x * dist_x, (index_y + 1) * dist_y + menu_y);
 				SCREEN_COLOR;
-				_cprintf(tenmuc[index_y + 1]);
-				gotoxy(menu_x + 17, index_y + menu_y);
+				_cprintf(tenmuc[index_y + 1][index_x]);
+				//in hien tai
+				gotoxy(menu_x + 17 + index_x * dist_x, index_y * dist_y + menu_y);
 				SETTING_BUT_CO;
-				_cprintf(tenmuc[index_y + index_x]);
+				_cprintf(tenmuc[index_y][index_x]);
 			}
-			if (ch == KEY_DOWN)
-			{
-				index_y++;
-				if (index_y == 0)
-				{
-					index_y = 0;
-					gotoxy(menu_x + 17, menu_y);
-					SCREEN_COLOR;
-					_cprintf(tenmuc[0]);
-					gotoxy(menu_x + 17, sl + menu_y);
-					SETTING_BUT_CO;
-					_cprintf(tenmuc[index_x + index_y]);
-				}
-				else
-				{
-					gotoxy(menu_x + 17, index_y + menu_y);
-					SCREEN_COLOR;
-					_cprintf(tenmuc[index_y + 1]);
-					gotoxy(menu_x + 17, index_y + menu_y);
-					SETTING_BUT_CO;
-					_cprintf(tenmuc[index_y + index_x]);
-				}
-			}
-
 		}
+		else if (ch == KEY_DOWN)
+		{
+			index_y++;
+			int bienDuoi;
+			(!index_x) ? bienDuoi = 2 : bienDuoi = 1;
+			if (index_y > bienDuoi)
+			{
+				//xoa tren
+				gotoxy(menu_x + 17 + index_x * dist_x, (index_y - 1) * dist_y + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[index_y - 1][index_x]);
+				index_y = 0;
+				gotoxy(menu_x + 17 + index_x * dist_x, index_y * dist_y + menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[index_y][index_x]);
+			}
+			else
+			{
+				//xoa tren
+				gotoxy(menu_x + 17 + index_x * dist_x, (index_y - 1) * dist_y + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[index_y - 1][index_x]);
+				//in hien tai
+				gotoxy(menu_x + 17 + index_x * dist_x, index_y * dist_y + menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[index_y][index_x]);
+			}
+		}
+		else if (ch == KEY_LEFT)
+		{
+			if (index_y != 2)index_x--;
+			//bien trai
+			if (index_x < 0)
+			{
+				//xoa trai
+				gotoxy(menu_x + 17, index_y * dist_y + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[index_y][0]);
+				index_x = 1;
+				gotoxy(menu_x + 17 + index_x * dist_x, index_y * dist_y + menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[index_y][index_x]);
+			}
+			else
+			{
+				//xoa phai
+				gotoxy(menu_x + 17 + (index_x + 1) * dist_x, (index_y)*dist_y + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[index_y][index_x + 1]);
+				//in hien tai
+				gotoxy(menu_x + 17 + index_x * dist_x, index_y * dist_y + menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[index_y][index_x]);
+			}
+		}
+		else if (ch == KEY_RIGHT)
+		{
+			if (index_y != 2)index_x++;
+			//bien phai
+			if (index_x > 1)
+			{
+				//xoa phai
+				gotoxy(menu_x + 17 + dist_x, index_y * dist_y + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[index_y][1]);
+				index_x = 0;
+				gotoxy(menu_x + 17 + index_x * dist_x, index_y * dist_y + menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[index_y][index_x]);
+			}
+			else
+			{
+				//xoa trai
+				gotoxy(menu_x + 17, (index_y)*dist_y + menu_y);
+				SCREEN_COLOR;
+				_cprintf(tenmuc[index_y][0]);
+				//in hien tai
+				gotoxy(menu_x + 17 + index_x * dist_x, index_y * dist_y + menu_y);
+				SETTING_BUT_CO;
+				_cprintf(tenmuc[index_y][index_x]);
+			}
+		}
+
+		//chinh mode
+		else if ((ch == ENTER) && !index_y)
+		{
+
+			if (!index_x) {
+				if (lane.getLevel().getMode())
+					lane.switchMode();
+			}
+			//hard
+			else {
+				if (!lane.getLevel().getMode())
+					lane.switchMode();
+			}
+			chosen1[0] =  index_y,chosen1[1]=index_x ;
+		}
+		else if ((ch == ENTER) && index_y == 1)
+		{
+			//on
+			if (!index_x)
+			{
+			}
+			//off
+			else {
+			}
+			chosen2[0] = index_y, chosen2[1] = index_x;
+		}
+		//back
+		else if ((ch == ENTER) && index_y == 2)
+		{
+			menu();
+		}
+
 	}
 
-
-
-	gotoxy(50, 20);
-	system("pause");
-	
 }
+
+
+
 void CGame::loadmenu()
 {
 	system("cls");
@@ -877,4 +1003,41 @@ void CGame::loadmenu()
 	}
 	if (th1.joinable())
 		th1.join();
+}
+
+void CGame::drawDino(int x, int y, bool dir)
+{
+	char shape0[5][11], shape1[5][11];
+	for (int i = 0; i < 4; ++i) shape1[0][i] = ' ';
+	for (int i = 4; i < 10; ++i) shape1[0][i] = char(220);
+	shape1[0][10] = ' ';
+	for (int i = 0; i < 3; ++i) shape1[1][i] = shape1[2][i] = ' ';
+	for (int i = 4; i < 9; ++i) shape1[1][i] = shape1[2][i] = shape1[3][i] = shape1[4][i] = char(219);
+	shape1[1][8] = char(220);
+	for (int i = 9; i < 11; ++i) shape1[1][i] = shape1[2][i] = char(223);
+	shape1[3][1] = shape1[4][3] = char(219);
+	shape1[3][9] = char(223), shape1[4][9] = char(220);
+	for (int i = 1; i < 3; ++i) shape1[4][i] = char(223);
+	shape1[3][2] = shape1[3][10] = shape1[4][10] = shape1[4][0] = ' ';
+	shape1[1][3] = shape1[2][3] = shape1[3][0] = shape1[3][3] = char(174);
+
+	for (int i = 7; i < 11; ++i) shape0[0][i] = ' ';
+	for (int i = 1; i < 7; ++i) shape0[0][i] = char(220);
+	shape0[0][0] = ' ';
+	for (int i = 8; i < 11; ++i) shape0[1][i] = shape0[2][i] = ' ';
+	for (int i = 2; i < 7; ++i) shape0[1][i] = shape0[2][i] = shape0[3][i] = shape0[4][i] = char(219);
+	shape0[1][2] = char(220);
+	for (int i = 0; i < 2; ++i) shape0[1][i] = shape0[2][i] = char(223);
+	shape0[3][9] = shape0[4][7] = char(219);
+	shape0[3][1] = char(223), shape0[4][1] = char(220);
+	for (int i = 8; i < 10; ++i) shape0[4][i] = char(223);
+	shape0[3][0] = shape0[3][8] = shape0[4][10] = shape0[4][0] = ' ';
+	shape0[1][7] = shape0[2][7] = shape0[3][7] = shape0[3][10] = char(175);
+	Point pos = { x,y };
+	for (int i = 0; i < 5; ++i)
+		for (int j = 0; j <11; ++j)
+		{
+			gotoxy(pos.x + j, pos.y + i);
+				(dir)?printf("%c", shape1[i][j]): printf("%c", shape0[i][j]);
+		}	
 }

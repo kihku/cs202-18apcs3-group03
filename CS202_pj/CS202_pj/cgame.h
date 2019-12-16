@@ -42,5 +42,6 @@ public:
 	static mutex mtx;
 	//LOADGAMEMENU
 	void loadmenu();
+	void drawDino(int, int, bool);
 
 };

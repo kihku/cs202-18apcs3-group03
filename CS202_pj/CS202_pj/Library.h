@@ -32,6 +32,7 @@ const int screenSize_V_bot = 24;
 const int delta_screenSize_H = screenSize_H_right - screenSize_H_left;
 const int delta_screenSize_V = screenSize_V_bot - screenSize_V_top;
 const int peopleLives = 5;
+const int heart_y = 13;
 
 const int MAXLEVEL = 5;
 const int MAXCAR = 5;
