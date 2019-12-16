@@ -27,6 +27,7 @@ void CPEOPLE::eraseCorpse()
 }
 void CPEOPLE::Up(int n)
 {
+	
 	mY -= n;
 	if (mY < screenSize_V_top-1)
 		mY = screenSize_V_top-1;
@@ -41,6 +42,7 @@ void CPEOPLE::Up(int n)
 }
 void CPEOPLE::Down(int n)
 {
+	
 	mY += n;
 	if (mY > screenSize_V_bot)
 		mY = screenSize_V_bot;
@@ -55,6 +57,7 @@ void CPEOPLE::Down(int n)
 }
 void CPEOPLE::Left(int n)
 {
+	
 	mX -= n;
 	if (mX < screenSize_H_left+2)
 		mX = screenSize_H_left+2;
@@ -66,6 +69,7 @@ void CPEOPLE::Left(int n)
 }
 void CPEOPLE::Right(int n)
 {
+	
 	mX += n;
 	if (mX > screenSize_H_right-5)
 		mX = screenSize_H_right-5;

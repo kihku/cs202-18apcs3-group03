@@ -19,10 +19,10 @@ CGame::CGame() :lane()
 	//mX = screenSize_H / 2;
 	//mY = screenSize_V;
 }
-void CGame::updatePosPeople(char keyPressed)
+void CGame::updatePosPeople(char keyPressed,bool lvUp)
 {
 	unique_lock<mutex> lk(CGame::mtx);
-	const int step_horizontal = 2;
+	const int step_horizontal = 1;
 	const int step_vertical = 2;
 	if (keyPressed == 'd')
 	{
@@ -118,6 +118,7 @@ void CGame::gamePlay()
 			//pauseGame(th1_handle);
 			lane.levelUp();
 			nextlevel(th1_handle, nextLevel);
+			nextLevel = false;
 			
 		}
 		//gameover
@@ -156,7 +157,7 @@ void CGame::gamePlay()
 		else if(isPause==false)
 		{
 			//Collide();
-			updatePosPeople(keyPressed);
+			updatePosPeople(keyPressed, nextLevel);
 			//Collide();
 		}
 		
