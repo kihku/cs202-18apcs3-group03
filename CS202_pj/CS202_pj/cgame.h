@@ -23,10 +23,13 @@ public:
 	void saveGame(string save); // Thực hiện lưu lại dữ liệu trò chơi
 	void pauseGame(HANDLE); // Tạm dừng Thread
 	void resumeGame(HANDLE); //Quay lai Thread
+
 	void updatePosPeople(char); //Thực hiện điều khiển di chuyển của CPEOPLE
 	void updatePosVehicle(bool); //Thực hiện cho Truck & Car di chuyển
 	void updatePosAnimal();//Thực hiện cho CDINAUSOR & CBird di chuyển
 	//MENU
+	void titleMenu();
+	string getFileContents(std::ifstream& File);
 	void menu();
 	void pauseMenu(HANDLE, bool&,bool);
 	void settingMenu();

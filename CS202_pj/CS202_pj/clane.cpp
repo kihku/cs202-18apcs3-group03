@@ -45,10 +45,11 @@ void Lane::initLane()
 		traf[i] = new Traffic(pTra), pTra.y += 4;
 
 	//dir = rand() % 2;
-	car = vector<Enemy*>(6, NULL);
+	car = vector<Enemy*>(carNum, NULL);
 	for (int i = 0; i < carNum; ++i)
-		car[i] = new Car(pC, 0), pC.x += lev.getDistCar();
-	truck = vector<Enemy*>(6, NULL);
+
+		car[i]=new Car(pC,0), pC.x += lev.getDistCar();
+	truck = vector<Enemy*>(carNum, NULL);
 	//dir = rand() % 2;
 
 	for (int i = 0; i < carNum; ++i)
@@ -56,11 +57,11 @@ void Lane::initLane()
 
 	pC = { 5, pT.y + 4 }, pT = { 5, pC.y + 4 };
 	//dir = rand() % 2;
-	bird = vector<Enemy*>(6, NULL);
+	bird = vector<Enemy*>(carNum, NULL);
 	for (int i = 0; i < carNum; ++i)
 		bird[i] = new Bird(pC, 0), pC.x += lev.getDistCar();
 	//dir = rand() % 2;
-	dino = vector<Enemy*>(6, NULL);
+	dino = vector<Enemy*>(carNum, NULL);
 	for (int i = 0; i < carNum; ++i)
 		dino[i] = new Dinosaur(pT, 1), pT.x += lev.getDistTruck();
 
