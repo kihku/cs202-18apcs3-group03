@@ -1,10 +1,5 @@
 ﻿#include"Library.h"
 
-void CGame::updatePosPeople(char keyPressed)
-{
-	unique_lock<mutex> lk(CGame::mtx);
-	const int step_horizontal = 4;
-
 CGame::CGame() :lane(level)
 {
 	//settingMenu();
