@@ -643,24 +643,47 @@ void CGame::settingMenu()
 			if (index_y < 0)
 			{
 				index_y = 4;
-				gotoxy(menu_x+17,  menu_y);
+				gotoxy(menu_x + 17, menu_y);
 				SCREEN_COLOR;
 				_cprintf(tenmuc[0]);
-				gotoxy(menu_x+17, sl + menu_y);
+				gotoxy(menu_x + 17, sl + menu_y);
 				SETTING_BUT_CO;
 				_cprintf(tenmuc[index_x + index_y]);
 			}
 			else
 			{
-				gotoxy(menu_x+17, index_y  + menu_y);
+				gotoxy(menu_x + 17, index_y + menu_y);
 				SCREEN_COLOR;
 				_cprintf(tenmuc[index_y + 1]);
-				gotoxy(menu_x+17, index_y + menu_y);
+				gotoxy(menu_x + 17, index_y + menu_y);
 				SETTING_BUT_CO;
 				_cprintf(tenmuc[index_y + index_x]);
 			}
+			if (ch == KEY_DOWN)
+			{
+				index_y++;
+				if (index_y==0)
+				{
+					index_y = 0;
+					gotoxy(menu_x + 17, menu_y);
+					SCREEN_COLOR;
+					_cprintf(tenmuc[0]);
+					gotoxy(menu_x + 17, sl + menu_y);
+					SETTING_BUT_CO;
+					_cprintf(tenmuc[index_x + index_y]);
+				}
+				else
+				{
+					gotoxy(menu_x + 17, index_y + menu_y);
+					SCREEN_COLOR;
+					_cprintf(tenmuc[index_y + 1]);
+					gotoxy(menu_x + 17, index_y + menu_y);
+					SETTING_BUT_CO;
+					_cprintf(tenmuc[index_y + index_x]);
+				}
+			}
+
 		}
-		
 	}
 
 
