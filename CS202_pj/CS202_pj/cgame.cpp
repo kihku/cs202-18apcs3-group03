@@ -57,11 +57,6 @@ CGame::~CGame()
 {
 	
 }
-CPEOPLE CGame::getPeople()
-{
-	CPEOPLE peo;
-	return peo;
-}
 vector<Enemy*> CGame::getVehicle()
 {
 	//example to get enemy position 

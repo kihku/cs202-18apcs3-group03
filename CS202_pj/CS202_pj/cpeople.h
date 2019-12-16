@@ -6,7 +6,6 @@ private:
 	int mX, mY;
 	int lives;
 	bool mState; //1 is alive, 0 is dead
-	static int obj;
 public:
 	CPEOPLE();
 	CPEOPLE(int x, int y, int live);

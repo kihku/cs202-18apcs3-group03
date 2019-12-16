@@ -8,12 +8,19 @@ class CGame {
 	Level level;
 	Lane lane;
 	bool isMute = false;
-	
-public:
-	CGame(); //Chuẩn bị dữ liệu cho tất cả các đối tượng
-	void drawGame(bool); //Thực hiện vẽ trò chơi ra màn hình sau khi có dữ liệu
+	static CGame* instance;
+	CGame();
 	~CGame(); // Hủy tài nguyên đã cấp phát
-	CPEOPLE getPeople();//Lấy thông tin người
+public:
+	static mutex mtx;
+	static CGame* getInstance() {
+		if (!instance)
+			instance = new CGame;
+		return instance;
+	}
+	//CGame(); //Chuẩn bị dữ liệu cho tất cả các đối tượng
+	void drawGame(bool); //Thực hiện vẽ trò chơi ra màn hình sau khi có dữ liệu
+	
 	vector<Enemy*> getVehicle();//Lấy danh sách các xe
 
 	//CANIMAL* getAnimal(); //Lấy danh sách các thú
@@ -40,7 +47,7 @@ public:
 	void gameOver(HANDLE);
 	void nextlevel(HANDLE,bool);
 	void bombEffect();
-	static mutex mtx;
+	
 	//LOADGAMEMENU
 	void loadmenu();
 	void drawDino(int, int, bool);
