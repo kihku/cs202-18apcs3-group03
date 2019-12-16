@@ -28,27 +28,27 @@ void CGame::updatePosPeople(char keyPressed,bool lvUp)
 	const int step_vertical = 2;
 	if (keyPressed == 'd')
 	{
-		cn.Right(step_horizontal);
-		if (!constVar::isMute) 
+		if (!isMute)
 			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);
+		cn.Right(step_horizontal);
 	}
 	else if (keyPressed == 'a')
 	{
-		cn.Left(step_horizontal);
-		if (!constVar::isMute)
+		if (!isMute)
 			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);
+		cn.Left(step_horizontal);
 	}
 	else if (keyPressed == 'w')
 	{
-		cn.Up(step_vertical);
-		if (!constVar::isMute)
+		if (!isMute)
 			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);
+		cn.Up(step_vertical);
 	}
 	else if (keyPressed == 's')
 	{
-		cn.Down(step_vertical);
-		if (!constVar::isMute)
+		if (!isMute)
 			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);
+		cn.Down(step_vertical);
 	}
 	//Collide();
 }
@@ -261,7 +261,7 @@ void CGame::drawGame(bool nextLevel)
 	if (nextLevel == true)
 		lk.lock(); 
 	system("cls");
-	if (!constVar::isMute)
+	if (!isMute)
 		PlaySound(TEXT("zelda_13.wav"), NULL, SND_ASYNC);
 	SCREEN_COLOR;
 	const int delta = 3;
@@ -440,7 +440,7 @@ void CGame::titleMenu() {
 void CGame::menu()
 {
 	system("cls");
-	if (!constVar::isMute)
+	if (!isMute)
 		PlaySound(TEXT("Christmas.wav"), NULL, SND_ASYNC);
 	//MAIN MENU
 	titleMenu();
@@ -660,10 +660,11 @@ void CGame::Collide() {
 		if (ene[i])
 		{
 			if (cn.isCrash(ene[i]->getPos(), ene[i]->getShapeSize()) == true) {
-				//if (!constantVar::isMute) enemyList[i]->sound();
+				//if (!constantVar::!isMute) enemyList[i]->sound();
 				//cn.killPlayer();
 				//gotoxy(20, 20);
-				getVehicle()[i]->sound();
+				if (!isMute)
+					ene[i]->sound();
 				cn.reduceLive();
 				cn.eraseCorpse();
 				cn.backToCheckPoint();
@@ -690,7 +691,7 @@ void CGame::gameOver() {
 void CGame:: nextlevel(HANDLE handle,bool nextLevel) {
 	
 	resetGame(nextLevel);
-	if (!constVar::isMute)
+	if (!isMute)
 		PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
 	cn.eraseCorpse();
 	cn.backToCheckPoint();

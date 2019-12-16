@@ -1,8 +1,6 @@
 #include"Library.h"
 mutex CGame::mtx;
 
-bool constVar::isMute = false;
-bool constVar::isHard = true;
 
 int main()
 {

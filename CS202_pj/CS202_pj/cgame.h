@@ -1,12 +1,13 @@
 ﻿#pragma once
 #include"Library.h"
+
 class CGame {
 	CPEOPLE cn;
 	int map[85][24];
 	bool mode;	//0: easy, 1: hard
 	Level level;
 	Lane lane;
-	
+	bool isMute = false;
 	
 public:
 	CGame(); //Chuẩn bị dữ liệu cho tất cả các đối tượng
