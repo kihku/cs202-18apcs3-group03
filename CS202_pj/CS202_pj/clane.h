@@ -10,7 +10,7 @@ private:
 
 	const int distCar[3] = {50,30,20};
 	const int distTruck[3] = {40,30,30};
-	const int ezSpeed[3] = { 200,200,200 };
+	const int ezSpeed[3] = { 100,100,100 };
 	const int harSpeed[3] = { 50,50,50 };
 	const int maxLevel = 3;
 	//int minSpd, maxSpd;
@@ -23,7 +23,6 @@ public:
 	Level(const Level& l) { level = l.level, mode = l.mode; };
 	Level& operator=(const Level& l) { level = l.level, mode = l.mode; return* this; }
 	bool levelUp();
-	void resetLevel();
 	int getMode() { return mode; };
 	int getLevel();
 
@@ -79,7 +78,6 @@ public:
 
 	vector<Enemy*>getDino() { return dino; }
 	Level getLevel() { return lev; }
-	void resetLevel();
 	bool levelUp();
 	Point  getVehiclePoint();
 	void updatePosEnemy(int t);

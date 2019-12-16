@@ -127,7 +127,6 @@ void CGame::gamePlay()
 			//win
 			if (lane.getLevel().getLevel()==3)
 			{
-				lane.resetLevel();
 				pauseGame(th1_handle);
 				system("cls");
 				gotoxy(20, 20);
@@ -392,6 +391,7 @@ string CGame::getFileContents(std::ifstream& File)
 			std::string TempLine;                  //Temp line
 			std::getline(File, TempLine);        //Get temp line
 			TempLine += "\n";                      //Add newline character
+
 			Lines += TempLine;                     //Add newline
 		}
 		return Lines;
@@ -462,18 +462,8 @@ void CGame::menu()
 	
 	drawDino(7, 5, 0);
 	drawDino(105, 5, 1);
-	drawDino(92, 12, 0);
-	drawDino(20, 12, 1);
-	drawDino(7, 19, 0);
-	drawDino(105, 19, 1);
-	drawDino(50, 21, 1);
-	drawDino(62, 21, 0);
-	gotoxy(59, 18);
-	cout << " " << char(220) << " " << char(220);
-	gotoxy(59, 19);
-	cout << char(219)<<char(219)<<char(219)<<char(219)<<char(219);
-	gotoxy(59, 20);
-	cout << " " << char(223)<<char(219)<<char(223);
+	drawDino(80, 15, 1);
+	drawDino(20, 20, 1);
 	SCREEN_COLOR;
 	int ki;
 	const int SL = 4;
@@ -768,11 +758,11 @@ void CGame::settingMenu()
 	gotoxy(menu_x, menu_y + 2);
 	cout << "S O U N D";
 	gotoxy(menu_x + 17, menu_y);
-	cout << " E A S Y   H A R D ";
+	cout << "E A S Y   H A R D";
 	gotoxy(menu_x + 17, menu_y + 2);
-	cout << " O N       O F F ";
+	cout << "O N       O F F";
 	gotoxy(menu_x + 17, menu_y + 4);
-	cout << " B A C K ";
+	cout << "B A C K";
 
 	//in dam luc khoi tao
 	int dist_x = 5 + 5, dist_y = 2;
@@ -924,11 +914,9 @@ void CGame::settingMenu()
 			//on
 			if (!index_x)
 			{
-
 			}
 			//off
 			else {
-
 			}
 			chosen2[0] = index_y, chosen2[1] = index_x;
 		}
