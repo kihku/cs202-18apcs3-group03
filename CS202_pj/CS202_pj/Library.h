@@ -10,7 +10,7 @@
 #include<mutex>
 #include<fstream>
 #include<string>
-#include <cmath>
+#include<MMSystem.h>
 using namespace std;
 struct Point { 
 	int x, y;
@@ -49,6 +49,7 @@ const int MAXSPEED = 100;		//1s
 #define SCREEN_COLOR system("Color B0");
 #define PAUSE_BUTTON_CO TextColor(8);
 #define PAUSE_SCREEN_CO system("Color C0");
+#define SETTING_BUT_CO TextColor(3);
 //#define RED_LIGHT SetColor(10);
 //#define GREEN_LIGHT SetColor(8);
 #include"extra.h"

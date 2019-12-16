@@ -6,7 +6,7 @@ CPEOPLE::CPEOPLE()
 	mX = delta_screenSize_H / 2;
 	mY = delta_screenSize_V+3;
 }
-CPEOPLE::CPEOPLE(int x,int y,int live)
+CPEOPLE::CPEOPLE(int x, int y, int live)
 {
 	lives = live;
 	if (live < 0)
@@ -26,6 +26,7 @@ void CPEOPLE::backToCheckPoint()
 	gotoxy(mX, mY + 1);
 	cout << " " << char(219) << "   ";
 }
+
 void CPEOPLE::eraseCorpse()
 {
 	unique_lock<mutex>lk(CGame::mtx);
@@ -36,6 +37,7 @@ void CPEOPLE::eraseCorpse()
 }
 void CPEOPLE::Up(int n)
 {
+	
 	mY -= n;
 	if (mY < screenSize_V_top-1)
 		mY = screenSize_V_top-1;
@@ -50,6 +52,7 @@ void CPEOPLE::Up(int n)
 }
 void CPEOPLE::Down(int n)
 {
+	
 	mY += n;
 	if (mY > screenSize_V_bot)
 		mY = screenSize_V_bot;
@@ -64,6 +67,7 @@ void CPEOPLE::Down(int n)
 }
 void CPEOPLE::Left(int n)
 {
+	
 	mX -= n;
 	if (mX < screenSize_H_left+2)
 		mX = screenSize_H_left+2;
@@ -75,6 +79,7 @@ void CPEOPLE::Left(int n)
 }
 void CPEOPLE::Right(int n)
 {
+	
 	mX += n;
 	if (mX > screenSize_H_right-5)
 		mX = screenSize_H_right-5;

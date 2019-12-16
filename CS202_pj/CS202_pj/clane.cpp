@@ -4,7 +4,55 @@ Lane::Lane()
 {
 	initLane();
 }
+Lane::Lane(Level&  levt)
+{
+	lev = levt;
+	/*int mode = 1;
+	int numCar, numTruck, distCar, distTruck;
+	if (!mode) {
+		numCar = levt.getNumCar();
+		numTruck = levt.getNumCar();
+		distCar = levt.getDistCar();
+		distTruck = levt.getDistTruck();
+	}
+	else {
+		numCar = levt.getNumCar();
+		numTruck = levt.getNumCar();
+		distCar = levt.getDistCar();
+		distTruck = levt.getDistTruck();
+	}*/
+	srand(time(NULL));
+	int topLeft = 2;
+	Point pTra = { screenSize_H_right + 2,topLeft + 4 }
+	, pC = { 5, topLeft + 3 }, pT = { 5,pC.y + 4 };
 
+	count = 0;
+	stopCount = 0, stopCar = -1;
+
+	traf = vector<Traffic*>(4, NULL);
+	for (int i = 0; i < 4; ++i)
+		traf[i] = new Traffic(pTra), pTra.y += 4;
+
+	//dir = rand() % 2;
+	car = vector<Enemy*>(6, NULL);
+	for (int i = 0; i < levt.getNumCar(); ++i)
+		car[i] = new Car(pC, 0), pC.x += levt.getDistCar();
+	truck = vector<Enemy*>(6, NULL);
+	//dir = rand() % 2;
+
+	for (int i = 0; i < levt.getNumTruck(); ++i)
+		truck[i] = new Truck(pT, 1), pT.x += levt.getDistTruck();
+
+	pC = { 5, pT.y + 4 }, pT = { 5, pC.y + 4 };
+	//dir = rand() % 2;
+	bird = vector<Enemy*>(6, NULL);
+	for (int i = 0; i < levt.getNumCar(); ++i)
+		bird[i] = new Bird(pC, 0), pC.x += levt.getDistCar();
+	//dir = rand() % 2;
+	dino = vector<Enemy*>(6, NULL);
+	for (int i = 0; i < levt.getNumTruck(); ++i)
+		dino[i] = new Dinosaur(pT, 1), pT.x += levt.getDistTruck();
+}
 Lane::~Lane()
 {
 	for (int i = 0; i < car.size(); ++i)
