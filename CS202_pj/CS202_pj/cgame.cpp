@@ -142,6 +142,7 @@ void CGame::gamePlay()
 			SuspendThread(th1_handle);
 			system("cls");
 			gameOver(th1_handle);
+			
 		}
 		keyPressed = _getch();
 		if (keyPressed == 0)
@@ -402,8 +403,8 @@ void CGame::titleMenu() {
 	//Ascii art
 	ifstream Reader("CrossyRoad.txt");             //Open file
 	string Art = getFileContents(Reader);       //Get file
-	gotoxy(0,0);
-	cout << Art << std::endl;               //Print it to the screen
+	//gotoxy(10,0);
+	cout << "		 "<<Art << std::endl;               //Print it to the screen
 	Reader.close();                           //Close file
 	///
 	SCREEN_COLOR;
@@ -784,6 +785,7 @@ void CGame::gameOver(HANDLE th1) {
 			exitGame();
 		}
 	}
+
 }
 
 void CGame:: nextlevel(HANDLE handle,bool nextLevel) {
@@ -799,6 +801,7 @@ void CGame:: nextlevel(HANDLE handle,bool nextLevel) {
 }
 void CGame::bombEffect()
 {
+	
 	const int baseX = 10, baseY = 10;
 	gotoxy(baseX, baseY);
 	cout << R"(                                               ____                       )" << "\n";
@@ -824,7 +827,7 @@ void CGame::bombEffect()
 	cout << R"(                                               <|i::|i|`.                     )" << "\n";
 	gotoxy(baseX, baseY + 11);
 	cout << R"(                                              (` ^'"`-' ")                    )";
-	
+	printAnimation();
 }
 void CGame::settingMenu()
 {
@@ -1155,4 +1158,24 @@ void CGame::increaseLive() {
 		for (int i = 0; i < cn.getLives() * 3; ++i)
 			cout << char(222);
 	}
+}
+void CGame::printAnimation() {
+	for (int i=0;i<5; ++i)
+	{
+		ifstream aReader("Animation.txt");             //Open file
+		string a = getFileContents(aReader);       //Get file
+		gotoxy(0, 0);
+		cout << a << std::endl;               //Print it to the screen
+		aReader.close();
+
+		Sleep(100);
+
+		ifstream bReader("Animation2.txt");             //Open file
+		string b = getFileContents(bReader);       //Get file
+		gotoxy(0, 0);
+		cout << b << std::endl;               //Print it to the screen
+		bReader.close();
+		Sleep(100);
+	}
+	
 }

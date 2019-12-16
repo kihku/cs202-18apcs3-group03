@@ -57,4 +57,6 @@ public:
 	void printHeart();
 	void isIncreaseLive();
 	void increaseLive();
+	//animation
+	void printAnimation();
 };
