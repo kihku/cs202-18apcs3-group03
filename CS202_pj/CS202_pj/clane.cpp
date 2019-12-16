@@ -1,6 +1,6 @@
 #include "Library.h"
 
-Lane::Lane(Level& lev)
+Lane::Lane()
 {
 	const int carNum = 6;
 	/*int mode = 1;
@@ -83,7 +83,7 @@ void Lane::updateTraffic()
 	//}
 }
 
-void Lane::drawLane(Level& lev)
+void Lane::drawLane()
 { 
 		for (int i = 0; i < lev.getNumCar(); ++i)
 			car[i]->drawEne(), bird[i]->drawEne();
@@ -93,7 +93,7 @@ void Lane::drawLane(Level& lev)
 	
 }
 
-void Lane::updateLane(Level& lev) {
+void Lane::updateLane() {
 	count++;
 	if (count % lev.getSpeed() == 0)
 	{
@@ -119,6 +119,21 @@ void Lane::updateLane(Level& lev) {
 		stopCar = -1;
 	}
 	updateTraffic();
+}
+
+bool Lane::levelUp()
+{
+	if (lev.levelUp()) {
+		for (int i = 0; i < car.size(); ++i)
+			delete car[i], bird[i], car[i] = NULL, bird[i] = NULL;
+		for (int i = 0; i < truck.size(); ++i)
+			delete truck[i], dino[i], truck[i] = NULL, dino[i] = NULL;
+		for (int i = 0; i < traf.size(); ++i)
+			delete traf[i], traf[i] = NULL;
+		Lane();
+		return true;
+	}
+	return false;
 }
 
 

@@ -1,5 +1,5 @@
 ﻿#include"Library.h"
-CGame::CGame() :lane(level)
+CGame::CGame() :lane()
 {
 	//settingMenu();
 	menu();
@@ -116,8 +116,7 @@ void CGame::gamePlay()
 		{
 			nextLevel = true;
 			//pauseGame(th1_handle);
-			level.levelUp();
-			lane = Lane(level);
+			lane.levelUp();
 			nextlevel(th1_handle, nextLevel);
 			
 		}
@@ -218,7 +217,7 @@ void CGame::updatePosVehicle(bool nextLevel)
 		if (nextLevel == true)
 			break;
 		//Collide();
-		lane.updateLane(level);
+		lane.updateLane();
 	}
 
 }
@@ -299,7 +298,7 @@ void CGame::drawGame(bool nextLevel)
 	gotoxy(screenSize_H_right + 12, screenSize_V_top + 5);
 	cout << "S T A T U S";
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 8);
-	cout << "L E V E L " << level.getLevel();
+	cout << "L E V E L " << lane.getLevel().getLevel();
 	gotoxy(screenSize_H_right + 6, screenSize_V_top + 11);
 	cout << "L I V E S";
 	gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
@@ -315,7 +314,7 @@ void CGame::drawGame(bool nextLevel)
 	cout << char(219) << char(219) << char(219);
 	gotoxy(pos.x, pos.y + 1);
 	cout << " " << char(219) << "   ";
-	lane.drawLane(level);
+	lane.drawLane();
 }
 bool CGame::exportMap(const char* path)
 {
