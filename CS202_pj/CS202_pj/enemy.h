@@ -30,6 +30,7 @@ class Traffic {
 	bool greenLight;
 public:
 	Traffic(Point p);
+	Traffic(bool green);
 	Traffic(const Traffic& src);
 	void drawTrafficLight();
 	void green();
@@ -59,6 +60,8 @@ public:
 	virtual void moveEne(bool);
 
 	virtual void drawEne(bool);
+
+	virtual void moveEne(bool,int,int);
 
 	virtual  void sound();
 	//void drawVeh() {

@@ -64,6 +64,7 @@ public:
 	Lane();
 	
 	Lane(Level& lev);
+	/*Lane(Level& lev, Point a, Point b, Point c, Point d,bool tr);*/
 	~Lane();
 	void initLane();
 	void updateTraffic();
@@ -77,11 +78,12 @@ public:
 	vector<Enemy*>getBird() { return bird; }
 
 	vector<Enemy*>getDino() { return dino; }
+	vector<Traffic*>getTraffic() { return traf; }
 	Level getLevel() { return lev; }
 	bool levelUp();
 	Point  getVehiclePoint();
 	void updatePosEnemy(int t);
-	
+
 	//bool drawlane(bool);
 	//void deleteOldEnemy(Point pos, ShapeSize s);
 	//bool printNewEnemy(Point pos, char** shape, ShapeSize s);	//return if printable

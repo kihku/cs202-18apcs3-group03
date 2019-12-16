@@ -1,5 +1,5 @@
 ﻿#include"Library.h"
-
+#pragma warning(disable : 4996)
 CGame::CGame() :lane(level)
 {
 	//settingMenu();
@@ -50,7 +50,7 @@ void CGame::updatePosPeople(char keyPressed,bool lvUp)
 			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);*/
 		cn.Down(step_vertical);
 	}
-	isIncreaseLive();
+	//Collide();
 }
 
 CGame::~CGame()
@@ -93,6 +93,7 @@ void CGame::resetGame(bool nextLevel)
 	drawGame(nextLevel);
 	//Lane();
 }
+
 void CGame::exitGame()
 {
 	//IS_RUNNING = false;
@@ -103,6 +104,7 @@ void CGame::exitGame()
 //void exitGame(HANDLE); 
 void CGame::gamePlay()
 {
+
 	SCREEN_COLOR;
 	int keyPressed;
 	bool isPause = false;
@@ -161,12 +163,47 @@ void CGame::gamePlay()
 		{
 			string save;
 			pauseGame(th1_handle);
+			int menu_x = screenSize_H_right + 15, menu_y = screenSize_V_top;
+			gotoxy(menu_x - 7, 2 + menu_y);
 			cout << "Enter filename: ";
+			gotoxy(menu_x - 7, 3 + menu_y);
 			cin >> save;
-
-
 			saveGame(save);
-			ResumeThread(th1_handle);
+			gotoxy(menu_x - 7, 2 + menu_y);
+			cout << "                ";
+			gotoxy(menu_x - 7, 3 + menu_y);
+			cout << "                ";
+			gotoxy(menu_x - 7, 2 + menu_y);
+			char c;
+			cout << "Do you want to continue(Y/N) ?";
+			cin >> c;
+			gotoxy(menu_x - 7, 2 + menu_y);
+			cout << "                               ";
+			if (c == 'y' || c == 'Y')
+			{
+				gotoxy(menu_x - 7, 1 + menu_y);
+				cout << "GAME STARTS IN: ";
+				gotoxy(menu_x - 7, 2 + menu_y);
+				Sleep(1000);
+				cout << 3;
+				gotoxy(menu_x - 7, 2 + menu_y);
+				Sleep(1000);
+				cout << 2;
+				gotoxy(menu_x - 7, 2 + menu_y);
+				Sleep(1000);
+				cout << 1;
+				Sleep(1000);
+				gotoxy(menu_x - 7, 1 + menu_y);
+				cout << "                 ";
+				gotoxy(menu_x - 7, 2 + menu_y);
+				cout << " ";
+				ResumeThread(th1_handle);
+			}
+			else
+			{
+				exitGame();
+				break;
+			}
 		}
 		else if(isPause==false)
 		{
@@ -180,9 +217,10 @@ void CGame::gamePlay()
 void CGame::loadGame(string load)
 {
 	ifstream fin;
-	fin.open(load + ".dat", ios::out | ios::binary);
+	fin.open("./data/"+load , ios::out | ios::binary);
 	level.~Level();
 	int lv, mode;
+	getline(fin,date);
 	fin >> lv >> mode;
 	new(&level) Level(lv,mode);
 	new(&lane) Lane(level);
@@ -191,13 +229,48 @@ void CGame::loadGame(string load)
 	fin >> peopleY;
 	fin >> live;
 	new(&cn) CPEOPLE(peopleX, peopleY, live);
-
+	int type;
+	fin >> type;
+	//int isGreen;
+	//fin >> isGreen;
+	//int enex, eney;
+	////car point
+	//fin >> enex;
+	//fin >> eney;
+	//Point car;
+	//car.x = enex;
+	//car.y = eney;
+	////truck point
+	//fin >> enex;
+	//fin >> eney;
+	//Point truck;
+	//truck.x = enex;
+	//truck.y = eney;
+	////bird point
+	//fin >> enex;
+	//fin >> eney;
+	//Point bird;
+	//bird.x = enex;
+	//bird.y = eney;
+	////dino point
+	//fin >> enex;
+	//fin >> eney;
+	//Point dino;
+	//dino.x = enex;
+	//dino.y = eney;
+	//new(&lane) Lane(level,car,truck,bird,dino,isGreen);
 }
 void CGame::saveGame(string save)
 {
 	ofstream fout;
-	fout.open(save + ".dat", ios::out | ios::binary);
-
+	fout.open("./data/"+save + ".dat", ios::out | ios::binary);
+	
+	time_t now = time(0);
+	char* dt = ctime(&now);
+	tm* gmtm = gmtime(&now);
+	dt = asctime(gmtm);
+	//DATE
+	fout << dt;
 	//SAVE LEVEL
 	fout << lane.getLevel().getLevel() << endl;
 	//SAVE MODE
@@ -209,14 +282,24 @@ void CGame::saveGame(string save)
 	//SAVE ENEMY
 	vector<Enemy*>v;
 	v = getVehicle();
+	int type = 0;
 	for (int i = 0; i < v.size(); i++)
 	{
+		
 		if (v[i] != NULL)
 		{
-			fout << v[i]->getType() << endl;
-			fout << v[i]->getPos().x << endl;
-			fout << v[i]->getPos().y << endl;
+			if (type != v[i]->getType())
+			{
+				/*fout << lane.getTraffic()[i]->isGreen() << endl;*/
+				fout << v[i]->getType() << endl;
+
+				fout << v[i]->getPos().x << endl;
+				fout << v[i]->getPos().y << endl;
+				
+			}
+			type = v[i]->getType();
 		}
+		
 	}
 	fout.close();
 
@@ -353,7 +436,6 @@ void CGame::drawGame(bool nextLevel)
 	gotoxy(pos.x, pos.y + 1);
 	cout << " " << char(219) << "   ";
 	lane.drawLane(nextLevel);
-	printHeart();
 }
 bool CGame::exportMap(const char* path)
 {
@@ -633,6 +715,7 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause, bool nextlv)
 		{
 			resumeGame(handle);
 			isPause = false;
+			stt = 0;
 			//lk.unlock();
 			break; //resume
 		}
@@ -645,17 +728,31 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause, bool nextlv)
 			isPause = false;
 			cn.eraseCorpse();
 			cn.backToCheckPoint();
+			stt = 0;
 			break;//restart
 
 		}
 		else if ((ch == ENTER) && (stt == 2))
 		{
 			exitGame();
+			stt = 0;
 			break;//exit
 		}
 	}
 }
-
+void CPEOPLE::reduceLive()
+{
+	if (lives > 0)
+	{
+		lives -= 1;
+		unique_lock<mutex> lk(CGame::mtx);
+		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+		cout << "               ";
+		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+		for (int i = 0; i < lives * 3; ++i)
+			cout << char(222);
+	}
+}
 //bool CGame::isCrash(Point pos) {
 //		if (abs(cn.mX - pos.x) <=5 && abs(mY - pos.y) <= 5) {
 //			return true;
@@ -1008,81 +1105,201 @@ void CGame::settingMenu()
 		}
 	}
 }
-
+//load all file name
+vector<string> CGame::getAllFilename(const string& name)
+{
+	vector<string> v;
+	string pattern(name);
+	pattern.append("\\*");
+	string stemp = string(pattern.begin(), pattern.end());
+	LPCSTR sw = stemp.c_str();
+	WIN32_FIND_DATA data;
+	HANDLE hFind;
+	if ((hFind = FindFirstFile(sw, &data)) != INVALID_HANDLE_VALUE) {
+		do {
+			char* txt = data.cFileName;
+			string ws(txt);
+			// your new String
+			string str(ws.begin(), ws.end());
+			if (str[0] == '.') continue;
+			// Show String
+			v.push_back(str);
+			
+		} while (FindNextFile(hFind, &data) != 0);
+		FindClose(hFind);
+	}
+	return v;
+}
 
 
 void CGame::loadmenu()
 {
 	system("cls");
-	string load;
-	cout << "Enter filname:";
-	cin >> load;
-	loadGame(load);
-	SCREEN_COLOR;
-	int keyPressed;
-	bool isPause = true;
-	bool nextLevel = false;
-	drawGame(nextLevel);
-	Sleep(3000);
-	isPause = false;
-	thread th1(&CGame::updatePosVehicle, this, nextLevel);
-	HANDLE th1_handle = th1.native_handle();
-	
-	while (1)
-	{
-		//level up
-		if (cn.isFinish())
-		{
-			nextLevel = true;
-			//pauseGame(th1_handle);
-			lane.levelUp();
-			nextlevel(th1_handle, nextLevel);
-			nextLevel = false;
-
-		}
-		//gameover
-		if (cn.getLives() <= 0)
-		{
-			SuspendThread(th1_handle);
-			system("cls");
-			gameOver(th1_handle);
-		}
-		keyPressed = _getch();
-		if (keyPressed == 0)
-			keyPressed = _getch();
-
-		if (keyPressed == 13 && isPause == false)
-		{
-			unique_lock<mutex>lk(CGame::mtx);
-			gotoxy(screenSize_H_right + 14, screenSize_V_top - 1);
-			cout << "P A U S E";
-			lk.unlock();
-			pauseGame(th1_handle);
-			isPause = true;
-			pauseMenu(th1_handle, isPause, nextLevel);
-		}
-		else if (keyPressed == 'c' || keyPressed == 'C')
-		{
-			string save;
-			pauseGame(th1_handle);
-			cout << "Enter filename: ";
-			cin >> save;
-
-			saveGame(save);
-			resumeGame(th1_handle);
-			isPause = false;
-
-		}
-		else if (isPause == false)
-		{
-			//Collide();
-			updatePosPeople(keyPressed, nextLevel);
-			//Collide();
-		}
-
+	vector<string> v;
+	v = getAllFilename("data");
+	if (v.size() == 0) {
+		gotoxy(30, 15);
+		cout << "No saved file to load !!!";
+		Sleep(1000);
+		
 	}
-	if (th1.joinable())
-		th1.join();
+	gotoxy(56, 15);
+	cout << "CHOOSE FILENAME TO LOAD: ";
+	int curPos = 0;
+	ifstream fin;
+	for (int i = 0; i < v.size(); ++i) {
+		if (i == curPos) {
+			gotoxy(52, 16 + i);
+			cout << ">> ";
+		}
+		gotoxy(56, 16 + i);
+		cout << v[i] << endl;
+	}
+
+	while (true) {
+		
+			char key = _getch();
+			if (key == KEY_UP)
+			{
+				string date = "";
+				gotoxy(52, 16 + curPos);
+				cout << "    " << v[curPos];
+				curPos--;
+				curPos = (curPos + v.size()) % v.size();
+				fin.open("./data/" + v[curPos], ios::out | ios::binary);
+				getline( fin,date);
+				gotoxy(75, 16 + curPos);
+				cout << "saved at " << date;
+				gotoxy(52, 16 + curPos);
+				cout << ">>  " << v[curPos];
+				fin.close();
+			}
+			if (key == KEY_DOWN)
+			{
+				string date = "";
+				gotoxy(52, 16 + curPos);
+				cout << "    " << v[curPos];
+				curPos++;
+				curPos = (curPos + v.size()) % v.size();
+				fin.open("./data/" + v[curPos], ios::out | ios::binary);
+				getline(fin, date);
+				gotoxy(75, 16 + curPos);
+				cout << "saved at " << date;
+				gotoxy(52, 16 + curPos);
+				cout << ">>  " << v[curPos];
+				fin.close();
+			}
+			if (key == 13)
+			{
+				system("cls");
+				
+
+
+				loadGame(v[curPos]);
+				SCREEN_COLOR;
+				int keyPressed;
+				bool isPause = false;
+				bool nextLevel = false;
+				drawGame(nextLevel);
+				/*Sleep(600);*/
+				int menu_x = screenSize_H_right + 15, menu_y = screenSize_V_top;
+				gotoxy(menu_x - 7, 1 + menu_y);
+				cout << "GAME STARTS IN: ";
+				gotoxy(menu_x - 7, 2 + menu_y);
+				Sleep(1000);
+				cout << 3;
+				gotoxy(menu_x - 7, 2 + menu_y);
+				Sleep(1000);
+				cout << 2;
+				gotoxy(menu_x - 7, 2 + menu_y);
+				Sleep(1000);
+				cout << 1;
+				Sleep(1000);
+				gotoxy(menu_x - 7, 1 + menu_y);
+				cout << "                 ";
+				gotoxy(menu_x - 7, 2 + menu_y);
+				cout << " ";
+				thread th1(&CGame::updatePosVehicle, this, nextLevel);
+				HANDLE th1_handle = th1.native_handle();
+				while (1)
+				{
+					//level up
+					if (cn.isFinish())
+					{
+						//win
+						if (lane.getLevel().getLevel() == 3)
+						{
+							pauseGame(th1_handle);
+							system("cls");
+							gotoxy(20, 20);
+							cout << "You WIN"; //kiem cai gi do
+							system("pause");
+
+							menu();
+						}
+						nextLevel = true;
+						//pauseGame(th1_handle);
+						lane.levelUp();
+						nextlevel(th1_handle, nextLevel);
+						nextLevel = false;
+
+					}
+					//gameover
+					if (cn.getLives() <= 0)
+					{
+						SuspendThread(th1_handle);
+						system("cls");
+						gameOver(th1_handle);
+					}
+					keyPressed = _getch();
+					if (keyPressed == 0)
+						keyPressed = _getch();
+
+					if (keyPressed == 13 && isPause == false)
+					{
+						unique_lock<mutex>lk(CGame::mtx);
+						gotoxy(screenSize_H_right + 14, screenSize_V_top - 1);
+						cout << "P A U S E";
+						lk.unlock();
+						pauseGame(th1_handle);
+						isPause = true;
+						pauseMenu(th1_handle, isPause, nextLevel);
+					}
+					else if (keyPressed == 'c' || keyPressed == 'C')
+					{
+						string save;
+						pauseGame(th1_handle);
+						int menu_x = screenSize_H_right + 15, menu_y = screenSize_V_top;
+						gotoxy(menu_x - 7, 2 + menu_y);
+						cout << "Enter filename: ";
+						gotoxy(menu_x - 7, 3 + menu_y);
+						cin >> save;
+						saveGame(save);
+						gotoxy(menu_x - 7, 2 + menu_y);
+						cout << "                ";
+						gotoxy(menu_x - 7, 3 + menu_y);
+						cout << "                ";
+						ResumeThread(th1_handle);
+					}
+					else if (isPause == false)
+					{
+						updatePosPeople(keyPressed, nextLevel);
+					}
+
+				}
+				if (th1.joinable())
+					th1.join();
+				
+				
+			}
+			if (key == 27)
+			{
+				system("cls");
+			}
+		
+		Sleep(200);
+	}
+	
 }
 
 void CGame::drawDino(int x, int y, bool dir)
@@ -1120,35 +1337,4 @@ void CGame::drawDino(int x, int y, bool dir)
 			gotoxy(pos.x + j, pos.y + i);
 				(dir)?printf("%c", shape1[i][j]): printf("%c", shape0[i][j]);
 		}	
-}
-int CGame::randHeart() {
-	int min = 10, max =50;
-	int range = max - min + 1;
-	int num = rand() % range + min;
-	posHeart = num;
-	return num;
-}
-void CGame::printHeart() {
-	char a;
-	a = 240;
-	gotoxy(randHeart(), 12);
-	cout << a;
-}
-void CGame::isIncreaseLive() {
-	if (cn.isEatHeart(posHeart)) {
-		if (!isMute)
-			PlaySound(TEXT("Earn Points.wav"), NULL, SND_ASYNC);
-		increaseLive();
-	}
-}
-void CGame::increaseLive() {
-	if (cn.getLives() < 5)
-	{
-		cn.plusLive();
-		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-		cout << "               ";
-		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-		for (int i = 0; i < cn.getLives() * 3; ++i)
-			cout << char(222);
-	}
 }

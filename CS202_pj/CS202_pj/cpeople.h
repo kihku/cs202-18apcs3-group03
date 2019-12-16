@@ -25,6 +25,4 @@ public:
 	//For arrayTesting
 	Point currentPos();
 	bool isCrash(Point Pos, ShapeSize ss);
-	bool isEatHeart(int X);
-	void plusLive();
 };

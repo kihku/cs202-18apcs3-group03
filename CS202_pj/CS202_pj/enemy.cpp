@@ -59,7 +59,49 @@ void Car::moveEne(bool lvUp)
 		//}
 	}
 }
-
+///FOR LOAD PURPOSE 
+void Car::moveEne(bool lvUp,int x,int y)
+{
+	if (lvUp == false)
+	{
+		unique_lock<mutex> lk(CGame::mtx);
+		Point pos = getPos();
+		for (int i = 0; i < ss.h; ++i)
+			for (int j = 0; j < ss.w; ++j)
+			{
+				gotoxy(pos.x + j, pos.y + i);
+				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+					cout << ' ';
+			}
+		//if (getDir()) {
+		//		setPos({ pos.x + 1, pos.y });
+		//	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });	//l-1?
+		//}
+		//else {
+		setPos({ pos.x - 1, pos.y });
+		if (getPos().x + ss.w - 1 <= screenSize_H_left) setPos({ screenSize_H_right, pos.y });
+		//}
+	}
+	else
+	{
+		Point pos = getPos();
+		for (int i = 0; i < ss.h; ++i)
+			for (int j = 0; j < ss.w; ++j)
+			{
+				gotoxy(pos.x + j, pos.y + i);
+				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+					cout << ' ';
+			}
+		//if (getDir()) {
+		//		setPos({ pos.x + 1, pos.y });
+		//	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });	//l-1?
+		//}
+		//else {
+		setPos({ pos.x - 1, pos.y });
+		if (getPos().x + ss.w - 1 <= screenSize_H_left) setPos({ screenSize_H_right, pos.y });
+		//}
+	}
+}
 
 void Car::drawEne(bool lvUp)
 {
@@ -379,6 +421,10 @@ Traffic::Traffic(Point p)
 		greenLight = true;
 		pos = p;
 	}
+}
+Traffic::Traffic(bool green)
+{
+	greenLight = green;
 }
 
 Traffic::Traffic(const Traffic& src)

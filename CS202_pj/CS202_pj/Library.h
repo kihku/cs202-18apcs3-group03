@@ -11,6 +11,7 @@
 #include<fstream>
 #include<string>
 #include<MMSystem.h>
+#include <ctime>
 using namespace std;
 struct Point { 
 	int x, y;

@@ -53,6 +53,39 @@ Lane::Lane(Level&  levt)
 	for (int i = 0; i < levt.getNumTruck(); ++i)
 		dino[i] = new Dinosaur(pT, 1), pT.x += levt.getDistTruck();
 }
+//FOR LOAD PURPOSE 
+//Lane::Lane(Level& levt,Point a,Point b,Point c,Point d,bool tr)
+//{
+//	lev = levt;
+//
+//	srand(time(NULL));
+//	count = 0;
+//	stopCount = 0, stopCar = -1;
+//
+//	traf = vector<Traffic*>(4, NULL);
+//	for (int i = 0; i < 4; ++i)
+//		traf[i] = new Traffic(tr);
+//
+//	//dir = rand() % 2;
+//	car = vector<Enemy*>(6, NULL);
+//	for (int i = 0; i < levt.getNumCar(); ++i)
+//		car[i] = new Car(a, 0), a.x += levt.getDistCar();
+//	truck = vector<Enemy*>(6, NULL);
+//	//dir = rand() % 2;
+//
+//	for (int i = 0; i < levt.getNumTruck(); ++i)
+//		truck[i] = new Truck(b, 1), b.x += levt.getDistTruck();
+//
+//	
+//	//dir = rand() % 2;
+//	bird = vector<Enemy*>(6, NULL);
+//	for (int i = 0; i < levt.getNumCar(); ++i)
+//		bird[i] = new Bird(c, 0), c.x += levt.getDistCar();
+//	//dir = rand() % 2;
+//	dino = vector<Enemy*>(6, NULL);
+//	for (int i = 0; i < levt.getNumTruck(); ++i)
+//		dino[i] = new Dinosaur(d, 1), d.x += levt.getDistTruck();
+//}
 Lane::~Lane()
 {
 	for (int i = 0; i < car.size(); ++i)

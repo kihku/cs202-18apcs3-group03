@@ -117,19 +117,6 @@ bool CPEOPLE::isFinish()
 	else
 		return false;
 }
-void CPEOPLE::reduceLive()
-{
-	if (lives > 0)
-	{
-		lives -= 1;
-		unique_lock<mutex> lk(CGame::mtx);
-		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-		cout << "               ";
-		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-		for (int i = 0; i < lives * 3; ++i)
-			cout << char(222);
-	}
-}
 bool CPEOPLE::isCrash(Point pos, ShapeSize ss) {
 	if ((mX - pos.x) >= 0 && (mY - pos.y) >= 0) //People in the right & below
 	{
@@ -161,15 +148,6 @@ bool CPEOPLE::isCrash(Point pos, ShapeSize ss) {
 				}
 	return false;
 }
-bool CPEOPLE::isEatHeart(int X) {
-	if ((X-mX) <= 1 && (X - mX) >= 0 && (13 - mY) <= 1 && (13 - mY) >= 0) {
-		//lives--;
-		return true;
-	}
-	return false;
-}
-void CPEOPLE::plusLive() {
-	lives++;
-}
+	
 	
 	

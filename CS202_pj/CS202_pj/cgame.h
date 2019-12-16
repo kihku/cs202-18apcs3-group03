@@ -7,8 +7,8 @@ class CGame {
 	bool mode;	//0: easy, 1: hard
 	Level level;
 	Lane lane;
+	string date;//for save load purpose
 	bool isMute = false;
-	int posHeart;
 	static CGame* instance;
 	CGame();
 	~CGame(); // Hủy tài nguyên đã cấp phát
@@ -51,10 +51,9 @@ public:
 	
 	//LOADGAMEMENU
 	void loadmenu();
+	vector<string> getAllFilename(const string& name);
+	string getdate() { return date; };
+	//DRAW DINO
 	void drawDino(int, int, bool);
-	//eat Live
-	int randHeart();
-	void printHeart();
-	void isIncreaseLive();
-	void increaseLive();
+
 };
