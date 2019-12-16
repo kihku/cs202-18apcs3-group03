@@ -118,30 +118,30 @@ bool CPEOPLE::isFinish()
 		return false;
 }
 bool CPEOPLE::isCrash(Point pos, ShapeSize ss) {
-	if ((mX - pos.x) >= 0 && (mY - pos.y) >= 0)
+	if ((mX - pos.x) >= 0 && (mY - pos.y) >= 0) //People in the right & below
 	{
-		if ((mX - pos.x) <= ss.w && (mY - pos.y) <= ss.h) {
+		if ((mX - pos.x) <= ss.w && (mY - pos.y) < ss.h) {
 			//lives--;
 			return true;
 		}
 	}
 	else 
-		if ((mX - pos.x) < 0 && (mY - pos.y) < 0) {
-			if ((mX - pos.x) ==0 && (mY - pos.y) == 0) {
+		if ((mX - pos.x) < 0 && (mY - pos.y) < 0) { //People in the left & above
+			if ((pos.x - mX) <=2 && (pos.y - mY) <= 1) {
 				//lives--;
 				return true;
 			}
 		}
 		else
-			if ((mX - pos.x) < 0 && (mY - pos.y) >= 0) {
-				if ((mX - pos.x) == 0 && (mY - pos.y) <= ss.h) {
+			if ((mX - pos.x) < 0 && (mY - pos.y) >= 0) { //People in the left & below
+				if ((pos.x- mX) <= 2 && (mY - pos.y) < ss.h) {
 					//lives--;
 					return true;
 				}
 			}
 			else
-				if ((mX - pos.x) >= 0 && (mY - pos.y) < 0) {
-					if ((mX - pos.x) <=ss.w && (mY - pos.y) == 0) {
+				if ((mX - pos.x) >= 0 && (mY - pos.y) < 0) { //People in the right & above
+					if ((mX - pos.x) <=ss.w && (pos.y - mY) <= 1) {
 						//lives--;
 						return true;
 					}

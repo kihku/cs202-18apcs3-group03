@@ -369,7 +369,7 @@ void Dinosaur::drawEne(bool lvUp)
 
 void Dinosaur::sound()
 {
-	PlaySound(TEXT("rabbit.wav"), NULL, SND_ASYNC);
+	PlaySound(TEXT("roo hop.wav"), NULL, SND_ASYNC);
 }
 
 Traffic::Traffic(Point p)
