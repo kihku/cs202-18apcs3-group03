@@ -77,12 +77,15 @@ vector<Enemy*> CGame::getVehicle()
 //	return car;
 }*/
 
-void CGame::resetGame()
+void CGame::resetGame(bool nextLevel)
 {
-	system("cls");
-	SCREEN_COLOR;
+	if (nextLevel == false)
+	{
+		system("cls");
+		SCREEN_COLOR;
+	}
 	//lane.~Lane();
-	drawGame();
+	drawGame(nextLevel);
 	//Lane();
 }
 void CGame::exitGame()
@@ -98,20 +101,25 @@ void CGame::gamePlay()
 	SCREEN_COLOR;
 	int keyPressed;
 	bool isPause = false;
+	bool nextLevel = false;
 	//return init lives for people
 	cn.resetLives();
 	cn.backToCheckPoint();
-	drawGame();
+	drawGame(nextLevel);
 	
-	thread th1(&CGame::updatePosVehicle, this);
+	thread th1(&CGame::updatePosVehicle, this, nextLevel);
 	HANDLE th1_handle = th1.native_handle();
 	while (1)
 	{
 		//level up
 		if (cn.isFinish())
 		{
+			nextLevel = true;
 			//pauseGame(th1_handle);
-			nextlevel(th1_handle);
+			level.levelUp();
+			lane = Lane(level);
+			nextlevel(th1_handle, nextLevel);
+			
 		}
 		//gameover
 		if (cn.getLives() <= 0)
@@ -132,7 +140,7 @@ void CGame::gamePlay()
 			lk.unlock();
 			pauseGame(th1_handle);
 			isPause = true;
-			pauseMenu(th1_handle, isPause);
+			pauseMenu(th1_handle, isPause,nextLevel);
 		}
 		else if (keyPressed == 'c' || keyPressed == 'C')
 		{
@@ -202,21 +210,29 @@ void CGame::resumeGame(HANDLE t)
 }
 //void pauseGame(HANDLE);
 //void resumeGame(HANDLE); 
-void CGame::updatePosVehicle()
+void CGame::updatePosVehicle(bool nextLevel)
 {
 	while (true)
-	//Collide();
+	{
+		if (nextLevel == true)
+			break;
+		//Collide();
 		lane.updateLane(level);
+	}
 }
 void CGame::updatePosAnimal()
 {
 
 }
-void CGame::drawGame()
+void CGame::drawGame(bool nextLevel)
 {
-	system("cls");
 	PlaySound(TEXT("smw_bonus_game_end.wav"), NULL, SND_ASYNC);
-	//SCREEN_COLOR;
+	unique_lock<mutex>lk(CGame::mtx);
+	lk.unlock();
+	if (nextLevel == true)
+		lk.lock(); 
+	system("cls");
+	SCREEN_COLOR;
 	const int delta = 3;
 	const int scoreBoard_H = 25;
 	const int scoreBoard_V = 5;
@@ -416,7 +432,7 @@ void CGame::menu()
 
 	}
 }
-void CGame::pauseMenu(HANDLE handle, bool& isPause)
+void CGame::pauseMenu(HANDLE handle, bool& isPause, bool nextlv)
 {
 	//unique_lock<mutex>lk(CGame::mtx);
 	int ki;
@@ -497,7 +513,7 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause)
 		else if ((ch == ENTER) && (stt == 1))
 		{
 
-			resetGame();
+			resetGame(nextlv);
 			
 			ResumeThread(handle);
 			isPause = false;
@@ -564,10 +580,9 @@ void CGame::gameOver() {
 		exitGame();
 	}
 }
-void CGame:: nextlevel(HANDLE handle) {
+void CGame:: nextlevel(HANDLE handle,bool nextLevel) {
 	
-	level.levelUp();
-	resetGame();
+	resetGame(nextLevel);
 	PlaySound(TEXT("smw_power-up.wav"), NULL, SND_ASYNC);
 	cn.eraseCorpse();
 	cn.backToCheckPoint();

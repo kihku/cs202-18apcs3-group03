@@ -28,7 +28,6 @@ public:
 class Traffic {
 	Point pos;
 	bool greenLight;
-	static int numTraffic;
 public:
 	Traffic(Point p);
 	Traffic(const Traffic& src);
