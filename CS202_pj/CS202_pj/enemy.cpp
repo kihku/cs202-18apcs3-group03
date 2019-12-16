@@ -20,74 +20,39 @@ int Car::getType()
 void Car::moveEne(bool lvUp)
 {
 	if (lvUp == false)
-	{
 		unique_lock<mutex> lk(CGame::mtx);
-		Point pos = getPos();
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					cout << ' ';
-			}
-		//if (getDir()) {
-		//		setPos({ pos.x + 1, pos.y });
-		//	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });	//l-1?
-		//}
-		//else {
-		setPos({ pos.x - 1, pos.y });
-		if (getPos().x + ss.w - 1 <= screenSize_H_left) setPos({ screenSize_H_right, pos.y });
-		//}
-	}
-	else
-	{
-		Point pos = getPos();
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					cout << ' ';
-			}
-		//if (getDir()) {
-		//		setPos({ pos.x + 1, pos.y });
-		//	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });	//l-1?
-		//}
-		//else {
-		setPos({ pos.x - 1, pos.y });
-		if (getPos().x + ss.w - 1 <= screenSize_H_left) setPos({ screenSize_H_right, pos.y });
-		//}
-	}
+	Point pos = getPos();
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
+		{
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				cout << ' ';
+		}
+	//if (getDir()) {
+	//		setPos({ pos.x + 1, pos.y });
+	//	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });	//l-1?
+	//}
+	//else {
+	setPos({ pos.x - 1, pos.y });
+	if (getPos().x +ss.w-1<=  screenSize_H_left) setPos({ screenSize_H_right, pos.y });
+	//}
 }
 
 
 void Car::drawEne(bool lvUp)
 {
 	if (lvUp == false)
-	{
-		unique_lock<mutex> lk(CGame::mtx);
-		Point pos = getPos();
+		unique_lock<mutex> lk(CGame::mtx); 
+	Point pos = getPos();
 
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					cout << shape[i][j];
-			}
-	}
-	else
-	{
-		Point pos = getPos();
-
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					cout << shape[i][j];
-			}
-	}
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
+		{
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				cout << shape[i][j];
+		}
 }
 
 void Car::sound()
@@ -110,74 +75,39 @@ int Truck::getType()
 void Truck::moveEne(bool lvUp)
 {
 	if (lvUp == false)
-	{
 		unique_lock<mutex> lk(CGame::mtx);
-		Point pos = getPos();
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					cout << ' ';
-			}
-		//if (getDir()) {
-		setPos({ pos.x + 1, pos.y });
-		if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });
-		//}
-		//else {
-		//	setPos({ pos.x - 1, pos.y });
-		//	if (getPos().x >= screenSize_H_left) setPos({ screenSize_H_right - ss.w, pos.y });
-		//}
-	}
-	else
-	{
-		Point pos = getPos();
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					cout << ' ';
-			}
-		//if (getDir()) {
-		setPos({ pos.x + 1, pos.y });
-		if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });
-		//}
-		//else {
-		//	setPos({ pos.x - 1, pos.y });
-		//	if (getPos().x >= screenSize_H_left) setPos({ screenSize_H_right - ss.w, pos.y });
-		//}
-	}
+	Point pos = getPos();
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
+		{
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				cout << ' ';
+		}
+	//if (getDir()) {
+	setPos({ pos.x + 1, pos.y });
+	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });
+	//}
+	//else {
+	//	setPos({ pos.x - 1, pos.y });
+	//	if (getPos().x >= screenSize_H_left) setPos({ screenSize_H_right - ss.w, pos.y });
+	//}
 }
 
 
 void Truck::drawEne(bool lvUp)
 {
 	if (lvUp == false)
-	{
 		unique_lock<mutex> lk(CGame::mtx);
-		Point pos = getPos();
+	Point pos = getPos();
 
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					cout << shape1[i][j];
-			}
-	}
-	else
-	{
-		Point pos = getPos();
-
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					cout << shape1[i][j];
-			}
-	}
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
+		{
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				cout << shape1[i][j];
+		}
 }
 
 void Truck::sound()
@@ -198,44 +128,23 @@ int Bird::getType()
 void Bird::moveEne(bool lvUp)
 {
 	if (lvUp == false)
-	{
 		unique_lock<mutex> lk(CGame::mtx);
-		Point pos = getPos();
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					cout << ' ';
-			}
-		//if (getDir()) {
-		//		setPos({ pos.x + 1, pos.y });
-		//	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });	//l-1?
-		//}
-		//else {
-		setPos({ pos.x - 1, pos.y });
-		if (getPos().x + ss.w - 1 <= screenSize_H_left) setPos({ screenSize_H_right, pos.y });
-		//}
-	}
-	else
-	{
-		Point pos = getPos();
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					cout << ' ';
-			}
-		//if (getDir()) {
-		//		setPos({ pos.x + 1, pos.y });
-		//	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });	//l-1?
-		//}
-		//else {
-		setPos({ pos.x - 1, pos.y });
-		if (getPos().x + ss.w - 1 <= screenSize_H_left) setPos({ screenSize_H_right, pos.y });
-		//}
-	}
+	Point pos = getPos();
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
+		{
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				cout << ' ';
+		}
+	//if (getDir()) {
+	//		setPos({ pos.x + 1, pos.y });
+	//	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });	//l-1?
+	//}
+	//else {
+	setPos({ pos.x - 1, pos.y });
+	if (getPos().x + ss.w - 1 <= screenSize_H_left) setPos({ screenSize_H_right, pos.y });
+	//}
 }
 
 
@@ -243,34 +152,16 @@ void Bird::drawEne(bool lvUp)
 {
 
 	if (lvUp == false)
-	{
 		unique_lock<mutex> lk(CGame::mtx);
-		Point pos = getPos();
+	Point pos = getPos();
 
-		for (int i = 0; i < ss.h; ++i)
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
 		{
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					cout << shape0[i][j];
-			}
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				cout << shape0[i][j];
 		}
-	}
-	else
-	{
-		Point pos = getPos();
-
-		for (int i = 0; i < ss.h; ++i)
-		{
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					cout << shape0[i][j];
-			}
-		}
-	}
 }
 void Bird::sound()
 {
@@ -292,79 +183,41 @@ int Dinosaur::getType()
 void Dinosaur::moveEne(bool lvUp)
 {
 	if (lvUp == false)
-	{
 		unique_lock<mutex> lk(CGame::mtx);
-		Point pos = getPos();
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					printf(" ");
-			}
-		//if (!getDir()) {
-		setPos({ pos.x + 1, pos.y });
-		if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });
-		//	}
-			////else {
-			//	setPos({ pos.x - 1, pos.y });
-			//	if (getPos().x >= screenSize_H_left) setPos({ screenSize_H_right - ss.w, pos.y });
-			////}
-	}
-	else
-	{
-		Point pos = getPos();
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					printf(" ");
-			}
-		//if (!getDir()) {
-		setPos({ pos.x + 1, pos.y });
-		if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });
-		//	}
-			////else {
-			//	setPos({ pos.x - 1, pos.y });
-			//	if (getPos().x >= screenSize_H_left) setPos({ screenSize_H_right - ss.w, pos.y });
-			////}
-	}
-
+	Point pos = getPos();
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
+		{
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				printf(" ");
+		}
+	//if (!getDir()) {
+	setPos({ pos.x + 1, pos.y });
+	if (getPos().x >= screenSize_H_right) setPos({ screenSize_H_left - ss.w, pos.y });
+	//	}
+		////else {
+		//	setPos({ pos.x - 1, pos.y });
+		//	if (getPos().x >= screenSize_H_left) setPos({ screenSize_H_right - ss.w, pos.y });
+		////}
 }
 
 
 void Dinosaur::drawEne(bool lvUp)
 {
 	if (lvUp == false)
-	{
 		unique_lock<mutex> lk(CGame::mtx);
-		Point pos = getPos();
-
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					printf("%c", shape1[i][j]);
-
-			}
-	}
-	else
-	{
-		Point pos = getPos();
-
-		for (int i = 0; i < ss.h; ++i)
-			for (int j = 0; j < ss.w; ++j)
-			{
-
-				gotoxy(pos.x + j, pos.y + i);
-				if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
-					printf("%c", shape1[i][j]);
-
-			}
-	}
+	Point pos = getPos();
+	
+	for (int i = 0; i < ss.h; ++i)
+		for (int j = 0; j < ss.w; ++j)
+		{
+			
+			gotoxy(pos.x + j, pos.y + i);
+			if (screenSize_H_left + 1 <= pos.x + j && pos.x + j <= screenSize_H_right - 1)
+				printf("%c", shape1[i][j]);
+			
+		}
 }
 
 void Dinosaur::sound()

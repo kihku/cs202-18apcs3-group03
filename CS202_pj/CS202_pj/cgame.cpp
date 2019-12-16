@@ -1,8 +1,35 @@
 ﻿#include"Library.h"
+<<<<<<< HEAD
 void CGame::updatePosPeople(char keyPressed)
 {
 	unique_lock<mutex> lk(CGame::mtx);
 	const int step_horizontal = 4;
+=======
+CGame::CGame() :lane()
+{
+	//settingMenu();
+	menu();
+	for (int i = 0; i < 24; ++i)
+	{
+		for (int j = 0; j < 85; ++j)
+		{
+			map[j][i] = 0;
+		}
+	}
+	//init people pos 
+	//people Pos: 42 24
+	map[42][22] = 1;
+	map[43][22] = 1;
+	map[44][22] = 1;
+	map[43][23] = 1;
+	//mX = screenSize_H / 2;
+	//mY = screenSize_V;
+}
+void CGame::updatePosPeople(char keyPressed)
+{
+	unique_lock<mutex> lk(CGame::mtx);
+	const int step_horizontal = 2;
+>>>>>>> parent of 427bd8c... next Level complete
 	const int step_vertical = 2;
 	if (keyPressed == 'd')
 	{
@@ -105,6 +132,19 @@ void CGame::gamePlay()
 	HANDLE th1_handle = th1.native_handle();
 	while (1)
 	{
+<<<<<<< HEAD
+=======
+		//level up
+		if (cn.isFinish())
+		{
+			nextLevel = true;
+			//pauseGame(th1_handle);
+			lane.levelUp();
+			nextlevel(th1_handle, nextLevel);
+			
+		}
+		//gameover
+>>>>>>> parent of 427bd8c... next Level complete
 		if (cn.getLives() <= 0)
 		{
 			SuspendThread(th1_handle);
@@ -136,8 +176,14 @@ void CGame::gamePlay()
 		}
 		else if(isPause==false)
 		{
+<<<<<<< HEAD
 			updatePosPeople(keyPressed);
 			Collide();
+=======
+			//Collide();
+			updatePosPeople(keyPressed);
+			//Collide();
+>>>>>>> parent of 427bd8c... next Level complete
 		}
 		
 	}
