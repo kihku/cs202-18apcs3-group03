@@ -8,7 +8,7 @@ class CGame {
 	Level level;
 	Lane lane;
 	bool isMute = false;
-	
+	int posHeart;
 public:
 	CGame(); //Chuẩn bị dữ liệu cho tất cả các đối tượng
 	void drawGame(bool); //Thực hiện vẽ trò chơi ra màn hình sau khi có dữ liệu
@@ -44,5 +44,9 @@ public:
 	//LOADGAMEMENU
 	void loadmenu();
 	void drawDino(int, int, bool);
-
+	//eat Live
+	int randHeart();
+	void printHeart();
+	void isIncreaseLive();
+	void increaseLive();
 };

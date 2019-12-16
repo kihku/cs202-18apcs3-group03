@@ -50,7 +50,7 @@ void CGame::updatePosPeople(char keyPressed,bool lvUp)
 			PlaySound(TEXT("move.wav"), NULL, SND_ASYNC);*/
 		cn.Down(step_vertical);
 	}
-	//Collide();
+	isIncreaseLive();
 }
 
 CGame::~CGame()
@@ -358,6 +358,7 @@ void CGame::drawGame(bool nextLevel)
 	gotoxy(pos.x, pos.y + 1);
 	cout << " " << char(219) << "   ";
 	lane.drawLane(nextLevel);
+	printHeart();
 }
 bool CGame::exportMap(const char* path)
 {
@@ -659,19 +660,7 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause, bool nextlv)
 		}
 	}
 }
-void CPEOPLE::reduceLive()
-{
-	if (lives > 0)
-	{
-		lives -= 1;
-		unique_lock<mutex> lk(CGame::mtx);
-		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-		cout << "               ";
-		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-		for (int i = 0; i < lives * 3; ++i)
-			cout << char(222);
-	}
-}
+
 //bool CGame::isCrash(Point pos) {
 //		if (abs(cn.mX - pos.x) <=5 && abs(mY - pos.y) <= 5) {
 //			return true;
@@ -1061,4 +1050,35 @@ void CGame::drawDino(int x, int y, bool dir)
 			gotoxy(pos.x + j, pos.y + i);
 				(dir)?printf("%c", shape1[i][j]): printf("%c", shape0[i][j]);
 		}	
+}
+int CGame::randHeart() {
+	int min = 10, max =50;
+	int range = max - min + 1;
+	int num = rand() % range + min;
+	posHeart = num;
+	return num;
+}
+void CGame::printHeart() {
+	char a;
+	a = 240;
+	gotoxy(randHeart(), 12);
+	cout << a;
+}
+void CGame::isIncreaseLive() {
+	if (cn.isEatHeart(posHeart)) {
+		if (!isMute)
+			PlaySound(TEXT("Earn Points.wav"), NULL, SND_ASYNC);
+		increaseLive();
+	}
+}
+void CGame::increaseLive() {
+	if (cn.getLives() < 5)
+	{
+		cn.plusLive();
+		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+		cout << "               ";
+		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
+		for (int i = 0; i < cn.getLives() * 3; ++i)
+			cout << char(222);
+	}
 }
