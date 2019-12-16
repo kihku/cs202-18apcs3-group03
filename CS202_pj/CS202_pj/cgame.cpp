@@ -400,7 +400,6 @@ string CGame::getFileContents(std::ifstream& File)
 }
 void CGame::titleMenu() {
 	//Ascii art
-
 	ifstream Reader("CrossyRoad.txt");             //Open file
 	string Art = getFileContents(Reader);       //Get file
 	gotoxy(0,0);
@@ -1002,6 +1001,7 @@ void CGame::settingMenu()
 			//off
 			else {
 				isMute = true;
+				PlaySound(TEXT("Pop 1.wav"), NULL, SND_ASYNC);
 			}
 			chosen2[0] = index_y, chosen2[1] = index_x;
 		}
