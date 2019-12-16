@@ -10,7 +10,7 @@ private:
 
 	const int distCar[3] = {50,30,20};
 	const int distTruck[3] = {40,30,30};
-	const int ezSpeed[3] = { 100,100,100 };
+	const int ezSpeed[3] = { 200,200,200 };
 	const int harSpeed[3] = { 50,50,50 };
 	const int maxLevel = 3;
 	//int minSpd, maxSpd;

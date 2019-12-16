@@ -5,7 +5,7 @@ CGame* CGame::instance = 0;
 int main()
 {
 
-	ResizeConsole(1100, 600);
+	ResizeConsole(920, 600);
 	FixConsoleWindow();
 	ShowConsoleCursor(false);
 	ios_base::sync_with_stdio(false);

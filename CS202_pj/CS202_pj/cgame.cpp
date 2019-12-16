@@ -741,19 +741,6 @@ void CGame::pauseMenu(HANDLE handle, bool& isPause, bool nextlv)
 		}
 	}
 }
-void CPEOPLE::reduceLive()
-{
-	if (lives > 0)
-	{
-		lives -= 1;
-		unique_lock<mutex> lk(CGame::mtx);
-		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-		cout << "               ";
-		gotoxy(screenSize_H_right + 10, screenSize_V_top + 13);
-		for (int i = 0; i < lives * 3; ++i)
-			cout << char(222);
-	}
-}
 //bool CGame::isCrash(Point pos) {
 //		if (abs(cn.mX - pos.x) <=5 && abs(mY - pos.y) <= 5) {
 //			return true;
@@ -1239,7 +1226,9 @@ void CGame::loadmenu()
 							pauseGame(th1_handle);
 							system("cls");
 							gotoxy(20, 20);
-							cout << "You WIN"; //kiem cai gi do
+							cout << "Y O U  W I N"; //kiem cai gi do
+							gotoxy(20, 22);
+							Sleep(5000);
 							system("pause");
 
 							menu();

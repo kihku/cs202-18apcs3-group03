@@ -12,6 +12,7 @@ class CGame {
 	static CGame* instance;
 	CGame();
 	~CGame(); // Hủy tài nguyên đã cấp phát
+	int posHeart;
 public:
 	static mutex mtx;
 	static CGame* getInstance() {
