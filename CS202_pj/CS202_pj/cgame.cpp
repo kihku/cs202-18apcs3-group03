@@ -260,7 +260,8 @@ void CGame::updatePosAnimal()
 }
 void CGame::drawGame(bool nextLevel)
 {
-	PlaySound(TEXT("smw_bonus_game_end.wav"), NULL, SND_ASYNC);
+	if (!isMute)
+		PlaySound(TEXT("smw_bonus_game_end.wav"), NULL, SND_ASYNC);
 	unique_lock<mutex>lk(CGame::mtx);
 	lk.unlock();
 	if (nextLevel == true)
@@ -688,7 +689,8 @@ void CGame::Collide() {
 void CGame::gameOver(HANDLE th1) {
 	char choice;
 	bombEffect();
-	PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
+	if(!isMute)
+		PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
 	gotoxy(20, 4);
 	cout << "P L A Y  A G A I N?";
 	
@@ -995,9 +997,11 @@ void CGame::settingMenu()
 			//on
 			if (!index_x)
 			{
+				isMute = false;
 			}
 			//off
 			else {
+				isMute = true;
 			}
 			chosen2[0] = index_y, chosen2[1] = index_x;
 		}
