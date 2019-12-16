@@ -20,6 +20,8 @@ public:
 
 	virtual void moveEne() = 0;
 	virtual void drawEne() = 0;
+
+	virtual void sound()=0;
 	//virtual char** getShape() = 0;
 };
 
@@ -58,6 +60,8 @@ public:
 	virtual void moveEne();
 
 	virtual void drawEne();
+
+	virtual  void sound();
 	//void drawVeh() {
 	//void Move();
 	//void pause();
@@ -89,6 +93,8 @@ public:
 	virtual void moveEne();
 
 	virtual void drawEne();
+
+	void sound();
 	//virtual char** getShape() ;		//return array of shape
 };
 
@@ -117,6 +123,8 @@ public:
 	  virtual void moveEne();
 
 	  virtual void drawEne();
+	  void sound();
+
 };
 
 	//    ,,,       ,,,             
@@ -139,6 +147,8 @@ public:
 	virtual void moveEne();
 
 	virtual void drawEne();
+
+	virtual void sound();
 };
 
 /////////////////////////////////////LANE//////////////////////////
