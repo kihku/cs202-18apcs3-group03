@@ -167,12 +167,13 @@ void CGame::gamePlay()
 		else if (keyPressed == 'c' || keyPressed == 'C')
 		{
 			string save;
-			pauseGame(th1_handle);
+			unique_lock<mutex>lk(CGame::mtx);
 			int menu_x = screenSize_H_right + 15, menu_y = screenSize_V_top;
 			gotoxy(menu_x - 7, 2 + menu_y);
 			cout << "Enter filename: ";
+			pauseGame(th1_handle);
 			gotoxy(menu_x - 7, 3 + menu_y);
-			cin >> save;
+			getline(cin, save);
 			saveGame(save);
 			gotoxy(menu_x - 7, 2 + menu_y);
 			cout << "                ";
@@ -1154,18 +1155,19 @@ void CGame::loadmenu()
 		gotoxy(30, 15);
 		cout << "No saved file to load !!!";
 		Sleep(1000);
-		
+		menu();
 	}
-	gotoxy(56, 15);
-	cout << "CHOOSE FILENAME TO LOAD: ";
+	gotoxy(40, 9);
+	cout << "C H O O S E  F I L E N A M E  T O  L O A D: ";
+	int load_x = 30,load_y=10;
 	int curPos = 0;
 	ifstream fin;
 	for (int i = 0; i < v.size(); ++i) {
 		if (i == curPos) {
-			gotoxy(52, 16 + i);
+			gotoxy(52,load_y + i);
 			cout << ">> ";
 		}
-		gotoxy(56, 16 + i);
+		gotoxy(56, load_y + i);
 		cout << v[i] << endl;
 	}
 
@@ -1175,30 +1177,30 @@ void CGame::loadmenu()
 			if (key == KEY_UP)
 			{
 				string date = "";
-				gotoxy(52, 16 + curPos);
+				gotoxy(52, load_y + curPos);
 				cout << "    " << v[curPos];
 				curPos--;
 				curPos = (curPos + v.size()) % v.size();
 				fin.open("./data/" + v[curPos], ios::out | ios::binary);
 				getline( fin,date);
-				gotoxy(75, 16 + curPos);
+				gotoxy(75, load_y + curPos);
 				cout << "saved at " << date;
-				gotoxy(52, 16 + curPos);
+				gotoxy(52, load_y + curPos);
 				cout << ">>  " << v[curPos];
 				fin.close();
 			}
 			if (key == KEY_DOWN)
 			{
 				string date = "";
-				gotoxy(52, 16 + curPos);
+				gotoxy(52, load_y + curPos);
 				cout << "    " << v[curPos];
 				curPos++;
 				curPos = (curPos + v.size()) % v.size();
 				fin.open("./data/" + v[curPos], ios::out | ios::binary);
 				getline(fin, date);
-				gotoxy(75, 16 + curPos);
+				gotoxy(75, load_y + curPos);
 				cout << "saved at " << date;
-				gotoxy(52, 16 + curPos);
+				gotoxy(52, load_y + curPos);
 				cout << ">>  " << v[curPos];
 				fin.close();
 			}
@@ -1209,11 +1211,12 @@ void CGame::loadmenu()
 
 
 				loadGame(v[curPos]);
+				
 				SCREEN_COLOR;
 				int keyPressed;
 				bool isPause = false;
-				bool nextLevel = false;
-				drawGame(nextLevel);
+				bool nextLevel = true;
+				drawGame(1);
 				/*Sleep(600);*/
 				int menu_x = screenSize_H_right + 15, menu_y = screenSize_V_top;
 				gotoxy(menu_x - 7, 1 + menu_y);
@@ -1289,7 +1292,7 @@ void CGame::loadmenu()
 						gotoxy(menu_x - 7, 2 + menu_y);
 						cout << "Enter filename: ";
 						gotoxy(menu_x - 7, 3 + menu_y);
-						cin >> save;
+						getline(cin, save);
 						saveGame(save);
 						gotoxy(menu_x - 7, 2 + menu_y);
 						cout << "                ";
