@@ -98,7 +98,7 @@ void CGame::exitGame()
 {
 	//IS_RUNNING = false;
 	system("cls");
-	CGame();
+	menu();
 	//t->join();
 }
 //void exitGame(HANDLE); 
@@ -129,9 +129,9 @@ void CGame::gamePlay()
 			{
 				pauseGame(th1_handle);
 				system("cls");
-				gotoxy(20, 20);
-				cout << "You WIN"; //kiem cai gi do
-				system("pause");
+				winningScreen("winningScreen.txt"); //kiem cai gi do
+				Sleep(5000);
+				lane.resetLvl();
 				//lane.getLevel().
 				menu();
 			}
@@ -490,7 +490,13 @@ string CGame::getFileContents(std::ifstream& File)
 }
 void CGame::winningScreen(const char* path)
 {
-
+	ifstream Reader(path);           //Open file
+	string Art = getFileContents(Reader);       //Get file
+	//gotoxy(10,0);
+	cout << "		 " << Art << std::endl;               //Print it to the screen
+	Reader.close();                           //Close file
+	///
+	SCREEN_COLOR;
 }
 void CGame::titleMenu() {
 	//Ascii art
@@ -877,6 +883,8 @@ void CGame::gameOver(HANDLE th1) {
 		//NO
 		else if (ch == ENTER && index_y == 1)
 		{
+
+			cn.resetLives(liveMode);
 			exitGame();
 		}
 	}
@@ -1080,12 +1088,12 @@ void CGame::settingMenu()
 
 			if (!index_x) {
 				if (lane.getLevel().getMode())
-					lane.switchMode();
+					lane.switchMode(), mode=0;
 			}
 			//hard
 			else {
 				if (!lane.getLevel().getMode())
-					lane.switchMode();
+					lane.switchMode(), mode=1;
 			}
 			chosen1[0] =  index_y,chosen1[1]=index_x ;
 		}
@@ -1236,12 +1244,13 @@ void CGame::loadmenu()
 						{
 							pauseGame(th1_handle);
 							system("cls");
-							gotoxy(20, 20);
-							cout << "Y O U  W I N"; //kiem cai gi do
-							gotoxy(20, 22);
+							/*gotoxy(20, 20);*/
+							//cout << "Y O U  W I N"; //kiem cai gi do
+							//gotoxy(20, 22);
+							winningScreen("winningScreen.txt");
 							Sleep(5000);
 							system("pause");
-
+							lane.resetLvl();
 							menu();
 						}
 						nextLevel = true;

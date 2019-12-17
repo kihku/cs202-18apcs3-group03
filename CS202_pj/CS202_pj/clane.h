@@ -33,6 +33,7 @@ public:
 	int getDistCar();
 	int getDistTruck();
 	void switchMode();
+	void resetLvl();
 	static Level* createLevel(int mode);
 };
 //class EzLevel:public Level {
@@ -81,6 +82,7 @@ public:
 	vector<Traffic*>getTraffic() { return traf; }
 	Level getLevel() { return lev; }
 	bool levelUp();
+	void resetLvl();
 	Point  getVehiclePoint();
 	void updatePosEnemy(int t);
 

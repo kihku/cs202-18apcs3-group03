@@ -224,6 +224,11 @@ bool Lane::levelUp()
 	return false;
 }
 
+void Lane::resetLvl()
+{
+	lev.resetLvl();
+}
+
 
 Level::Level()
 {
@@ -275,6 +280,10 @@ int Level::getDistTruck()
 void Level::switchMode()
 {
 	mode = !mode;
+}
+void Level::resetLvl()
+{
+	level = 1;
 }
 //Level* Level::createLevel(int mode)
 //{
