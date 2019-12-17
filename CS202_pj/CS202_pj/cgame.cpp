@@ -104,13 +104,16 @@ void CGame::exitGame()
 //void exitGame(HANDLE); 
 void CGame::gamePlay()
 {
-
+	if (mode == 0)
+		liveMode = 5;
+	else
+		liveMode = 1;
 	SCREEN_COLOR;
 	int keyPressed;
 	bool isPause = false;
 	bool nextLevel = false;
 	//return init lives for people
-	cn.resetLives();
+	cn.resetLives(liveMode);
 	cn.backToCheckPoint();
 	drawGame(nextLevel);
 	
@@ -531,6 +534,7 @@ void CGame::titleMenu() {
 }
 void CGame::menu()
 {
+	int menu_x = 52, menu_y = 12;
 	system("cls");
 	if (!isMute)
 		PlaySound(TEXT("jingleBell.wav"), NULL, SND_ASYNC);
@@ -556,11 +560,11 @@ void CGame::menu()
 	const char* tenmuc[] = { "N E W  G A M E","L O A D  G A M E","S E T T I N G S","Q U I T" };
 	for (ki = 1; ki < SL; ki++)
 	{
-		gotoxy(52, ki + 1 + 10);
+		gotoxy(menu_x, ki + 1 + menu_y);
 		SCREEN_COLOR;
 		_cprintf(tenmuc[ki]);
 	}
-	gotoxy(52, 1 + 10);
+	gotoxy(menu_x, 1 + menu_y);
 	SCREEN_COLOR;
 	BUTTON_COLOR;
 	_cprintf(tenmuc[0]);
@@ -577,20 +581,19 @@ void CGame::menu()
 			if (stt < 0)
 			{
 				stt = SL - 1;
-				gotoxy(52, 1 + 10);
+				gotoxy(menu_x, 1 + menu_y);
 				SCREEN_COLOR;
 				_cprintf(tenmuc[0]);
-				gotoxy(52, SL + 10);
+				gotoxy(menu_x, SL + menu_y);
 				BUTTON_COLOR;
 				_cprintf(tenmuc[stt]);
 			}
 			else
 			{
-
-				gotoxy(52, stt + 2 + 10);
+				gotoxy(menu_x, stt + 2 + menu_y);
 				SCREEN_COLOR;
 				_cprintf(tenmuc[stt + 1]);
-				gotoxy(52, stt + 1 + 10);
+				gotoxy(menu_x, stt + 1 + menu_y);
 				BUTTON_COLOR;
 				_cprintf(tenmuc[stt]);
 			}
@@ -600,20 +603,20 @@ void CGame::menu()
 			stt++;
 			if (stt > SL - 1)
 			{
-				gotoxy(52, SL + 10);
+				gotoxy(menu_x, SL + menu_y);
 				SCREEN_COLOR;
 				_cprintf(tenmuc[SL - 1]);
 				stt = 0;
-				gotoxy(52, 1 + 10);
+				gotoxy(menu_x, 1 + menu_y);
 				BUTTON_COLOR;
 				_cprintf(tenmuc[stt]);
 			}
 			else
 			{
-				gotoxy(52, stt + 10);
+				gotoxy(menu_x, stt + menu_y);
 				SCREEN_COLOR;
 				_cprintf(tenmuc[stt - 1]);
-				gotoxy(52, stt + 1 + 10);
+				gotoxy(menu_x, stt + 1 + menu_y);
 				BUTTON_COLOR;
 				_cprintf(tenmuc[stt]);
 			}
@@ -854,7 +857,7 @@ void CGame::gameOver(HANDLE th1) {
 		else if (ch == ENTER && index_y == 0)
 		{
 			resetGame(0);
-			cn.resetLives();
+			cn.resetLives(liveMode);
 			gotoxy(screenSize_H_right + 10, screenSize_V_top + 13); 
 			for (int i = 0; i < cn.getLives() * 3; ++i)
 				cout << char(222);

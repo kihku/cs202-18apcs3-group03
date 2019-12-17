@@ -106,9 +106,9 @@ int CPEOPLE::getLives()
 {
 	return lives;
 }
-void CPEOPLE::resetLives()
+void CPEOPLE::resetLives(int liveMode)
 {
-	lives = peopleLives;
+	lives = liveMode;
 }
 bool CPEOPLE::isFinish()
 {

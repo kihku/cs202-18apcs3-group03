@@ -15,7 +15,7 @@ public:
 	void Right(int);
 	void Down(int);
 	int getLives();
-	void resetLives();
+	void resetLives(int liveMode);
 	void reduceLive();
 	void backToCheckPoint();
 	void eraseCorpse();

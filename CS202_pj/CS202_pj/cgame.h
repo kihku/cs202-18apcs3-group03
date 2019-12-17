@@ -2,6 +2,7 @@
 #include"Library.h"
 
 class CGame {
+	int liveMode;
 	CPEOPLE cn;
 	int map[85][24];
 	bool mode;	//0: easy, 1: hard
