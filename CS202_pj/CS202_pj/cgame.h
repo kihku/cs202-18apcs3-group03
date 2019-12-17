@@ -38,6 +38,7 @@ public:
 	void updatePosVehicle(bool); //Thực hiện cho Truck & Car di chuyển
 	void updatePosAnimal();//Thực hiện cho CDINAUSOR & CBird di chuyển
 	//MENU
+	void winningScreen(const char* path);
 	void titleMenu();
 	string getFileContents(std::ifstream& File);
 	void menu();
@@ -46,6 +47,7 @@ public:
 	//For arrayTesting
 	bool exportMap(const char* a);
 	Point peoplePos();
+
 	void Collide();
 	void gameOver(HANDLE);
 	void nextlevel(HANDLE,bool);

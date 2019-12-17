@@ -132,6 +132,7 @@ void CGame::gamePlay()
 				gotoxy(20, 20);
 				cout << "You WIN"; //kiem cai gi do
 				system("pause");
+				//lane.getLevel().
 				menu();
 			}
 			nextLevel = true;
@@ -433,7 +434,9 @@ void CGame::drawGame(bool nextLevel)
 	gotoxy(screenSize_H_right+4, screenSize_V_top + 18);
 	cout << "Press WASD to MOVE";
 	gotoxy(screenSize_H_right + 10, screenSize_V_top + 19);
-	cout << "Esc to EXIT";
+	cout << "Enter to Pause";
+	gotoxy(screenSize_H_right + 10, screenSize_V_top + 20);
+	cout << "c to save";
 	//draw people
 	Point pos = cn.currentPos();
 	gotoxy(pos.x, pos.y);
@@ -458,6 +461,7 @@ bool CGame::exportMap(const char* path)
 		}
 		file << "\n";
 	}
+	return true;
 }
 Point CGame::peoplePos()
 {
@@ -483,6 +487,10 @@ string CGame::getFileContents(std::ifstream& File)
 	{
 		return "ERROR File does not exist.";
 	}
+}
+void CGame::winningScreen(const char* path)
+{
+
 }
 void CGame::titleMenu() {
 	//Ascii art
@@ -774,7 +782,7 @@ void CGame::Collide() {
 	}
 }
 void CGame::gameOver(HANDLE th1) {
-	char choice;
+	//char choice;
 	bombEffect();
 	if(!isMute)
 		PlaySound(TEXT("smw_game_over.wav"), NULL, SND_ASYNC);
@@ -1201,7 +1209,7 @@ void CGame::loadmenu()
 				/*Sleep(600);*/
 				int menu_x = screenSize_H_right + 15, menu_y = screenSize_V_top;
 				gotoxy(menu_x - 7, 1 + menu_y);
-				cout << "GAME STARTS IN: ";
+				cout << "S T A R T S  I N  ";
 				gotoxy(menu_x - 7, 2 + menu_y);
 				Sleep(1000);
 				cout << 3;
@@ -1294,6 +1302,7 @@ void CGame::loadmenu()
 			if (key == 27)
 			{
 				system("cls");
+				menu();
 			}
 		
 		Sleep(200);
@@ -1347,7 +1356,7 @@ int CGame::randHeart() {
 }
 void CGame::printHeart() {
 	char a;
-	a = 240;
+	a = char(240);
 	gotoxy(randHeart(), 12);
 	cout << a;
 }
